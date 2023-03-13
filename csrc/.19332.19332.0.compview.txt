@@ -1,0 +1,9 @@
+{"vcs1":{"timestamp_begin":1678554449.792717266, "rt":1.25, "ut":0.10, "st":0.10}}
+{"vcselab":{"timestamp_begin":1678554451.073874094, "rt":0.64, "ut":0.15, "st":0.04}}
+{"link":{"timestamp_begin":1678554451.864233655, "rt":1.00, "ut":0.08, "st":0.12}}
+{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1678554449.531750655}
+{"VCS_COMP_START_TIME": 1678554449.531750655}
+{"VCS_COMP_END_TIME": 1678554453.568232758}
+{"VCS_USER_OPTIONS": "-q -nc -sverilog -sverilog -R -top tb_top -debug_access+all huff_enc.sv"}
+{"vcs1": {"peak_mem": 337072}}
+{"stitch_vcselab": {"peak_mem": 222592}}
