@@ -5,7 +5,7 @@
 //left and right nodes are 0 for leaf nodes
 
 typedef struct {
-    //logic [6:0] ascii_char;
+    //logic [7:0] ascii_char; //total 128 characters
     integer ascii_char;
     integer frequency;
     logic is_leaf_node;
@@ -150,7 +150,7 @@ endmodule
 module merge_nodes(input node_t min_node, input node_t second_min_node, output node_t merged_node);
 //should inside loop
 always_comb begin
-    merged_node.ascii_char =  {min_node.ascii_char,second_min_node.ascii_char};
+    merged_node.ascii_char =  {min_node.ascii_char + second_min_node.ascii_char};    //not working- FIXME????
     merged_node.frequency = min_node.frequency + second_min_node.frequency;
     merged_node.left_node = min_node.ascii_char;
     merged_node.right_node = second_min_node.ascii_char;
@@ -158,6 +158,12 @@ always_comb begin
 end
 endmodule
 
+//Algorithm
+//1. First sort the input node list, find 1st and 2nd minimum 
+//2. Allocate them to huff_tree, assign only is_leaf_node, child nodes (not parent node)
+//3. Merge nodes--> create internal node- sort and then add to huff tree -repeat 
+//4. Iterate until root node 
+//5. Start from i=count-1, left_node=2i, right_node=2i+1 (i decrementing from count-1 to 0)
 
 //instead send the entire node list and keep on finding the internal node
 //original list of nodes(leaf nodes) created is sent as an input
@@ -193,28 +199,16 @@ always_comb begin
         in_huff_tree[0][i] = input_node[i];  
     end
     for(int j=0; j< `MAX_CHAR_LENGTH; j++) begin
-        encoded_value[j] = 'bz;
+    //    encoded_value[j] = 'bz;
     end
 end
 
 
 genvar level, cnt;
-//initialize everything to `bz
-/*
-always_comb begin
-    for (int i=0; i <= (2*`MAX_CHAR_LENGTH); i++) begin
-        huff_tree[i].ascii_char = 'bz;
-        huff_tree[i].frequency = 0;
-        huff_tree[i].is_leaf_node = 1'b0;
-        huff_tree[i].parent = 'b0;
-        huff_tree[i].left_node = 'b0;
-        huff_tree[i].right_node = 'b0;
-    end
-end
-*/
+
     int j;    
     generate
-    for (level=0; level < 3-1; level++) begin 
+    for (level=0; level < `MAX_CHAR_LENGTH-1; level++) begin 
         node_sorter node_sorter_ins_level(.node(in_huff_tree[level][0:`MAX_CHAR_LENGTH-1]), .output_node(out_huff_tree[level][0:`MAX_CHAR_LENGTH-1]));
         merge_nodes merge_nodes_ins_level(.min_node(out_huff_tree[level][0]), .second_min_node(out_huff_tree[level][1]), .merged_node(merged_nodes_list[level+1]));
       assign in_huff_tree[level+1][0:`MAX_CHAR_LENGTH-1] = {merged_nodes_list[level+1],out_huff_tree[level][2:`MAX_CHAR_LENGTH]};
@@ -231,10 +225,12 @@ end
             huff_tree[i].parent = 'b0;
             huff_tree[i].left_node = 'b0;
             huff_tree[i].right_node = 'b0;
+            encoded_value[i] = 'bz;
         end
 
         for (int l=0; l< count; l++) begin
             j = count - 1- l;
+            if (j!= 0) begin
             huff_tree[2*j].ascii_char = out_huff_tree[l][0].ascii_char; 
             huff_tree[2*j + 1].ascii_char = out_huff_tree[l][1].ascii_char;
             huff_tree[2*j].is_leaf_node = out_huff_tree[l][0].is_leaf_node;
@@ -245,18 +241,36 @@ end
             huff_tree[2*j + 1].left_node = out_huff_tree[l][1].left_node;
             huff_tree[2*j].right_node = out_huff_tree[l][0].right_node;
             huff_tree[2*j + 1].right_node = out_huff_tree[l][1].right_node;
+            end
+            else if (j==0) begin
+            huff_tree[2*j + 1].ascii_char = out_huff_tree[l][0].ascii_char;
+            huff_tree[2*j + 1].is_leaf_node = out_huff_tree[l][0].is_leaf_node;
+            huff_tree[2*j + 1].frequency = out_huff_tree[l][0].frequency;
+            huff_tree[2*j + 1].left_node = out_huff_tree[l][0].left_node;
+            huff_tree[2*j + 1].right_node = out_huff_tree[l][0].right_node;
+            end
     end
+
+    //assigning parent field
+     for (int l=(2*count)-1; l > 1; l--) begin
+        for (int n=1; n< (2*count); n++) begin
+            if (huff_tree[n].left_node == huff_tree[l].ascii_char | huff_tree[n].right_node == huff_tree[l].ascii_char) begin
+                huff_tree[l].parent = n;
+            end
+        end
     end
 
+    //assigning encodings
+        for (int n=2; n< (2*count); n++) begin  //1-root node
+            if (huff_tree[n].parent != 1) begin
+                encoded_value[n] = (n%2==0) ? {1'b0,encoded_value[huff_tree[n].parent]}: {1'b1,encoded_value[huff_tree[n].parent]};
+            end
+            else if (huff_tree[n].parent == 1) begin
+                encoded_value[n][0] = (n%2==0) ? {1'b0}: {1'b1};
+            end
+        end
 
-//Algorithm
-//1. First sort the input node list, find 1st and 2nd minimum 
-//2. Allocate them to huff_tree, assign only is_leaf_node, child nodes (not parent node)
-//3. Merge nodes--> create internal node- sort and then add to huff tree -repeat 
-//4. Iterate until root node 
-//5. Start from i=count-1, left_node=2i, right_node=2i+1 (i decrementing from count-1 to 0)
-
-
+    end
 
 
 
@@ -294,12 +308,19 @@ module tb_top;
 
     always_comb begin
         $display("Input data: data_in:%p\n", data_in);
-       //   $display("comparator results: node:%p, count=%d, min_node=%p, second_min_node=%p\n", DUT1.node, DUT1.count, DUT1.min_node, DUT1.second_min_node);
- //       $display("sorter results: input_node:%p,\n output_node:%p\n", DUT2.node, DUT2.output_node);
+    //   $display("Input data: data_in:%d\n", "ae");
+    //   $display("comparator results: node:%p, count=%d, min_node=%p, second_min_node=%p\n", DUT1.node, DUT1.count, DUT1.min_node, DUT1.second_min_node);
+    //   $display("sorter results: input_node:%p,\n output_node:%p\n", DUT2.node, DUT2.output_node);
     //   $display("huffman encoder: INPUT: created node :%p\n", DUT.node);
-       $display("Input node[0]:%p\n", DUT.node);
+        $display("Input node:%p\n", DUT.node);
+    for (int j=0; j < count; j++) begin //level
+        $display("in_huff_tree[%0d]:%p\n\n", j, DUT3.in_huff_tree[j]);
+        $display("\n");
+        $display("out_huff_tree[%0d]:%p\n\n", j, DUT3.out_huff_tree[j]);
+    end
        for (int i=0; i<= 2*`MAX_CHAR_LENGTH; i++) begin
        $display("binary_tree:  huff_tree[%0d]:%p\n", i, DUT3.huff_tree[i]);
+       $display("OUTPUT encoded values[%0d]:%b\n", i, DUT3.encoded_value[i]);
     end
     end
 endmodule 
