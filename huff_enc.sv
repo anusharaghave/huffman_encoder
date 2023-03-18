@@ -21,15 +21,16 @@ typedef struct {
     integer left_node;  
     integer right_node;
     integer parent; 
+    integer level;
 } huff_tree_node_t; 
 
 //main encoder module
-module huff_encoder(input logic [6:0] data_in[`MAX_CHAR_LENGTH], input logic data_en, output logic [2*6+2:0] encoded_value[`MAX_CHAR_LENGTH]);   //to fix the output logic width
+module huff_encoder(input logic [6:0] data_in[`MAX_CHAR_LENGTH], input logic data_en, output logic [2*6+2:0] encoded_value[`MAX_CHAR_LENGTH], output logic [2*6+2:0] encoded_mask[`MAX_CHAR_LENGTH]);   //to fix the output logic width
 integer count;
 node_t node[`MAX_CHAR_LENGTH]; 
 
     freq_calc freq_calc_ins0(.data_in(data_in), .data_en(data_en), .node(node), .count(count)); 
-    binary_tree_node binary_tree_node_ins0(.count(count), .input_node(node), .encoded_value(encoded_value)); //cannot pass the count value calculated in freq_calc module
+    binary_tree_node binary_tree_node_ins0(.count(count), .input_node(node), .encoded_value(encoded_value), .encoded_mask(encoded_mask)); //cannot pass the count value calculated in freq_calc module
 endmodule
 
 
@@ -171,7 +172,7 @@ endmodule
 //node 0 and node 1 are first and second minimum
 //count-1 times sort plus and merge action with decreasing count every level
 //hence create an 2-D array of that dimension 
-module binary_tree_node (input integer count, input node_t input_node[`MAX_CHAR_LENGTH], output logic[2*6+2:0] encoded_value[`MAX_CHAR_LENGTH]);
+module binary_tree_node (input integer count, input node_t input_node[`MAX_CHAR_LENGTH], output logic[2*6+2:0] encoded_value[`MAX_CHAR_LENGTH], output logic[2*6+2:0] encoded_mask[`MAX_CHAR_LENGTH]);
 node_t min_node, second_min_node, merged_node;
 node_t min_node_tmp, second_min_node_tmp, merge_node_tmp;
 node_t in_huff_tree[0:`MAX_CHAR_LENGTH][0:`MAX_CHAR_LENGTH], out_huff_tree[0:`MAX_CHAR_LENGTH][0:`MAX_CHAR_LENGTH]; //size is  fixed now, can change based on level and number of elements required- FIXME???
@@ -225,7 +226,9 @@ genvar level, cnt;
             huff_tree[i].parent = 'b0;
             huff_tree[i].left_node = 'b0;
             huff_tree[i].right_node = 'b0;
-            encoded_value[i] = 'bz;
+            huff_tree[i].level = 'b0;
+            encoded_value[i] = 'b0;
+            encoded_mask[i] = 'b0;
         end
 
         for (int l=0; l< count; l++) begin
@@ -241,6 +244,8 @@ genvar level, cnt;
             huff_tree[2*j + 1].left_node = out_huff_tree[l][1].left_node;
             huff_tree[2*j].right_node = out_huff_tree[l][0].right_node;
             huff_tree[2*j + 1].right_node = out_huff_tree[l][1].right_node;
+            huff_tree[2*j + 1].level = j;
+            huff_tree[2*j].level = j;
             end
             else if (j==0) begin
             huff_tree[2*j + 1].ascii_char = out_huff_tree[l][0].ascii_char;
@@ -249,6 +254,7 @@ genvar level, cnt;
             huff_tree[2*j + 1].left_node = out_huff_tree[l][0].left_node;
             huff_tree[2*j + 1].right_node = out_huff_tree[l][0].right_node;
             end
+            
     end
 
     //assigning parent field
@@ -261,14 +267,18 @@ genvar level, cnt;
     end
 
     //assigning encodings
+
         for (int n=2; n< (2*count); n++) begin  //1-root node
-            if (huff_tree[n].parent != 1) begin
-                encoded_value[n] = (n%2==0) ? {1'b0,encoded_value[huff_tree[n].parent]}: {1'b1,encoded_value[huff_tree[n].parent]};
+        encoded_mask[n] = (1'b1 << huff_tree[n].level) -1;
+            if (huff_tree[n].parent != 1) begin 
+    //            encoded_value[n] = (n%2==0) ? {1'b0,encoded_value[huff_tree[n].parent]}: {1'b1,encoded_value[huff_tree[n].parent]};
+                encoded_value[n] = (n%2==0) ? {encoded_value[huff_tree[n].parent] << (huff_tree[n].level-1)}: (encoded_value[huff_tree[n].parent] << (huff_tree[n].level-1)) | 1'b1;
             end
             else if (huff_tree[n].parent == 1) begin
                 encoded_value[n][0] = (n%2==0) ? {1'b0}: {1'b1};
             end
         end
+
 
     end
 
@@ -290,7 +300,7 @@ module tb_top;
    freq_calc DUT(.data_in(data_in), .data_en(data_en), .node(node), .count(count)); 
  //  comparator DUT1(.node(DUT.node), .min_node(), .second_min_node());
  //  node_sorter DUT2(.node(DUT.node), .output_node());
-    binary_tree_node DUT3(.count(count), .input_node(DUT.node), .encoded_value());
+    binary_tree_node DUT3(.count(count), .input_node(DUT.node), .encoded_value(), .encoded_mask());
  //   huff_encoder DUT(.data_in(data_in), .data_en(data_en), .encoded_value(encoded_value));
 
     initial begin
@@ -319,8 +329,10 @@ module tb_top;
         $display("out_huff_tree[%0d]:%p\n\n", j, DUT3.out_huff_tree[j]);
     end
        for (int i=0; i<= 2*`MAX_CHAR_LENGTH; i++) begin
+        if (DUT3.huff_tree[i].ascii_char != 1'bz) begin
        $display("binary_tree:  huff_tree[%0d]:%p\n", i, DUT3.huff_tree[i]);
-       $display("OUTPUT encoded values[%0d]:%b\n", i, DUT3.encoded_value[i]);
+       $display("OUTPUT encoded mask[%0d]:%b, encoded values[%0d]:%b\n", i, DUT3.encoded_mask[i], i, DUT3.encoded_value[i]);
     end
+       end
     end
 endmodule 
