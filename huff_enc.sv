@@ -46,8 +46,8 @@ integer index, sorted_count, ll;
 huff_tree_node_t huff_tree[`MAX_STRING_LENGTH*2];
 node_t in_huff_tree[`MAX_STRING_LENGTH][0:`MAX_STRING_LENGTH];
 node_t out_huff_tree[`MAX_STRING_LENGTH][0:`MAX_STRING_LENGTH]; //size is  fixed now, can change based on level and number of elements required- FIXME???
-node_t merged_nodes_list[`MAX_STRING_LENGTH];
-node_t out_huff_tree_s[`MAX_STRING_LENGTH][`MAX_STRING_LENGTH];
+node_t merged_nodes_list;   
+node_t out_huff_tree_s[`MAX_STRING_LENGTH];
 logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask_h[2*`MAX_STRING_LENGTH];
 logic [`MAX_OUTPUT_SIZE-1:0] encoded_value_h[2*`MAX_STRING_LENGTH];
 int j, itr;
@@ -104,13 +104,12 @@ always_ff @(posedge clk) begin : huffman_enc
 
         `SORT : begin
             count = sorted_count;
-            out_huff_tree[ll][0:`MAX_STRING_LENGTH-1] = out_huff_tree_s[ll][0:`MAX_STRING_LENGTH-1];
+            out_huff_tree[ll][0:`MAX_STRING_LENGTH-1] = out_huff_tree_s[0:`MAX_STRING_LENGTH-1];
             state = `MERGE;
         end
 
         `MERGE : begin
-            merged_nodes_list[0] = initial_node[0];
-            in_huff_tree[ll+1][0:`MAX_STRING_LENGTH-1] = {merged_nodes_list[ll+1],out_huff_tree[ll][2:`MAX_STRING_LENGTH]};
+            in_huff_tree[ll+1][0:`MAX_STRING_LENGTH-1] = {merged_nodes_list,out_huff_tree[ll][2:`MAX_STRING_LENGTH]};
             if (count == 1) begin
                 state = `BUILD_TREE;
                 ll = 0;
@@ -206,9 +205,10 @@ always_ff @(posedge clk) begin : huffman_enc
 
 end //posedge_clk
 
+
     freq_calc freq_calc_ins(.data_in(data_in), .data_en(data_en), .node(initial_node), .count(unique_char_count));
-    node_sorter node_sorter_ins(.count(sorted_count), .node(in_huff_tree[ll][0:`MAX_STRING_LENGTH-1]), .output_node(out_huff_tree_s[ll][0:`MAX_STRING_LENGTH-1]));
-    merge_nodes merge_nodes_ins(.min_node(out_huff_tree[ll][0]), .second_min_node(out_huff_tree[ll][1]), .merged_node(merged_nodes_list[ll+1]));
+    node_sorter node_sorter_ins(.count(sorted_count), .node(in_huff_tree[ll][0:`MAX_STRING_LENGTH-1]), .output_node(out_huff_tree_s[0:`MAX_STRING_LENGTH-1]));
+    merge_nodes merge_nodes_ins(.min_node(out_huff_tree[ll][0]), .second_min_node(out_huff_tree[ll][1]), .merged_node(merged_nodes_list));
      
  //   binary_tree_node binary_tree_node_ins0(.count(count), .input_node(node), .encoded_value(encoded_value), .encoded_mask(encoded_mask)); //cannot pass the count value calculated in freq_calc module
 endmodule
