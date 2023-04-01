@@ -282,14 +282,14 @@ integer ctr;
             node[i].left_node = 'b0;   //ascii valud of null
             node[i].right_node = 'b0;
             node[i].is_leaf_node = 1'b0;
-    end
+        end
     end 
     else begin
-    if (data_en) begin
+        if (data_en) begin
         node_create = 1;
         ctr = 0;
         foreach(data_in[i]) begin
-            if (data_in[i] != 0) begin
+    //        if (data_in[i] != 0) begin
             matched = 0;
             break1 = 0;
             cnt = 1'b1;
@@ -325,7 +325,7 @@ integer ctr;
         end
         end
     end
-    end
+ //   end
   end
 
     always_comb begin
