@@ -1,0 +1,12 @@
+source /afs/club.cc.cmu.edu/projects/stuco-open-eda/bashrc
+
+sv2v MatMul.sv MatMul_tb.sv > _mm_tb.v
+iverilog -s MatMul_tb -o _mm_tb.vvp _mm_tb.v
+vvp _mm_tb.vvp
+gtkwave _mm_out.vcd
+
+verilator -Wno-lint --trace --cc MatMul.sv --exe MatMulDemo.cpp
+make -C obj_dir -f VMatMul.mk VMatMul
+./obj_dir/VMatMul
+read_verilog -sv huffman_enc.sv
+write_verilog -sv
