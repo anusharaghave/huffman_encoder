@@ -37,11 +37,11 @@ typedef struct {
 } huff_tree_node_t; 
 
 //main encoder module
-module huff_encoder(input logic clk, input logic reset, input logic [6:0] data[`MAX_STRING_LENGTH], input logic data_en, output logic [`MAX_OUTPUT_SIZE-1:0] encoded_value[`MAX_STRING_LENGTH], output logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask[`MAX_STRING_LENGTH], output logic[6:0] character[`MAX_STRING_LENGTH]);   //to fix the output logic width
+module huff_encoder(input logic clk, input logic reset, input logic [7:0] data[`MAX_STRING_LENGTH], input logic data_en, output logic [`MAX_OUTPUT_SIZE-1:0] encoded_value[`MAX_STRING_LENGTH], output logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask[`MAX_STRING_LENGTH], output logic[6:0] character[`MAX_STRING_LENGTH]);   //to fix the output logic width
 integer count, unique_char_count;
 node_t node [`MAX_STRING_LENGTH]; //initial node
 node_t initial_node[`MAX_STRING_LENGTH];
-logic [6:0] data_in[`MAX_STRING_LENGTH];
+logic [7:0] data_in[`MAX_STRING_LENGTH];
 logic [2:0] state;
 integer index, ll;
 huff_tree_node_t huff_tree[`MAX_STRING_LENGTH*2];
@@ -78,7 +78,7 @@ end
 */
 
     freq_calc freq_calc_ins(.clk(clk), .reset(reset), .data_in(data_in), .data_en(data_en), .node(initial_node), .count(unique_char_count));
-    node_sorter node_sorter_ins(.clk(clk), .count(unique_char_count), .node(in_huff_tree[ll][0:`MAX_STRING_LENGTH-1]), .output_node(out_huff_tree_s[0:`MAX_STRING_LENGTH-1]));
+    node_sorter node_sorter_ins(.clk(clk), .reset(reset), .state(state), .count(unique_char_count), .input_node(in_huff_tree[ll][0:`MAX_STRING_LENGTH-1]), .output_node(out_huff_tree_s[0:`MAX_STRING_LENGTH-1]));
     merge_nodes merge_nodes_ins(.min_node(out_huff_tree_s[0]), .second_min_node(out_huff_tree_s[1]), .merged_node(merged_nodes_list));
 
 always_ff @(posedge clk) begin : huffman_enc
@@ -125,7 +125,7 @@ always_ff @(posedge clk) begin : huffman_enc
                 node[j] = initial_node[j];  //from freq calc module 
             end
             count = unique_char_count;
-            for (int i=0; i< unique_char_count; i++) begin
+            for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
             in_huff_tree[0][i] = initial_node[i];
            // out_huff_tree[ll][i] = out_huff_tree_s[i];
           end
@@ -138,7 +138,7 @@ always_ff @(posedge clk) begin : huffman_enc
         end
 
         `MERGE : begin  //state=4
-               for (int i=0; i< unique_char_count; i++) begin
+               for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
            // in_huff_tree[0][i] = initial_node[i];
             out_huff_tree[ll][i] = out_huff_tree_s[i];
           end
@@ -155,7 +155,8 @@ always_ff @(posedge clk) begin : huffman_enc
         end
 
         `BUILD_TREE: begin  //state=5   //might be a critical path
-        for (int l=0; l< unique_char_count; l++) begin
+        for (int l=0; l< `MAX_STRING_LENGTH; l++) begin //initialy it was unique_char_count 
+            if (l < unique_char_count) begin
             //assigning child nodes and leaf node fields 
         //    $display("count:%d\n", unique_char_count);
             j = unique_char_count - 1- l;   //2,1,0
@@ -181,12 +182,12 @@ always_ff @(posedge clk) begin : huffman_enc
             huff_tree[2*j + 1].left_node = out_huff_tree[l][0].left_node;
             huff_tree[2*j + 1].right_node = out_huff_tree[l][0].right_node;
             end
-            
+            end    
     end
 
     //assigning parent field for a node if that node is present as a child node either in left or right node 
-     for (int l=(2*unique_char_count)-1; l > 1; l--) begin
-        for (int n=1; n< (2*unique_char_count); n++) begin
+     for (int l=(2*`MAX_STRING_LENGTH)-1; l > 1; l--) begin
+        for (int n=1; n< (2*`MAX_STRING_LENGTH); n++) begin
             if (huff_tree[n].left_node == huff_tree[l].ascii_char | huff_tree[n].right_node == huff_tree[l].ascii_char) begin
                 huff_tree[l].parent = n;
             end
@@ -210,7 +211,7 @@ always_ff @(posedge clk) begin : huffman_enc
         end
 
         `ENCODE: begin  //state=6
-               for (int n=2; n < (2*unique_char_count); n++) begin  //1-root node
+               for (int n=2; n < (2*`MAX_STRING_LENGTH); n++) begin  //1-root node
                 encoded_mask_h[n] = (1'b1 << huff_tree[n].level) -1;
             if (huff_tree[n].parent != 1) begin   
             //    encoded_value_h[n] = (n%2==0) ? (encoded_value_h[huff_tree[n].parent] << (huff_tree[n].level-1)): ((encoded_value_h[huff_tree[n].parent] << (huff_tree[n].level-1)) | 1'b1);
@@ -228,14 +229,14 @@ always_ff @(posedge clk) begin : huffman_enc
      //extract only encodings for unique characters 
     `SEND_OUTPUT: begin     //state=7
         itr = 0;
-        for (int n=0; n< (2*unique_char_count); n++) begin
+        for (int n=0; n< (2*`MAX_STRING_LENGTH); n++) begin
             if (huff_tree[n].is_leaf_node == 1) begin
                 encoded_mask[itr] = encoded_mask_h[n];
                 encoded_value[itr] = encoded_value_h[n];
                 character[itr] = huff_tree[n].ascii_char;
                 itr = itr + 1; 
             end
-            $display("Output sent\n");
+         //   $display("Output sent\n");
         end
 
         if (data_en) begin
@@ -261,7 +262,7 @@ end //posedge_clk
 endmodule
 
 
-module freq_calc(input logic clk, input logic reset, input logic [6:0] data_in[`MAX_STRING_LENGTH], input logic data_en, output node_t node[`MAX_STRING_LENGTH], output integer count);
+module freq_calc(input logic clk, input logic reset, input logic [7:0] data_in[`MAX_STRING_LENGTH], input logic data_en, output node_t node[`MAX_STRING_LENGTH], output integer count);
 //integer node[char];   //like an hash node[a] = frequency- not synthesizable 
 
 //node_t node[`MAX_STRING_LENGTH];
@@ -288,19 +289,14 @@ integer ctr;
         node_create = 1;
         ctr = 0;
         foreach(data_in[i]) begin
+            if (data_in[i] != 0) begin
             matched = 0;
             break1 = 0;
             cnt = 1'b1;
             index = ctr;
-            // node[index].ascii_char = 0;
-            // node[index].frequency = 0;
-            // node[index].left_node = 0;   //ascii valud of null
-            // node[index].right_node = 0;
+            if (data_in[i] !== 'x) begin
             node[index].is_leaf_node = 1'b1;
             //compare against the existing nodes
-            if (`DEBUG) begin
-         //   $display("i:%d, ctr:%d\n", i, ctr);
-            end
             for (int j=0; j< i; j++) begin
                 if (break1 ==0) begin
                 if (data_in[i] == node[j].ascii_char) begin
@@ -326,6 +322,8 @@ integer ctr;
                 node[index].frequency = cnt;
         end
         node_create = 1'b1;
+        end
+        end
     end
     end
   end
@@ -383,38 +381,47 @@ endmodule
 */
 
 
-module node_sorter(input logic clk, input integer count, input node_t node[`MAX_STRING_LENGTH], output node_t output_node[`MAX_STRING_LENGTH]);
+module node_sorter(input logic clk, input logic reset, input logic[2:0] state, input integer count, input node_t input_node[`MAX_STRING_LENGTH], output node_t output_node[`MAX_STRING_LENGTH]);
  
-
-
 node_t temp_node;
+integer ctr;
  //swap and sort
 //always_comb begin
   always_ff @(posedge clk) begin
  //   sort_done <= 1'b0;
-        temp_node.ascii_char = '0;
-        temp_node.frequency = '0;
+    if (~reset) begin
+    //    ctr = count; //no use as count is unknown at reset 
+    end
+    else if (state==`SORT) begin
+        // ctr = count;
+        // ctr <= ctr - 1;  //but you might have to reset for new data in
+        temp_node.ascii_char = 'b0;
+        temp_node.frequency = 'b0;
         temp_node.is_leaf_node = '0;
         temp_node.left_node = '0;
         temp_node.right_node = '0;
         for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
-            output_node = node;
+            output_node = input_node;
         end
+        //sorting logic 
         for(int j=0; j< `MAX_STRING_LENGTH-1; j++)  begin  //if non-zero frequency ??FIXME
             for (int k=j+1; k< `MAX_STRING_LENGTH-1; k++) begin
-            if (output_node[j].frequency == output_node[k].frequency) begin
-                 if (output_node[j].ascii_char > output_node[k].ascii_char) begin
+                if (!(output_node[j].ascii_char == 0 || output_node[k].ascii_char == 0)) begin
+                if (output_node[j].frequency == output_node[k].frequency) begin
+                    if (output_node[j].ascii_char > output_node[k].ascii_char) begin
+                    temp_node = output_node[j];
+                    output_node[j] = output_node[k];
+                    output_node[k] = temp_node;
+                    end
+                end
+                else if (output_node[j].frequency > output_node[k].frequency) begin
                     temp_node = output_node[j];
                     output_node[j] = output_node[k];
                     output_node[k] = temp_node;
                 end
             end
-            else if (output_node[j].frequency > output_node[k].frequency) begin
-                temp_node = output_node[j];
-                output_node[j] = output_node[k];
-                output_node[k] = temp_node;
             end
-            end
+        end
     end
  //   sort_done <= 1'b1;
 end   
@@ -581,3 +588,66 @@ genvar ll, cnt;
 endmodule
 */
 
+//For synthesis
+module m_design (
+    input logic clk100, // 100MHz clock- this should be 1MHz???
+    input logic reset_n, // Active-low reset
+
+    // output logic [7:0] base_led, // LEDs on the far right side of the board
+    // output logic [23:0] led, // LEDs in the middle of the board
+
+    // input logic [23:0] sw, // The tiny slide-switches
+
+    // output logic [3:0] display_sel, // Select between the 4 segments
+    // output logic [7:0] display // Seven-segment display
+    input logic [7:0] data[`MAX_STRING_LENGTH], 
+    input logic data_en, 
+    output logic [`MAX_OUTPUT_SIZE-1:0] encoded_value[`MAX_STRING_LENGTH], 
+    output logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask[`MAX_STRING_LENGTH], 
+    output logic[7:0] character[`MAX_STRING_LENGTH]
+);
+
+    logic clk; // 25MHz, generated by PLL
+    logic [7:0] input_string[`MAX_STRING_LENGTH];
+    logic [7:0] data_in[`MAX_STRING_LENGTH];
+
+    // blinky my_blinky (
+    //     .clk, .reset_n, .led
+    // );
+
+     huff_encoder DUT(.clk(clk), .reset(reset_n), .data(data_in), .data_en(data_en), .encoded_value(encoded_value), .encoded_mask(), .character(character));
+
+    initial begin
+        input_string = "ae aa"; //working
+       // input_string = "after"; //working
+      //  input_string = "aaaaa";     //no encoding for single character
+     //   input_string = "after";     //working  
+        foreach(input_string[i]) begin
+            data_in[i] = {input_string[i]};   //check in waves 
+        end
+        data_en = 1'b1;
+        #100; //this should match the char count *20 (clock period)- else it will create x in data_in
+        data_en = 1'b0;
+    end
+
+    // 100MHz -> 25MHz
+    SB_PLL40_CORE #(
+//        .FEEDBACK_PATH("SIMPLE"),
+//        .DIVR(4'b0000),         // DIVR =  0
+//        .DIVF(7'b0000111),      // DIVF =  7
+//        .DIVQ(3'b101),          // DIVQ =  5
+//        .FILTER_RANGE(3'b101)   // FILTER_RANGE = 5
+.FEEDBACK_PATH("SIMPLE"),
+.DIVR(4'b0000),         // DIVR =  0
+.DIVF(7'b0000111),      // DIVF =  7
+.DIVQ(3'b100),          // DIVQ =  4
+.FILTER_RANGE(3'b101)   // FILTER_RANGE = 5    
+) pll (
+        .LOCK(),
+        .RESETB(1'b1),
+        .BYPASS(1'b0),
+        .REFERENCECLK(clk100),
+        .PLLOUTCORE(clk)
+    );
+
+endmodule
