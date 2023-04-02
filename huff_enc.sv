@@ -1,7 +1,7 @@
 `timescale 1us/1ps
 `default_nettype  wire
-`define MAX_STRING_LENGTH 6 //change this as required 
-`define MAX_OUTPUT_SIZE 6  
+`define MAX_STRING_LENGTH 10 //change this as required 
+`define MAX_OUTPUT_SIZE 10  
 `define DEBUG 1
 
 //change it later as per number of states : FIXME???
@@ -39,7 +39,7 @@ typedef struct {
 //main encoder module
 module huff_encoder(input logic clk, input logic reset, input logic [7:0] data[`MAX_STRING_LENGTH], input logic data_en, output logic [`MAX_OUTPUT_SIZE-1:0] encoded_value[`MAX_STRING_LENGTH], output logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask[`MAX_STRING_LENGTH], output logic[6:0] character[`MAX_STRING_LENGTH]);   //to fix the output logic width
 integer count, unique_char_count;
-node_t node [`MAX_STRING_LENGTH]; //initial node
+//node_t node [`MAX_STRING_LENGTH]; //initial node
 node_t initial_node[`MAX_STRING_LENGTH];
 //logic [7:0] data_in[`MAX_STRING_LENGTH];
 logic [2:0] state;
@@ -53,32 +53,11 @@ logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask_h[2*`MAX_STRING_LENGTH];
 logic [`MAX_OUTPUT_SIZE-1:0] encoded_value_h[2*`MAX_STRING_LENGTH];
 int j, itr;
 logic data_collect, sort_done;
+logic[6:0] frequency[`MAX_STRING_LENGTH];
 
-//collecting data over every posedge clk
-/*this setup is to collect 1 char data every posedge of cycle- TRY LATER
-always_ff @(posedge clk) begin
-    if (~reset) begin
-        index = 0;
-        for (int m=0; m< `MAX_STRING_LENGTH; m++) begin
-            data_in[m] = 0;
-        end
-        data_collect = 0;
-    end
-    else begin
-        if (data_en) begin
-        data_in[index] = data;
-        index = index +1;
-        data_collect = 1'b0;
-    end
-    else begin
-        data_collect = 1'b1;
-    end
-    end
-end
-*/
 
-    freq_calc freq_calc_ins(.clk(clk), .state(state), .data_in(data), .data_en(data_en), .node(initial_node), .count(unique_char_count));
-    node_sorter node_sorter_ins(.clk(clk), .reset(reset), .state(state), .count(unique_char_count), .input_node(in_huff_tree[ll][0:`MAX_STRING_LENGTH-1]), .output_node(out_huff_tree_s[0:`MAX_STRING_LENGTH-1]));
+    freq_calc freq_calc_ins(.state(state), .data_in(data), .node(initial_node), .count(unique_char_count));
+    node_sorter node_sorter_ins(.state(state),.input_node(in_huff_tree[ll][0:`MAX_STRING_LENGTH-1]), .output_node(out_huff_tree_s[0:`MAX_STRING_LENGTH-1]));
     merge_nodes merge_nodes_ins(.min_node(out_huff_tree_s[0]), .second_min_node(out_huff_tree_s[1]), .merged_node(merged_nodes_list));
 
 always_ff @(posedge clk) begin : huffman_enc
@@ -103,16 +82,12 @@ always_ff @(posedge clk) begin : huffman_enc
                 huff_tree[i].right_node = 'b0;
                 huff_tree[i].level = 'b0;
             end
-            for (int j=0; j< `MAX_STRING_LENGTH; j++) begin
-                node[j].ascii_char = 0;
-                node[j].frequency = 0;
-                node[j].left_node = 0;   //ascii valud of null
-                node[j].right_node = 0;
-                node[j].is_leaf_node = 1'b1;  
+            if (data_en) begin
+                state <= `DATA_COLLECT;
             end
-            
-        //LATER    state = data_collect? `DATA_COLLECT : `INIT; 
-        state <= `DATA_COLLECT;
+            else begin 
+                state <= `INIT;
+            end
         end
 
         `DATA_COLLECT: begin    //at every posedge of cycle- data comes in
@@ -121,28 +96,22 @@ always_ff @(posedge clk) begin : huffman_enc
         end
 
         `FREQ_CALC: begin
-            for (int j=0; j< `MAX_STRING_LENGTH; j++) begin
-                node[j] = initial_node[j];  //from freq calc module 
-            end
             count = unique_char_count;
             for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
             in_huff_tree[0][i] = initial_node[i];
-           // out_huff_tree[ll][i] = out_huff_tree_s[i];
           end
             state <= `SORT;
         end
 
         `SORT : begin   //state=3
-          //  count = unique_char_count;
             state <= `MERGE;
         end
 
         `MERGE : begin  //state=4
-               for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
-           // in_huff_tree[0][i] = initial_node[i];
-            out_huff_tree[ll][i] = out_huff_tree_s[i];
-          end
-            in_huff_tree[ll+1][0:`MAX_STRING_LENGTH-1] = {merged_nodes_list, out_huff_tree[ll][2:`MAX_STRING_LENGTH]}; //somehow put this merged list in the end
+            for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
+                out_huff_tree[ll][i] = out_huff_tree_s[i];
+            end
+            in_huff_tree[ll+1][0:`MAX_STRING_LENGTH-1] = {merged_nodes_list, out_huff_tree[ll][2:`MAX_STRING_LENGTH]}; 
             count = count - 1;
             if (count == 0) begin
                 state <= `BUILD_TREE;
@@ -158,29 +127,25 @@ always_ff @(posedge clk) begin : huffman_enc
         for (int l=0; l< `MAX_STRING_LENGTH; l++) begin //initialy it was unique_char_count 
             if (l < unique_char_count) begin
             //assigning child nodes and leaf node fields 
-        //    $display("count:%d\n", unique_char_count);
             j = unique_char_count - 1- l;   //2,1,0
-        //    $display("j=%d, l=%d\n", j, l);
             if (j!= 0) begin
-            huff_tree[2*j].ascii_char = out_huff_tree[l][0].ascii_char; 
-            huff_tree[2*j + 1].ascii_char = out_huff_tree[l][1].ascii_char;
-            huff_tree[2*j].is_leaf_node = out_huff_tree[l][0].is_leaf_node;
-            huff_tree[2*j + 1].is_leaf_node = out_huff_tree[l][1].is_leaf_node;
-            huff_tree[2*j].frequency = out_huff_tree[l][0].frequency;
-            huff_tree[2*j + 1].frequency = out_huff_tree[l][1].frequency;
-            huff_tree[2*j].left_node = out_huff_tree[l][0].left_node;
-            huff_tree[2*j + 1].left_node = out_huff_tree[l][1].left_node;
-            huff_tree[2*j].right_node = out_huff_tree[l][0].right_node;
-            huff_tree[2*j + 1].right_node = out_huff_tree[l][1].right_node;
-        //    huff_tree[2*j + 1].level = j;
-        //    huff_tree[2*j].level = j;
+                huff_tree[2*j].ascii_char = out_huff_tree[l][0].ascii_char; 
+                huff_tree[2*j + 1].ascii_char = out_huff_tree[l][1].ascii_char;
+                huff_tree[2*j].is_leaf_node = out_huff_tree[l][0].is_leaf_node;
+                huff_tree[2*j + 1].is_leaf_node = out_huff_tree[l][1].is_leaf_node;
+                huff_tree[2*j].frequency = out_huff_tree[l][0].frequency;
+                huff_tree[2*j + 1].frequency = out_huff_tree[l][1].frequency;
+                huff_tree[2*j].left_node = out_huff_tree[l][0].left_node;
+                huff_tree[2*j + 1].left_node = out_huff_tree[l][1].left_node;
+                huff_tree[2*j].right_node = out_huff_tree[l][0].right_node;
+                huff_tree[2*j + 1].right_node = out_huff_tree[l][1].right_node;
             end
             else if (j==0) begin
-            huff_tree[2*j + 1].ascii_char = out_huff_tree[l][0].ascii_char;
-            huff_tree[2*j + 1].is_leaf_node = out_huff_tree[l][0].is_leaf_node;
-            huff_tree[2*j + 1].frequency = out_huff_tree[l][0].frequency;
-            huff_tree[2*j + 1].left_node = out_huff_tree[l][0].left_node;
-            huff_tree[2*j + 1].right_node = out_huff_tree[l][0].right_node;
+                huff_tree[2*j + 1].ascii_char = out_huff_tree[l][0].ascii_char;
+                huff_tree[2*j + 1].is_leaf_node = out_huff_tree[l][0].is_leaf_node;
+                huff_tree[2*j + 1].frequency = out_huff_tree[l][0].frequency;
+                huff_tree[2*j + 1].left_node = out_huff_tree[l][0].left_node;
+                huff_tree[2*j + 1].right_node = out_huff_tree[l][0].right_node;
             end
             end    
     end
@@ -207,23 +172,20 @@ always_ff @(posedge clk) begin : huffman_enc
         end
         end
     end
-    state <= `ENCODE;
+        state <= `ENCODE;
         end
 
         `ENCODE: begin  //state=6
-               for (int n=2; n < (2*`MAX_STRING_LENGTH); n++) begin  //1-root node
+            for (int n=2; n < (2*`MAX_STRING_LENGTH); n++) begin  //1-root node
                 encoded_mask_h[n] = (1'b1 << huff_tree[n].level) -1;
-            if (huff_tree[n].parent != 1) begin   
-            //    encoded_value_h[n] = (n%2==0) ? (encoded_value_h[huff_tree[n].parent] << (huff_tree[n].level-1)): ((encoded_value_h[huff_tree[n].parent] << (huff_tree[n].level-1)) | 1'b1);
-            encoded_value_h[n] = (n%2==0) ? (encoded_value_h[huff_tree[n].parent] << 1'b1): ((encoded_value_h[huff_tree[n].parent] << 1'b1) | 1'b1);
+                if (huff_tree[n].parent != 1) begin   
+                    encoded_value_h[n] = (n%2==0) ? (encoded_value_h[huff_tree[n].parent] << 1'b1): ((encoded_value_h[huff_tree[n].parent] << 1'b1) | 1'b1);
+                end
+                else if (huff_tree[n].parent == 1) begin
+                    encoded_value_h[n][0] = (n%2==0) ? {1'b0}: {1'b1};
+                end
             end
-            else if (huff_tree[n].parent == 1) begin
-               encoded_value_h[n][0] = (n%2==0) ? {1'b0}: {1'b1};
-            end
-        end
-
-        state <= `SEND_OUTPUT;
-
+            state <= `SEND_OUTPUT;
         end
 
      //extract only encodings for unique characters 
@@ -234,11 +196,12 @@ always_ff @(posedge clk) begin : huffman_enc
                 encoded_mask[itr] = encoded_mask_h[n];
                 encoded_value[itr] = encoded_value_h[n];
                 character[itr] = huff_tree[n].ascii_char;
+                frequency[itr] = huff_tree[n].frequency;
                 itr = itr + 1; 
             end
-         //   $display("Output sent\n");
         end
 
+        //if reset is asserted everytime after each data, then this can be removed
         if (data_en) begin
         state <= `INIT;
         end
@@ -255,36 +218,28 @@ always_ff @(posedge clk) begin : huffman_enc
 
 end //posedge_clk
 
-
-    
-     
- //   binary_tree_node binary_tree_node_ins0(.count(count), .input_node(node), .encoded_value(encoded_value), .encoded_mask(encoded_mask)); //cannot pass the count value calculated in freq_calc module
 endmodule
 
 
-module freq_calc(input logic clk, input logic [2:0] state, input logic [7:0] data_in[`MAX_STRING_LENGTH], input logic data_en, output node_t node[`MAX_STRING_LENGTH], output integer count);
+module freq_calc(input logic [2:0] state, input logic [7:0] data_in[`MAX_STRING_LENGTH], output node_t node[`MAX_STRING_LENGTH], output integer count);
 
 integer cnt, index;    //initially 0
 logic node_create;
 logic matched, break1;
 integer ctr;
-logic [1:0] internal_state; 
 
-//for now able to calculate frequency properly, but had to delete the extra nodes: FIXME????
-  always_ff @(posedge clk) begin
+  always_comb begin
         matched = '0;
         break1 = '0;
     //have to initialize entire node array- FIXME? - else it will impact count
-     if (data_en && (state==`DATA_COLLECT)) begin
-        //    if (state == `FREQ_CALC && data_en) begin
-             for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
+     if ((state==`DATA_COLLECT)) begin
+        for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
             node[i].ascii_char = 'b0;
             node[i].frequency = 'b0;
             node[i].left_node = 'b0;   //ascii valud of null
             node[i].right_node = 'b0;
             node[i].is_leaf_node = 1'b0;
         end
-        node_create = 'b0;
         ctr = 'b0;
         cnt = 'b0;
         foreach(data_in[i]) begin
@@ -319,7 +274,6 @@ logic [1:0] internal_state;
                 node[index].ascii_char = data_in[i];
                 node[index].frequency = cnt;
         end
-        node_create = 1'b1;
        end
     end
     end
@@ -337,49 +291,11 @@ logic [1:0] internal_state;
 
 endmodule 
 
-/*
-module comparator(input node_t node[`MAX_STRING_LENGTH], output node_t min_node, output node_t second_min_node);
 
-//create a counter to check the max length of the node array
-logic break1;
-integer count;
-
-//working
-always_comb begin
-    count = 0;
-    break1 = 0;
-foreach(node[i]) begin
-    if (break1 == 0) begin
-    if (node[i].frequency != 0) begin
-        count = count + 1;
-    end
-    else begin
-        break1 = 1;
-    end
-    end
-end
-end
-
-always_comb begin
-for(int j=0; j< count-1; j++)  begin  //if non-zero frequency
-    if (node[j].frequency <= node[j+1].frequency) begin
-        min_node = node[j];
-        second_min_node = node[j+1];
-    end
-    else begin
-        min_node = node[j+1];
-        second_min_node = node[j];
-    end
-end
-end
-endmodule
-*/
-
-
-module node_sorter(input logic clk, input logic reset, input logic[2:0] state, input integer count, input node_t input_node[`MAX_STRING_LENGTH], output node_t output_node[`MAX_STRING_LENGTH]);
+module node_sorter(input logic[2:0] state, input node_t input_node[`MAX_STRING_LENGTH], output node_t output_node[`MAX_STRING_LENGTH]);
  
 node_t temp_node;
-  always_ff @(posedge clk) begin
+    always_comb begin
     if (state==`SORT) begin
         temp_node.ascii_char = 'b0;
         temp_node.frequency = 'b0;
@@ -409,14 +325,13 @@ node_t temp_node;
             end
         end
     end
- //   sort_done <= 1'b1;
 end   
 endmodule
 
 module merge_nodes(input node_t min_node, input node_t second_min_node, output node_t merged_node);
 //should inside loop
 always_comb begin
-    merged_node.ascii_char =  {min_node.ascii_char + second_min_node.ascii_char};    //not working- FIXME????
+    merged_node.ascii_char =  {min_node.ascii_char + second_min_node.ascii_char};    
     merged_node.frequency = min_node.frequency + second_min_node.frequency;
     merged_node.left_node = min_node.ascii_char;
     merged_node.right_node = second_min_node.ascii_char;
