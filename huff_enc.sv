@@ -1,7 +1,7 @@
 `timescale 1us/1ps
 `default_nettype  wire
-`define MAX_STRING_LENGTH 5 //change this as required 
-`define MAX_OUTPUT_SIZE 5  //ideally 64-1=63 bits
+`define MAX_STRING_LENGTH 6 //change this as required 
+`define MAX_OUTPUT_SIZE 6  
 `define DEBUG 1
 
 //change it later as per number of states : FIXME???
@@ -41,7 +41,7 @@ module huff_encoder(input logic clk, input logic reset, input logic [7:0] data[`
 integer count, unique_char_count;
 node_t node [`MAX_STRING_LENGTH]; //initial node
 node_t initial_node[`MAX_STRING_LENGTH];
-logic [7:0] data_in[`MAX_STRING_LENGTH];
+//logic [7:0] data_in[`MAX_STRING_LENGTH];
 logic [2:0] state;
 integer index, ll;
 huff_tree_node_t huff_tree[`MAX_STRING_LENGTH*2];
@@ -77,7 +77,7 @@ always_ff @(posedge clk) begin
 end
 */
 
-    freq_calc freq_calc_ins(.clk(clk), .reset(reset), .data_in(data_in), .data_en(data_en), .node(initial_node), .count(unique_char_count));
+    freq_calc freq_calc_ins(.clk(clk), .state(state), .data_in(data), .data_en(data_en), .node(initial_node), .count(unique_char_count));
     node_sorter node_sorter_ins(.clk(clk), .reset(reset), .state(state), .count(unique_char_count), .input_node(in_huff_tree[ll][0:`MAX_STRING_LENGTH-1]), .output_node(out_huff_tree_s[0:`MAX_STRING_LENGTH-1]));
     merge_nodes merge_nodes_ins(.min_node(out_huff_tree_s[0]), .second_min_node(out_huff_tree_s[1]), .merged_node(merged_nodes_list));
 
@@ -116,7 +116,7 @@ always_ff @(posedge clk) begin : huffman_enc
         end
 
         `DATA_COLLECT: begin    //at every posedge of cycle- data comes in
-                data_in = data;
+            //    data_in = data;
                 state <= `FREQ_CALC;
         end
 
@@ -262,51 +262,49 @@ end //posedge_clk
 endmodule
 
 
-module freq_calc(input logic clk, input logic reset, input logic [7:0] data_in[`MAX_STRING_LENGTH], input logic data_en, output node_t node[`MAX_STRING_LENGTH], output integer count);
-//integer node[char];   //like an hash node[a] = frequency- not synthesizable 
+module freq_calc(input logic clk, input logic [2:0] state, input logic [7:0] data_in[`MAX_STRING_LENGTH], input logic data_en, output node_t node[`MAX_STRING_LENGTH], output integer count);
 
-//node_t node[`MAX_STRING_LENGTH];
 integer cnt, index;    //initially 0
 logic node_create;
 logic matched, break1;
 integer ctr;
-
+logic [1:0] internal_state; 
 
 //for now able to calculate frequency properly, but had to delete the extra nodes: FIXME????
   always_ff @(posedge clk) begin
+        matched = '0;
+        break1 = '0;
     //have to initialize entire node array- FIXME? - else it will impact count
-    if (~reset) begin
-    for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
+     if (data_en && (state==`DATA_COLLECT)) begin
+        //    if (state == `FREQ_CALC && data_en) begin
+             for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
             node[i].ascii_char = 'b0;
             node[i].frequency = 'b0;
             node[i].left_node = 'b0;   //ascii valud of null
             node[i].right_node = 'b0;
             node[i].is_leaf_node = 1'b0;
         end
-    end 
-    else begin
-        if (data_en) begin
-        node_create = 1;
-        ctr = 0;
+        node_create = 'b0;
+        ctr = 'b0;
+        cnt = 'b0;
         foreach(data_in[i]) begin
-    //        if (data_in[i] != 0) begin
+           if (data_in[i] != 0) begin
             matched = 0;
             break1 = 0;
             cnt = 1'b1;
             index = ctr;
-            if (data_in[i] !== 'x) begin
             node[index].is_leaf_node = 1'b1;
             //compare against the existing nodes
             for (int j=0; j< i; j++) begin
                 if (break1 ==0) begin
-                if (data_in[i] == node[j].ascii_char) begin
+                if (data_in[i] == node[j].ascii_char) begin //if matched 
                     cnt = node[j].frequency + 1;
                   //  index = j;
                     index = j;
                     matched = 1;
                     break1 = 1;
                 end
-                else begin
+                else begin      //if not match
                     matched = 0;
                     break1 = 0;
                 end    
@@ -322,21 +320,18 @@ integer ctr;
                 node[index].frequency = cnt;
         end
         node_create = 1'b1;
-        end
-        end
+       end
     end
- //   end
-  end
+    end
+
 
     always_comb begin
-        if (node_create) begin
             count = 0;
             for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
                 if (node[i].ascii_char != 0) begin
                     count = count + 1;
                 end
             end
-        end
     end
 
 
@@ -463,7 +458,7 @@ integer itr;
 //non leaf node- then check for it's child nodes and search recursively to assign parent and child fields 
 */
 
-
+/*
 //For synthesis
 module m_design (
     input logic clk100, // 100MHz clock- this should be 1MHz???
@@ -477,33 +472,33 @@ module m_design (
     // output logic [3:0] display_sel, // Select between the 4 segments
     // output logic [7:0] display // Seven-segment display
     input logic [7:0] data[`MAX_STRING_LENGTH], 
-    input logic data_en, 
+    input logic sw, 
     output logic [`MAX_OUTPUT_SIZE-1:0] encoded_value[`MAX_STRING_LENGTH], 
     output logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask[`MAX_STRING_LENGTH], 
     output logic[7:0] character[`MAX_STRING_LENGTH]
 );
 
     logic clk; // 25MHz, generated by PLL
-    logic [7:0] input_string[`MAX_STRING_LENGTH];
+    logic [0:`MAX_STRING_LENGTH-1] [7:0] input_string;
     logic [7:0] data_in[`MAX_STRING_LENGTH];
 
     // blinky my_blinky (
     //     .clk, .reset_n, .led
     // );
 
-     huff_encoder DUT(.clk(clk), .reset(reset_n), .data(data_in), .data_en(data_en), .encoded_value(encoded_value), .encoded_mask(), .character(character));
+     huff_encoder DUT(.clk(clk), .reset(reset_n), .data(data_in), .data_en(sw), .encoded_value(encoded_value), .encoded_mask(), .character(character));
 
     initial begin
-        input_string = "ae aa"; //working
+        input_string = "anush"; //working
        // input_string = "after"; //working
       //  input_string = "aaaaa";     //no encoding for single character
      //   input_string = "after";     //working  
         foreach(input_string[i]) begin
             data_in[i] = {input_string[i]};   //check in waves 
         end
-        data_en = 1'b1;
+    //    data_en = 1'b1;
         #100; //this should match the char count *20 (clock period)- else it will create x in data_in
-        data_en = 1'b0;
+    //    data_en = 1'b0;
     end
 
     // 100MHz -> 25MHz
@@ -527,3 +522,4 @@ module m_design (
     );
 
 endmodule
+*/
