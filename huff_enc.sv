@@ -1,10 +1,25 @@
+/*********Author: Anusha Raghavendra********/
+//Project : Huffman Encoder
+
+
+//Algorithm
+//1. Read the character array, calculate the frequency of each node(leaf node/character)
+//2. First sort the input node list, find 1st and 2nd minimum. If tied, sort according to the ascii value
+//3. Allocate them to huff_tree, assign only is_leaf_node, child nodes (not parent node)
+//4. Merge nodes--> create internal node- sort and then add to huff tree -repeat until only 1 node is left
+//5. Iterate until the root node 
+//6. Start from i=count-1, left_node=2i, right_node=2i+1 (i decrementing from count-1 to 0), where count is the number of unique character count
+//7. Traverse the entire array to assign the parent node and level in the binary tree
+//8. Traverse again to assign the encodings to each character
+
+
+
 `timescale 1us/1ps
-`default_nettype  wire
-`define MAX_STRING_LENGTH 10 //change this as required 
-`define MAX_OUTPUT_SIZE 10  
+`define MAX_STRING_LENGTH 20 //change this as required 
+`define MAX_CHAR_LENGTH 5
+`define MAX_OUTPUT_SIZE 5  
 `define DEBUG 1
 
-//change it later as per number of states : FIXME???
 `define INIT 3'b000
 `define DATA_COLLECT 3'b001
 `define FREQ_CALC 3'b010
@@ -17,8 +32,7 @@
 
 //left and right nodes are 0 for leaf nodes
 typedef struct {
-    //logic [7:0] ascii_char; //total 128 characters
-    integer ascii_char;
+    integer ascii_char; //change this to the max value obtained by adding other nodes and levels possible
     integer frequency;
     logic is_leaf_node;
     integer left_node;  //stores the index
@@ -26,8 +40,7 @@ typedef struct {
 } node_t;
 
 typedef struct {
-    //logic [6:0] ascii_char; -replacing with integer as concatenating can cause > logic [6:0]
-    integer ascii_char;
+    integer ascii_char; //change this to the max value obtained by adding other nodes and levels possible
     integer frequency;
     logic is_leaf_node;
     integer left_node;  
@@ -37,27 +50,27 @@ typedef struct {
 } huff_tree_node_t; 
 
 //main encoder module
-module huff_encoder(input logic clk, input logic reset, input logic [7:0] data[`MAX_STRING_LENGTH], input logic data_en, output logic [`MAX_OUTPUT_SIZE-1:0] encoded_value[`MAX_STRING_LENGTH], output logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask[`MAX_STRING_LENGTH], output logic[6:0] character[`MAX_STRING_LENGTH]);   //to fix the output logic width
+module huff_encoder(input logic clk, input logic reset, input logic [7:0] data_in[`MAX_STRING_LENGTH], input logic data_en, output logic [`MAX_OUTPUT_SIZE-1:0] encoded_value[`MAX_CHAR_LENGTH], output logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask[`MAX_CHAR_LENGTH], output logic[6:0] character[`MAX_CHAR_LENGTH], output logic done);   //to fix the output logic width
 integer count, unique_char_count;
-//node_t node [`MAX_STRING_LENGTH]; //initial node
-node_t initial_node[`MAX_STRING_LENGTH];
-//logic [7:0] data_in[`MAX_STRING_LENGTH];
+//node_t node [`MAX_CHAR_LENGTH]; //initial node
+node_t initial_node[`MAX_CHAR_LENGTH];
+//logic [7:0] data_in[`MAX_CHAR_LENGTH];
 logic [2:0] state;
 integer index, ll;
-huff_tree_node_t huff_tree[`MAX_STRING_LENGTH*2];
-node_t in_huff_tree[`MAX_STRING_LENGTH][0:`MAX_STRING_LENGTH-1];
-node_t out_huff_tree[`MAX_STRING_LENGTH][0:`MAX_STRING_LENGTH]; //size is  fixed now, can change based on level and number of elements required- FIXME???
+huff_tree_node_t huff_tree[`MAX_CHAR_LENGTH*2];
+node_t in_huff_tree[`MAX_CHAR_LENGTH][0:`MAX_CHAR_LENGTH-1];
+node_t out_huff_tree[`MAX_CHAR_LENGTH][0:`MAX_CHAR_LENGTH]; //size is  fixed now, can change based on level and number of elements required- FIXME???
 node_t merged_nodes_list;   
-node_t out_huff_tree_s[`MAX_STRING_LENGTH];
-logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask_h[2*`MAX_STRING_LENGTH];
-logic [`MAX_OUTPUT_SIZE-1:0] encoded_value_h[2*`MAX_STRING_LENGTH];
+node_t out_huff_tree_s[`MAX_CHAR_LENGTH];
+logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask_h[2*`MAX_CHAR_LENGTH];
+logic [`MAX_OUTPUT_SIZE-1:0] encoded_value_h[2*`MAX_CHAR_LENGTH];
 int j, itr;
 logic data_collect, sort_done;
-logic[6:0] frequency[`MAX_STRING_LENGTH];
+logic[6:0] frequency[`MAX_CHAR_LENGTH];
 
 
-    freq_calc freq_calc_ins(.state(state), .data_in(data), .node(initial_node), .count(unique_char_count));
-    node_sorter node_sorter_ins(.state(state),.input_node(in_huff_tree[ll][0:`MAX_STRING_LENGTH-1]), .output_node(out_huff_tree_s[0:`MAX_STRING_LENGTH-1]));
+    freq_calc freq_calc_ins(.state(state), .data_in(data_in), .node(initial_node), .count(unique_char_count));
+    node_sorter node_sorter_ins(.state(state),.input_node(in_huff_tree[ll][0:`MAX_CHAR_LENGTH-1]), .output_node(out_huff_tree_s[0:`MAX_CHAR_LENGTH-1]));
     merge_nodes merge_nodes_ins(.min_node(out_huff_tree_s[0]), .second_min_node(out_huff_tree_s[1]), .merged_node(merged_nodes_list));
 
 always_ff @(posedge clk) begin : huffman_enc
@@ -68,8 +81,9 @@ always_ff @(posedge clk) begin : huffman_enc
     case (state) 
     
         `INIT : begin
-            ll = 0;
-            for (int i=0; i < (2*`MAX_STRING_LENGTH); i++) begin
+            done = 'b0;
+            ll = 'b0;
+            for (int i=0; i < (2*`MAX_CHAR_LENGTH); i++) begin
                 encoded_value[i] = 'bz;
                 encoded_mask[i] = 'b0;
                 encoded_value_h[i] = 'bz;
@@ -97,7 +111,7 @@ always_ff @(posedge clk) begin : huffman_enc
 
         `FREQ_CALC: begin
             count = unique_char_count;
-            for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
+            for (int i=0; i< `MAX_CHAR_LENGTH; i++) begin
             in_huff_tree[0][i] = initial_node[i];
           end
             state <= `SORT;
@@ -108,10 +122,13 @@ always_ff @(posedge clk) begin : huffman_enc
         end
 
         `MERGE : begin  //state=4
-            for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
+            for (int i=0; i< `MAX_CHAR_LENGTH; i++) begin
                 out_huff_tree[ll][i] = out_huff_tree_s[i];
             end
-            in_huff_tree[ll+1][0:`MAX_STRING_LENGTH-1] = {merged_nodes_list, out_huff_tree[ll][2:`MAX_STRING_LENGTH]}; 
+            //for iverilog sim
+            //in_huff_tree[ll+1][0:`MAX_CHAR_LENGTH-1] = {merged_nodes_list, out_huff_tree[ll][2:`MAX_CHAR_LENGTH]}; 
+            in_huff_tree[ll+1][0] = merged_nodes_list;
+            in_huff_tree[ll+1][1:`MAX_CHAR_LENGTH-1] = out_huff_tree[ll][2:`MAX_CHAR_LENGTH];
             count = count - 1;
             if (count == 0) begin
                 state <= `BUILD_TREE;
@@ -124,7 +141,7 @@ always_ff @(posedge clk) begin : huffman_enc
         end
 
         `BUILD_TREE: begin  //state=5   //might be a critical path
-        for (int l=0; l< `MAX_STRING_LENGTH; l++) begin //initialy it was unique_char_count 
+        for (int l=0; l< `MAX_CHAR_LENGTH; l++) begin //initialy it was unique_char_count 
             if (l < unique_char_count) begin
             //assigning child nodes and leaf node fields 
             j = unique_char_count - 1- l;   //2,1,0
@@ -151,8 +168,8 @@ always_ff @(posedge clk) begin : huffman_enc
     end
 
     //assigning parent field for a node if that node is present as a child node either in left or right node 
-     for (int l=(2*`MAX_STRING_LENGTH)-1; l > 1; l--) begin
-        for (int n=1; n< (2*`MAX_STRING_LENGTH); n++) begin
+     for (int l=(2*`MAX_CHAR_LENGTH)-1; l > 1; l--) begin
+        for (int n=1; n< (2*`MAX_CHAR_LENGTH); n++) begin
             if (huff_tree[n].left_node == huff_tree[l].ascii_char | huff_tree[n].right_node == huff_tree[l].ascii_char) begin
                 huff_tree[l].parent = n;
             end
@@ -160,9 +177,9 @@ always_ff @(posedge clk) begin : huffman_enc
     end
 
     //assigning levels
-    for (int m=1; m < (2*`MAX_STRING_LENGTH); m++) begin
+    for (int m=1; m < (2*`MAX_CHAR_LENGTH); m++) begin
         if (huff_tree[m].is_leaf_node != 1) begin
-        for (int n=2; n < (2*`MAX_STRING_LENGTH); n++) begin
+        for (int n=2; n < (2*`MAX_CHAR_LENGTH); n++) begin
             if (huff_tree[n].ascii_char == huff_tree[m].left_node) begin
                 huff_tree[n].level = huff_tree[m].level + 1;
             end
@@ -176,7 +193,7 @@ always_ff @(posedge clk) begin : huffman_enc
         end
 
         `ENCODE: begin  //state=6
-            for (int n=2; n < (2*`MAX_STRING_LENGTH); n++) begin  //1-root node
+            for (int n=2; n < (2*`MAX_CHAR_LENGTH); n++) begin  //1-root node
                 encoded_mask_h[n] = (1'b1 << huff_tree[n].level) -1;
                 if (huff_tree[n].parent != 1) begin   
                     encoded_value_h[n] = (n%2==0) ? (encoded_value_h[huff_tree[n].parent] << 1'b1): ((encoded_value_h[huff_tree[n].parent] << 1'b1) | 1'b1);
@@ -191,7 +208,7 @@ always_ff @(posedge clk) begin : huffman_enc
      //extract only encodings for unique characters 
     `SEND_OUTPUT: begin     //state=7
         itr = 0;
-        for (int n=0; n< (2*`MAX_STRING_LENGTH); n++) begin
+        for (int n=0; n< (2*`MAX_CHAR_LENGTH); n++) begin
             if (huff_tree[n].is_leaf_node == 1) begin
                 encoded_mask[itr] = encoded_mask_h[n];
                 encoded_value[itr] = encoded_value_h[n];
@@ -200,15 +217,7 @@ always_ff @(posedge clk) begin : huffman_enc
                 itr = itr + 1; 
             end
         end
-
-        //if reset is asserted everytime after each data, then this can be removed
-        if (data_en) begin
-        state <= `INIT;
-        end
-        else begin
-            state <= `SEND_OUTPUT;
-        end
-
+        done = 1'b1;    //used in SV tb to stop the simulation
         end
 
         default : begin
@@ -221,7 +230,7 @@ end //posedge_clk
 endmodule
 
 
-module freq_calc(input logic [2:0] state, input logic [7:0] data_in[`MAX_STRING_LENGTH], output node_t node[`MAX_STRING_LENGTH], output integer count);
+module freq_calc(input logic [2:0] state, input logic [7:0] data_in[`MAX_STRING_LENGTH], output node_t node[`MAX_CHAR_LENGTH], output integer count);
 
 integer cnt, index;    //initially 0
 logic node_create;
@@ -233,7 +242,7 @@ integer ctr;
         break1 = '0;
     //have to initialize entire node array- FIXME? - else it will impact count
      if ((state==`DATA_COLLECT)) begin
-        for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
+        for (int i=0; i< `MAX_CHAR_LENGTH; i++) begin
             node[i].ascii_char = 'b0;
             node[i].frequency = 'b0;
             node[i].left_node = 'b0;   //ascii valud of null
@@ -281,7 +290,7 @@ integer ctr;
 
     always_comb begin
             count = 0;
-            for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
+            for (int i=0; i< `MAX_CHAR_LENGTH; i++) begin
                 if (node[i].ascii_char != 0) begin
                     count = count + 1;
                 end
@@ -292,7 +301,7 @@ integer ctr;
 endmodule 
 
 
-module node_sorter(input logic[2:0] state, input node_t input_node[`MAX_STRING_LENGTH], output node_t output_node[`MAX_STRING_LENGTH]);
+module node_sorter(input logic[2:0] state, input node_t input_node[`MAX_CHAR_LENGTH], output node_t output_node[`MAX_CHAR_LENGTH]);
  
 node_t temp_node;
     always_comb begin
@@ -302,12 +311,12 @@ node_t temp_node;
         temp_node.is_leaf_node = '0;
         temp_node.left_node = '0;
         temp_node.right_node = '0;
-        for (int i=0; i< `MAX_STRING_LENGTH; i++) begin
+        for (int i=0; i< `MAX_CHAR_LENGTH; i++) begin
             output_node = input_node;
         end
         //sorting logic 
-        for(int j=0; j< `MAX_STRING_LENGTH-1; j++)  begin  //if non-zero frequency ??FIXME
-            for (int k= 0; k< `MAX_STRING_LENGTH-1; k++) begin
+        for(int j=0; j< `MAX_CHAR_LENGTH-1; j++)  begin  //if non-zero frequency ??FIXME
+            for (int k= 0; k< `MAX_CHAR_LENGTH-1; k++) begin
                 if (!(output_node[k].ascii_char == 0 || output_node[k+1].ascii_char == 0)) begin
                 if (output_node[k].frequency == output_node[k+1].frequency) begin
                     if (output_node[k].ascii_char > output_node[k+1].ascii_char) begin
@@ -339,39 +348,7 @@ always_comb begin
 end
 endmodule
 
-//Algorithm
-//1. First sort the input node list, find 1st and 2nd minimum 
-//2. Allocate them to huff_tree, assign only is_leaf_node, child nodes (not parent node)
-//3. Merge nodes--> create internal node- sort and then add to huff tree -repeat 
-//4. Iterate until root node 
-//5. Start from i=count-1, left_node=2i, right_node=2i+1 (i decrementing from count-1 to 0)
 
-//instead send the entire node list and keep on finding the internal node
-//original list of nodes(leaf nodes) created is sent as an input
-//FIXME- yet to fix the dimension of output encoded value  
-//node 0 and node 1 are first and second minimum
-//count-1 times sort plus and merge action with decreasing count every level
-//hence create an 2-D array of that dimension 
-/*
-module binary_tree_node (input integer count, input node_t input_node[`MAX_STRING_LENGTH], output logic[`MAX_OUTPUT_SIZE-1:0] encoded_value[`MAX_STRING_LENGTH], output logic[`MAX_OUTPUT_SIZE-1:0] encoded_mask[`MAX_STRING_LENGTH], output logic[6:0] character[`MAX_STRING_LENGTH]);
-node_t min_node, second_min_node, merged_node;
-node_t min_node_tmp, second_min_node_tmp, merge_node_tmp;
-node_t in_huff_tree[0:`MAX_STRING_LENGTH][0:`MAX_STRING_LENGTH], out_huff_tree[0:`MAX_STRING_LENGTH][0:`MAX_STRING_LENGTH]; //size is  fixed now, can change based on level and number of elements required- FIXME???
-node_t merged_nodes_list[0:`MAX_STRING_LENGTH];
-logic[`MAX_OUTPUT_SIZE-1:0] encoded_value_h[2*`MAX_STRING_LENGTH];
-logic[`MAX_OUTPUT_SIZE-1:0] encoded_mask_h[2*`MAX_STRING_LENGTH];
-integer itr;
-//create an array of some struct to indicate parent and child index of size 2*count (2*MAX for now)
-//Ignore 0th index
-//Root node is in index 1
-//Start allocating from bottom of the array
-//new struct --> ascii-freq-is_leaf_node-parent-left_node-right_node-encoding
-//traverse the array to produce the encoded value 
-
-//defining index as integer is waste of resource - can be clog2(2*count) - FIXME???
-
-//non leaf node- then check for it's child nodes and search recursively to assign parent and child fields 
-*/
 
 /*
 //For synthesis
@@ -386,16 +363,16 @@ module m_design (
 
     // output logic [3:0] display_sel, // Select between the 4 segments
     // output logic [7:0] display // Seven-segment display
-    input logic [7:0] data[`MAX_STRING_LENGTH], 
+    input logic [7:0] data[`MAX_CHAR_LENGTH], 
     input logic sw, 
-    output logic [`MAX_OUTPUT_SIZE-1:0] encoded_value[`MAX_STRING_LENGTH], 
-    output logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask[`MAX_STRING_LENGTH], 
-    output logic[7:0] character[`MAX_STRING_LENGTH]
+    output logic [`MAX_OUTPUT_SIZE-1:0] encoded_value[`MAX_CHAR_LENGTH], 
+    output logic [`MAX_OUTPUT_SIZE-1:0] encoded_mask[`MAX_CHAR_LENGTH], 
+    output logic[7:0] character[`MAX_CHAR_LENGTH]
 );
 
     logic clk; // 25MHz, generated by PLL
-    logic [0:`MAX_STRING_LENGTH-1] [7:0] input_string;
-    logic [7:0] data_in[`MAX_STRING_LENGTH];
+    logic [0:`MAX_CHAR_LENGTH-1] [7:0] input_string;
+    logic [7:0] data_in[`MAX_CHAR_LENGTH];
 
     // blinky my_blinky (
     //     .clk, .reset_n, .led
