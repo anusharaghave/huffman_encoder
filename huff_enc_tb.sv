@@ -1,4 +1,4 @@
-
+`define DEBUG 1
 
 module tb_top;
   logic [7:0] data;
@@ -27,7 +27,7 @@ module tb_top;
         input_string = "aaf";     //working 
         input_string = "raghavendr";  //working 
         input_string = "anushaanua";    //working only if you maintain the max unique character length to be within limits
-        data_in = "anuan";
+        data_in = "~{}|z";
       //  data_in = "aae e";
      //   data_in = "anushaanua";
         /*
