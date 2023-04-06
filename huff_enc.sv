@@ -69,16 +69,16 @@ huff_tree_node_t huff_tree[`MAX_CHAR_COUNT*2];
 node_t in_huff_tree[0:`MAX_CHAR_COUNT-1];
 node_t out_huff_tree[0:`MAX_CHAR_COUNT]; //size is  fixed now, can change based on level and number of elements required- FIXME???
 node_t merged_node;   
-node_t out_huff_tree_s[`MAX_CHAR_COUNT];
-logic [`MAX_CHAR_COUNT-1:0] encoded_mask_h[2*`MAX_CHAR_COUNT];
+//node_t out_huff_tree_s[0:`MAX_CHAR_COUNT];
+//logic [`MAX_CHAR_COUNT-1:0] encoded_mask_h[2*`MAX_CHAR_COUNT];
 logic [`MAX_CHAR_COUNT-1:0] encoded_value_h[2*`MAX_CHAR_COUNT];
 int j;
-logic[6:0] frequency[`MAX_CHAR_COUNT];
+//logic[6:0] frequency[`MAX_CHAR_COUNT];
 integer level, m, itr;
 
     freq_calc freq_calc_ins(.clk(clk), .state(state), .data_in(data_in), .node(initial_node), .count(unique_char_count));
-    node_sorter node_sorter_ins(.clk(clk), .state(state),.input_node(in_huff_tree[0:`MAX_CHAR_COUNT-1]), .output_node(out_huff_tree_s[0:`MAX_CHAR_COUNT-1]));
-    merge_nodes merge_nodes_ins(.min_node(out_huff_tree_s[0]), .second_min_node(out_huff_tree_s[1]), .merged_node(merged_node));
+    node_sorter node_sorter_ins(.clk(clk), .state(state),.input_node(in_huff_tree[0:`MAX_CHAR_COUNT-1]), .output_node(out_huff_tree[0:`MAX_CHAR_COUNT-1]));
+    merge_nodes merge_nodes_ins(.min_node(out_huff_tree[0]), .second_min_node(out_huff_tree[1]), .merged_node(merged_node));
 
 always_ff @(posedge clk) begin : huffman_enc
     if (~reset) begin
@@ -104,7 +104,7 @@ always_ff @(posedge clk) begin : huffman_enc
             ll = 'b0;
             for (int i=0; i < (2*`MAX_CHAR_COUNT); i++) begin
                 encoded_value_h[i] = 'b0;
-                encoded_mask_h[i] = 'b0;
+            //    // encoded_mask_h[i] = 'b0;
                 huff_tree[i].ascii_char = 'bz;
                 huff_tree[i].frequency = 0;
                 huff_tree[i].is_leaf_node = 1'b0;
@@ -138,14 +138,16 @@ always_ff @(posedge clk) begin : huffman_enc
         end
 
         `SORT : begin   //state=3
-            state <= `MERGE;
+            state <= `MERGE_BUILD;
         end
 
-        `MERGE : begin  //state=4
+        `MERGE_BUILD : begin  //state=4
+        /*
             for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
                 //out_huff_tree[ll][i] = out_huff_tree_s[i];
                 out_huff_tree[i] = out_huff_tree_s[i];
             end
+          */
             //for iverilog sim
             /*
             in_huff_tree[ll+1][0] = merged_node;
@@ -160,23 +162,23 @@ always_ff @(posedge clk) begin : huffman_enc
             //assigning child nodes and leaf node fields 
             j = count-1;  //2,1,0
             if (j!= 0) begin
-                huff_tree[2*j].ascii_char = out_huff_tree_s[0].ascii_char; 
-                huff_tree[2*j + 1].ascii_char = out_huff_tree_s[1].ascii_char;
-                huff_tree[2*j].is_leaf_node = out_huff_tree_s[0].is_leaf_node;
-                huff_tree[2*j + 1].is_leaf_node = out_huff_tree_s[1].is_leaf_node;
-                huff_tree[2*j].frequency = out_huff_tree_s[0].frequency;
-                huff_tree[2*j + 1].frequency = out_huff_tree_s[1].frequency;
-                huff_tree[2*j].left_node = out_huff_tree_s[0].left_node;
-                huff_tree[2*j + 1].left_node = out_huff_tree_s[1].left_node;
-                huff_tree[2*j].right_node = out_huff_tree_s[0].right_node;
-                huff_tree[2*j + 1].right_node = out_huff_tree_s[1].right_node;
+                huff_tree[2*j].ascii_char = out_huff_tree[0].ascii_char; 
+                huff_tree[2*j + 1].ascii_char = out_huff_tree[1].ascii_char;
+                huff_tree[2*j].is_leaf_node = out_huff_tree[0].is_leaf_node;
+                huff_tree[2*j + 1].is_leaf_node = out_huff_tree[1].is_leaf_node;
+                huff_tree[2*j].frequency = out_huff_tree[0].frequency;
+                huff_tree[2*j + 1].frequency = out_huff_tree[1].frequency;
+                huff_tree[2*j].left_node = out_huff_tree[0].left_node;
+                huff_tree[2*j + 1].left_node = out_huff_tree[1].left_node;
+                huff_tree[2*j].right_node = out_huff_tree[0].right_node;
+                huff_tree[2*j + 1].right_node = out_huff_tree[1].right_node;
             end
             else if (j==0) begin
-                huff_tree[2*j + 1].ascii_char = out_huff_tree_s[0].ascii_char;
-                huff_tree[2*j + 1].is_leaf_node = out_huff_tree_s[0].is_leaf_node;
-                huff_tree[2*j + 1].frequency = out_huff_tree_s[0].frequency;
-                huff_tree[2*j + 1].left_node = out_huff_tree_s[0].left_node;
-                huff_tree[2*j + 1].right_node = out_huff_tree_s[0].right_node;
+                huff_tree[2*j + 1].ascii_char = out_huff_tree[0].ascii_char;
+                huff_tree[2*j + 1].is_leaf_node = out_huff_tree[0].is_leaf_node;
+                huff_tree[2*j + 1].frequency = out_huff_tree[0].frequency;
+                huff_tree[2*j + 1].left_node = out_huff_tree[0].left_node;
+                huff_tree[2*j + 1].right_node = out_huff_tree[0].right_node;
             end
                
         
@@ -185,7 +187,7 @@ always_ff @(posedge clk) begin : huffman_enc
 
             count = count - 1;
             if (count == 0) begin
-                state <= `BUILD_TREE;
+                state <= `ENCODE;
                 ll = 0;
             end
             else begin
@@ -194,13 +196,13 @@ always_ff @(posedge clk) begin : huffman_enc
             end
         end
 
-        `BUILD_TREE: begin  //state=5   //might be a critical path
         /*
+        `BUILD_TREE: begin  //state=5   //might be a critical path
+        
         for (int l=0; l< `MAX_CHAR_COUNT; l++) begin //initialy it was unique_char_count 
             if (l < unique_char_count) begin
             //assigning child nodes and leaf node fields 
             j = unique_char_count - 1- l;   //2,1,0
-            /*
             if (j!= 0) begin
                 huff_tree[2*j].ascii_char = out_huff_tree[l][0].ascii_char; 
                 huff_tree[2*j + 1].ascii_char = out_huff_tree[l][1].ascii_char;
@@ -220,11 +222,8 @@ always_ff @(posedge clk) begin : huffman_enc
                 huff_tree[2*j + 1].left_node = out_huff_tree[l][0].left_node;
                 huff_tree[2*j + 1].right_node = out_huff_tree[l][0].right_node;
             end
-        
-           
             end    
     end
-    */
 
     //assigning parent field for a node if that node is present as a child node either in left or right node 
      for (int l=(2*`MAX_CHAR_COUNT)-1; l > 1; l--) begin
@@ -250,10 +249,34 @@ always_ff @(posedge clk) begin : huffman_enc
     end
         state <= `ENCODE;
         end
+        */
 
         `ENCODE: begin  //state=6
+          //assigning parent field for a node if that node is present as a child node either in left or right node 
+     for (int l=(2*`MAX_CHAR_COUNT)-1; l > 1; l--) begin
+        for (int n=1; n< (2*`MAX_CHAR_COUNT); n++) begin
+            if (huff_tree[n].left_node == huff_tree[l].ascii_char | huff_tree[n].right_node == huff_tree[l].ascii_char) begin
+                huff_tree[l].parent = n;
+            end
+        end
+    end
+
+    //assigning levels
+    for (int m=1; m < (2*`MAX_CHAR_COUNT); m++) begin
+        if (huff_tree[m].is_leaf_node != 1) begin
+        for (int n=2; n < (2*`MAX_CHAR_COUNT); n++) begin
+            if (huff_tree[n].ascii_char == huff_tree[m].left_node) begin
+                huff_tree[n].level = huff_tree[m].level + 1;
+            end
+            if (huff_tree[n].ascii_char == huff_tree[m].right_node) begin
+                huff_tree[n].level = huff_tree[m].level + 1;
+            end
+        end
+        end
+    end
+
             for (int n=2; n < (2*`MAX_CHAR_COUNT); n++) begin  //1-root node
-                encoded_mask_h[n] = (1'b1 << huff_tree[n].level) -1;
+            //    // encoded_mask_h[n] = (1'b1 << huff_tree[n].level) -1;
                 if (huff_tree[n].parent != 1) begin   
                     encoded_value_h[n] = (n%2==0) ? (encoded_value_h[huff_tree[n].parent] << 1'b1): ((encoded_value_h[huff_tree[n].parent] << 1'b1) | 1'b1);
                 end
@@ -273,9 +296,10 @@ always_ff @(posedge clk) begin : huffman_enc
                 /*working 
                 encoded_value[itr] = encoded_value_h[n];
                 */
-                encoded_mask[m] = encoded_mask_h[n];
+               // encoded_mask[m] = encoded_mask_h[n];
+                encoded_mask[m] = (1'b1 << huff_tree[n].level) -1;
                 character[m] = huff_tree[n].ascii_char;
-                frequency[m] = huff_tree[n].frequency;
+            //    frequency[m] = huff_tree[n].frequency;
                 level = huff_tree[n].level;
                 encoded_value[m] = encoded_value_h[n];
                 /*

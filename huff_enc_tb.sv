@@ -27,8 +27,9 @@ module tb_top;
         input_string = "aaf";     //working 
         input_string = "raghavendr";  //working 
         input_string = "anushaanua";    //working only if you maintain the max unique character length to be within limits
-        data_in = "aae_a";
-       // data_in = "anushaanua";
+        data_in = "anuan";
+      //  data_in = "aae e";
+     //   data_in = "anushaanua";
         /*
         $display("input_string:%x\n", input_string);
         foreach(input_string[i]) begin
@@ -63,16 +64,16 @@ module tb_top;
 
         if (`DEBUG && done) begin
         //     for (int j=0; j < DUT.unique_char_count; j++) begin //level
-        //         $display("in_huff_tree[%0d]:%p\n\n", j, DUT.in_huff_tree[j]);
-        //         $display("out_huff_tree[%0d]:%p\n\n", j, DUT.out_huff_tree[j]);
+                 $display("in_huff_tree:%p\n\n",  DUT.in_huff_tree);
+                 $display("out_huff_tree:%p\n\n", DUT.out_huff_tree);
         // end
         
         for (int i=0; i< 2*DUT.unique_char_count; i++) begin
-            $display("binary_tree:  huff_tree[%0d]:%p, encoded_mask_h[%0d]:%b, encoded_values_h[%0d]:%b\n", i, DUT.huff_tree[i], i, DUT.encoded_mask_h[i], i, DUT.encoded_value_h[i]);   
+            $display("binary_tree:  huff_tree[%0d]:%p, encoded_values_h[%0d]:%b\n", i, DUT.huff_tree[i],  i, DUT.encoded_value_h[i]);   
         end
 
         for (int i=0; i< DUT.unique_char_count; i++) begin
-        $display("OUTPUT character:%s, encoded mask[%0d]:%b, encoded values[%0d]:%b, frequency[%0d]:%d\n", DUT.character[i], i, DUT.encoded_mask[i], i, DUT.encoded_value[i], i, DUT.frequency[i]);
+        $display("OUTPUT character:%s, encoded mask[%0d]:%b, encoded values[%0d]:%b\n", DUT.character[i], i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
        // $display("OUTPUT character:%s, encoded mask[%0d]:%b, encoded values:%b, frequency[%0d]:%d\n", DUT.character[i], i, DUT.encoded_mask[i], DUT.encoded_value, i, DUT.frequency[i]);
         end
 
