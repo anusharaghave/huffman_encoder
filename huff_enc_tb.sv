@@ -2,7 +2,7 @@
 
 module tb_top;
   
-  logic [0:`MAX_STRING_LENGTH-1][7:0] data_in;
+  logic [`MAX_STRING_LENGTH-1:0][7:0] data_in;
   logic [0:`MAX_STRING_LENGTH-1][2:0] freq_in;
   logic [`MAX_CHAR_COUNT*`MAX_CHAR_COUNT-1:0] encoded_value;
   logic data_en;
@@ -28,9 +28,9 @@ module tb_top;
 
 
        // freq_in = {3'h2, 3'h1, 'h1};    //anu
-        freq_in[0] = 2;
+        freq_in[0] = 1;
         freq_in[1] = 3;
-        freq_in[2] = 7;
+        freq_in[2] = 2;
 
          #5 reset = 1;
         #15; //increase if you increase the string length
@@ -62,11 +62,11 @@ module tb_top;
                  $display("out_huff_tree:%p\n\n", DUT.out_huff_tree);
         
         
-        for (int i=0; i< 2*DUT.unique_char_count; i++) begin
+        for (int i=0; i< 2*`MAX_CHAR_COUNT; i++) begin
             $display("binary_tree:  huff_tree[%0d]:%p, encoded_values_h[%0d]:%b\n", i, DUT.huff_tree[i],  i, DUT.encoded_value_h[i]);   
         end
 
-        for (int i=0; i< DUT.unique_char_count; i++) begin
+        for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
         $display("OUTPUT character:%s, encoded mask[%0d]:%b, encoded values[%0d]:%b\n", DUT.character[i], i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
         end
 
