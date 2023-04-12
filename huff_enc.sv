@@ -13,16 +13,19 @@
 //8. Traverse again to assign the encodings to each character
 
 
+//Optimizations
+//1. remove frequency calculator module- frequency in should be within 7 (3 bits)
+//2. sorting logic- use some fields of nodes (don't pass entire node list)   , also can only find min and second min 
+//3. limit the characters that can be encoded 
 
 `timescale 1us/1ps
 
-`define MAX_STRING_LENGTH 5 //change this as required 
+//5,3,2
+
+`define MAX_STRING_LENGTH 3
 `define MAX_CHAR_COUNT 3
-//`define BIT_WIDTH clog2(`MAX_CHAR_COUNT)
 `define BIT_WIDTH 2
 
-//for displays
-//`define DEBUG 1
 
 `define INIT 3'b000
 `define DATA_COLLECT 3'b001
@@ -35,49 +38,43 @@
 
 //left and right nodes are 0 for leaf nodes
 typedef struct {
-   // integer ascii_char; //change this to the max value obtained by adding other nodes and levels possible
-    logic [8:0] ascii_char;
-   // integer frequency;
-    logic [2:0] frequency; //max freq can go upto 8
+    logic [8:0] ascii_char; //7 max bits + 1
+    logic [2:0] frequency;
     logic is_leaf_node;
-    // integer left_node;  //stores the index
-    // integer right_node; //stores the index
     logic [8:0] left_node;  //stores the index
     logic [8:0] right_node; //stores the index
 } node_t;
 
 typedef struct {
-    integer ascii_char; //change this to the max value obtained by adding other nodes and levels possible
-   // integer frequency;
+    integer ascii_char; 
     logic [2:0] frequency;
     logic is_leaf_node;
-    // integer left_node;  
-    // integer right_node;
     logic [8:0] left_node;  //stores the index
     logic [8:0] right_node; //stores the index
-    //integer parent; 
-    //integer level;
     logic [`BIT_WIDTH:0] parent;
     logic [`BIT_WIDTH:0] level;
 } huff_tree_node_t; 
 
 //main encoder module
-module huff_encoder (input logic clk, input logic reset, input logic [0:`MAX_STRING_LENGTH-1][7:0] data_in, input logic data_en, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_value, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_mask, output logic [0:`MAX_CHAR_COUNT-1][6:0] character, output logic done);   
+//module huff_encoder (input logic clk, input logic reset, input logic [0:`MAX_STRING_LENGTH-1][7:0] data_in, input logic data_en, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_value, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_mask, output logic [0:`MAX_CHAR_COUNT-1][6:0] character, output logic done);   
+module huff_encoder (input logic clk, input logic reset, input logic [0:`MAX_STRING_LENGTH-1][7:0] data_in, input logic [0:`MAX_STRING_LENGTH-1][2:0] freq_in, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_value, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_mask, output logic [0:`MAX_CHAR_COUNT-1][6:0] character, output logic done);
+
+
 logic [`BIT_WIDTH-1:0] count, unique_char_count, ll;
 node_t initial_node[`MAX_CHAR_COUNT];
 logic [2:0] state;
-//integer ll;
 huff_tree_node_t huff_tree[`MAX_CHAR_COUNT*2];
 node_t in_huff_tree[0:`MAX_CHAR_COUNT-1];
-node_t out_huff_tree[0:`MAX_CHAR_COUNT]; //size is  fixed now, can change based on level and number of elements required- FIXME???
-node_t merged_node;   
+node_t out_huff_tree[0:`MAX_CHAR_COUNT]; 
+node_t merged_node; 
+
+assign unique_char_count = `MAX_STRING_LENGTH;
+
 
 logic [`MAX_CHAR_COUNT-1:0] encoded_value_h[2*`MAX_CHAR_COUNT];
-//int j;
-//integer level, m, itr;
 logic [`BIT_WIDTH-1:0] level, m;
 
-    freq_calc freq_calc_ins(.clk(clk), .state(state), .data_in(data_in), .node(initial_node), .count(unique_char_count));
+    freq_calc freq_calc_ins(.data_in(data_in), .freq_in(freq_in), .node(initial_node));
     node_sorter node_sorter_ins(.clk(clk), .state(state),.input_node(in_huff_tree[0:`MAX_CHAR_COUNT-1]), .output_node(out_huff_tree[0:`MAX_CHAR_COUNT-1]));
     merge_nodes merge_nodes_ins(.min_node(out_huff_tree[0]), .second_min_node(out_huff_tree[1]), .merged_node(merged_node));
 
@@ -89,7 +86,22 @@ always_ff @(posedge clk) begin : huffman_enc
            for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
                 encoded_value[i] = 'b0;
                 encoded_mask[i] = 'b0;
+                in_huff_tree[i].ascii_char = 'b0;
+                in_huff_tree[i].frequency = 'b0;
+                in_huff_tree[i].is_leaf_node = 'b0;
+                in_huff_tree[i].left_node = 'b0;
+                in_huff_tree[i].right_node = 'b0;
+                // out_huff_tree[i].ascii_char = 'b0;
+                // out_huff_tree[i].frequency = 'b0;
+                // out_huff_tree[i].is_leaf_node = 'b0;
+                // out_huff_tree[i].left_node = 'b0;
+                // out_huff_tree[i].right_node = 'b0;
             end
+            // out_huff_tree[`MAX_CHAR_COUNT].ascii_char = 'b0;
+            //     out_huff_tree[`MAX_CHAR_COUNT].frequency = 'b0;
+            //     out_huff_tree[`MAX_CHAR_COUNT].is_leaf_node = 'b0;
+            //     out_huff_tree[`MAX_CHAR_COUNT].left_node = 'b0;
+            //     out_huff_tree[`MAX_CHAR_COUNT].right_node = 'b0;
     end
 
     case (state) 
@@ -99,7 +111,7 @@ always_ff @(posedge clk) begin : huffman_enc
             ll = 'b0;
             for (int i=0; i < (2*`MAX_CHAR_COUNT); i++) begin
                 encoded_value_h[i] = 'b0;
-                huff_tree[i].ascii_char = 'bz;
+                huff_tree[i].ascii_char = 'b0;
                 huff_tree[i].frequency = 0;
                 huff_tree[i].is_leaf_node = 1'b0;
                 huff_tree[i].parent = 'b0;
@@ -107,14 +119,9 @@ always_ff @(posedge clk) begin : huffman_enc
                 huff_tree[i].right_node = 'b0;
                 huff_tree[i].level = 'b0;
             end
-         
-
-            if (data_en) begin
+        
                 state <= `DATA_COLLECT;
-            end
-            else begin 
-                state <= `INIT;
-            end
+            
         end
 
         `DATA_COLLECT: begin    
@@ -137,7 +144,6 @@ always_ff @(posedge clk) begin : huffman_enc
             in_huff_tree[0] = merged_node;
             in_huff_tree[1:`MAX_CHAR_COUNT-1] = out_huff_tree[2:`MAX_CHAR_COUNT];
 
-            $display("count:%d\n", count);
         
             //assigning child nodes and leaf node fields 
             if ((count-1'b1)!= 0) begin
@@ -160,10 +166,6 @@ always_ff @(posedge clk) begin : huffman_enc
                 huff_tree[2*(count-1'b1) + 1].right_node = out_huff_tree[0].right_node;
             end
                
-        
-
-
-
             count = count - 1;
             if (count == 0) begin
                 state <= `ENCODE;
@@ -201,7 +203,6 @@ always_ff @(posedge clk) begin : huffman_enc
     end
 
             for (int n=2; n < (2*`MAX_CHAR_COUNT); n++) begin  //1-root node
-            //    // encoded_mask_h[n] = (1'b1 << huff_tree[n].level) -1;
                 if (huff_tree[n].parent != 1) begin   
                     encoded_value_h[n] = (n%2==0) ? (encoded_value_h[huff_tree[n].parent] << 1'b1): ((encoded_value_h[huff_tree[n].parent] << 1'b1) | 1'b1);
                 end
@@ -217,27 +218,10 @@ always_ff @(posedge clk) begin : huffman_enc
         m = 0;
         for (int n=0; n< (2*`MAX_CHAR_COUNT); n++) begin
             if (huff_tree[n].is_leaf_node == 1) begin
-                /*working 
-                encoded_value[itr] = encoded_value_h[n];
-                */
-               // encoded_mask[m] = encoded_mask_h[n];
                 encoded_mask[m] = (1'b1 << huff_tree[n].level) -1;
                 character[m] = huff_tree[n].ascii_char;
-            //    frequency[m] = huff_tree[n].frequency;
                 level = huff_tree[n].level;
                 encoded_value[m] = encoded_value_h[n];
-                /*
-                foreach (encoded_mask_h[n][i]) begin
-                    if (encoded_mask_h[n][i] === 1'b1) begin
-                //    $display("I am here:%0d\n", n);
-                   // encoded_value[m][((`MAX_CHAR_COUNT*`MAX_CHAR_COUNT)-1)-itr] = encoded_value_h[n][i];    //different bit assignment- might throw error
-                    encoded_value[m][i] = encoded_value_h[n][i];
-                    itr = itr + 1;  //like a pointer
-                end
-                end
-                */
-
-                //itr = itr + level;
                 m = m+1;
                 end //if loop
         end //for loop
@@ -254,75 +238,21 @@ end //posedge_clk
 endmodule
 
 
-module freq_calc(input logic clk, input logic [2:0] state, input logic [0:`MAX_STRING_LENGTH-1][7:0] data_in, output node_t node[`MAX_CHAR_COUNT], output logic [`BIT_WIDTH-1:0] count);
+module freq_calc(input logic [0:`MAX_STRING_LENGTH-1][7:0] data_in, input logic [0:`MAX_STRING_LENGTH-1][2:0] freq_in, output node_t node[`MAX_CHAR_COUNT]);
 
-// integer cnt, index;    //initially 0
-// logic matched, break1;
-// integer ctr;
 
-logic [`BIT_WIDTH:0] cnt, index, ctr;
-logic matched, break1;
+//logic [`BIT_WIDTH:0] cnt, index, ctr;
+//logic matched, break1;
 
-  always_ff @(posedge clk) begin
-        matched = '0;
-        break1 = '0;
-    //have to initialize entire node array- FIXME? - else it will impact count
-     if ((state==`DATA_COLLECT)) begin
+always_comb begin
         for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
-            node[i].ascii_char = 'b0;
-            node[i].frequency = 'b0;
+            node[i].ascii_char = data_in[i];
+            node[i].frequency = freq_in[i];
             node[i].left_node = 'b0;   //ascii valud of null
             node[i].right_node = 'b0;
-            node[i].is_leaf_node = 1'b0;
+            node[i].is_leaf_node = 1'b1;
         end
-        ctr = 'b0;
-        cnt = 'b0;
-        foreach(data_in[i]) begin
-           if (data_in[i] != 0) begin
-            matched = 0;
-            break1 = 0;
-            cnt = 1'b1;
-            index = ctr;
-            node[index].is_leaf_node = 1'b1;
-            //compare against the existing nodes
-            for (int j=0; j< `MAX_CHAR_COUNT; j++) begin
-                if (break1 ==0) begin
-                if (data_in[i] == node[j].ascii_char) begin //if matched 
-                    cnt = node[j].frequency + 1;
-                  //  index = j;
-                    index = j;
-                    matched = 1;
-                    break1 = 1;
-                end
-                else begin      //if not match
-                    matched = 0;
-                    break1 = 0;
-                end    
-            end //for loop
-            end
-            if (i == 0) begin
-                    ctr = ctr + 1;
-            end 
-            else begin
-                ctr = matched ? ctr : ctr + 1;
-            end    
-                node[index].ascii_char = data_in[i];
-                node[index].frequency = cnt;
-        end
-       end
-    end
-    end
-
-
-    always_comb begin
-            count = 0;
-            for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
-                if (node[i].ascii_char != 0) begin
-                    count = count + 1;
-                end
-            end
-    end
-
+end
 
 endmodule 
 
@@ -330,7 +260,6 @@ endmodule
 module node_sorter(input logic clk, input logic[2:0] state, input node_t input_node[`MAX_CHAR_COUNT], output node_t output_node[`MAX_CHAR_COUNT]);
  
 node_t temp_node;
-    //always_comb begin
         always_ff @(posedge clk) begin
     if (state==`SORT) begin
         temp_node.ascii_char = 'b0;
@@ -365,20 +294,11 @@ end
 endmodule
 
 module merge_nodes(input node_t min_node, input node_t second_min_node, output node_t merged_node);
-//should inside loop
-//always_comb begin
-    /*
-    assign merged_node.ascii_char = 'b0 ;    
-    assign merged_node.frequency = 'b0;
-    assign merged_node.left_node = 'b0;
-    assign merged_node.right_node = 'b0;
-    */
     assign merged_node.ascii_char =  min_node.ascii_char + second_min_node.ascii_char;    
     assign merged_node.frequency = min_node.frequency + second_min_node.frequency;
     assign merged_node.left_node = min_node.ascii_char;
     assign merged_node.right_node = second_min_node.ascii_char;
     assign merged_node.is_leaf_node = 1'b0;    
-//end
 endmodule
 
 
