@@ -12,7 +12,7 @@ module tb_top;
 
     initial begin
         clk = 0;
-        reset = 0;
+        reset = 1;
         data_in = "adity"; //working
         data_in = "anusha";
         data_in = "aabb";
@@ -28,7 +28,7 @@ module tb_top;
         freq_in[1] = 2;
         freq_in[2] = 1;
 
-         #5 reset = 1;
+         #5 reset = 0;
         #15; //increase if you increase the string length
         $finish;
     end
