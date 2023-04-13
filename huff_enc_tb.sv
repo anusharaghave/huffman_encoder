@@ -8,15 +8,11 @@ module tb_top;
   logic data_en;
   logic clk, reset, done;
  
-    huff_encoder DUT(.clk(clk), .reset(reset), .data_in(data_in), .freq_in(freq_in), .encoded_value(), .encoded_mask(), .character(), .done(done));
+    huff_encoder DUT(.clk(clk), .reset(reset), .data_in(data_in), .freq_in(freq_in), .encoded_value(), .encoded_mask(), .done(done));
 
     initial begin
         clk = 0;
         reset = 0;
-        data_in = 0;
-       
-     
-     
         data_in = "adity"; //working
         data_in = "anusha";
         data_in = "aabb";
@@ -29,8 +25,8 @@ module tb_top;
 
        // freq_in = {3'h2, 3'h1, 'h1};    //anu
         freq_in[0] = 1;
-        freq_in[1] = 3;
-        freq_in[2] = 2;
+        freq_in[1] = 2;
+        freq_in[2] = 1;
 
          #5 reset = 1;
         #15; //increase if you increase the string length

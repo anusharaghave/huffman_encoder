@@ -56,11 +56,10 @@ typedef struct {
     logic [`BIT_WIDTH:0] level;
 } huff_tree_node_t; 
 
-//main encoder module
-//module huff_encoder (input logic clk, input logic reset, input logic [0:`MAX_STRING_LENGTH-1][7:0] data_in, input logic data_en, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_value, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_mask, output logic [0:`MAX_CHAR_COUNT-1][6:0] character, output logic done);   
-module huff_encoder (input logic clk, input logic reset, input logic [`MAX_STRING_LENGTH-1:0][7:0] data_in, input logic [0:`MAX_STRING_LENGTH-1][2:0] freq_in, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_value, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_mask, output logic [0:`MAX_CHAR_COUNT-1][6:0] character, output logic done);
+//main encoder module  
+module huff_encoder (input logic clk, input logic reset, input logic [`MAX_STRING_LENGTH-1:0][7:0] data_in, input logic [0:`MAX_STRING_LENGTH-1][2:0] freq_in, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_value, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_mask, output logic done);
 
-
+logic [0:`MAX_CHAR_COUNT-1][6:0] character;
 logic [`BIT_WIDTH-1:0] count;
 node_t initial_node[`MAX_CHAR_COUNT];
 logic [2:0] state;
@@ -69,21 +68,18 @@ node_t in_huff_tree[0:`MAX_CHAR_COUNT-1];
 node_t out_huff_tree[0:`MAX_CHAR_COUNT]; 
 node_t merged_node; 
 
-
-
-
 logic [`MAX_CHAR_COUNT-1:0] encoded_value_h[2*`MAX_CHAR_COUNT];
-logic [`BIT_WIDTH-1:0] level, m;
+//logic [`BIT_WIDTH-1:0] level, m;
 
     freq_calc freq_calc_ins(.data_in(data_in), .freq_in(freq_in), .node(initial_node));
-    node_sorter node_sorter_ins(.clk(clk), .state(state),.input_node(in_huff_tree[0:`MAX_CHAR_COUNT-1]), .output_node(out_huff_tree[0:`MAX_CHAR_COUNT-1]));
+    node_sorter node_sorter_ins(.clk(clk), .input_node(in_huff_tree[0:`MAX_CHAR_COUNT-1]), .output_node(out_huff_tree[0:`MAX_CHAR_COUNT-1]));
     merge_nodes merge_nodes_ins(.min_node(out_huff_tree[0]), .second_min_node(out_huff_tree[1]), .merged_node(merged_node));
 
 always_ff @(posedge clk) begin : huffman_enc
     if (~reset) begin
         state <= `INIT;
-        level = 'b0;
-        m =0;
+     //   level = 'b0;
+     //   m =0;
            for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
                 encoded_value[i] = 'b0;
                 encoded_mask[i] = 'b0;
@@ -209,8 +205,9 @@ always_ff @(posedge clk) begin : huffman_enc
 
      //extract only encodings for unique characters 
     `SEND_OUTPUT: begin     //state=7
-        m = 0;
-        for (int n=0; n< (2*`MAX_CHAR_COUNT); n++) begin
+     //   m = 0;
+        /*
+        for (int n=1; n< (2*`MAX_CHAR_COUNT); n++) begin
             if (huff_tree[n].is_leaf_node == 1) begin
                 encoded_mask[m] = (1'b1 << huff_tree[n].level) -1;
                 character[m] = huff_tree[n].ascii_char;
@@ -219,6 +216,21 @@ always_ff @(posedge clk) begin : huffman_enc
                 m = m+1;
                 end //if loop
         end //for loop
+        */
+
+        foreach(data_in[i]) begin
+        for (int n=1; n< (2*`MAX_CHAR_COUNT); n++) begin
+            if (huff_tree[n].ascii_char == data_in[i]) begin
+                encoded_mask[i] = (1'b1 << huff_tree[n].level) -1;
+                character[i] = huff_tree[n].ascii_char;
+             //   level = huff_tree[n].level;
+                encoded_value[i] = encoded_value_h[n];
+             //   m = m+1;
+                end //if loop
+        end //for loop
+        end
+
+
         done = 1'b1;    //used in SV tb to stop the simulation
         end
 
@@ -233,7 +245,6 @@ endmodule
 
 
 module freq_calc(input logic [0:`MAX_STRING_LENGTH-1][7:0] data_in, input logic [0:`MAX_STRING_LENGTH-1][2:0] freq_in, output node_t node[`MAX_CHAR_COUNT]);
-
 
 always_comb begin
         for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
@@ -258,11 +269,12 @@ end
 endmodule 
 
 
-module node_sorter(input logic clk, input logic[2:0] state, input node_t input_node[`MAX_CHAR_COUNT], output node_t output_node[`MAX_CHAR_COUNT]);
+module node_sorter(input logic clk, input node_t input_node[`MAX_CHAR_COUNT], output node_t output_node[`MAX_CHAR_COUNT]);
  
 node_t temp_node;
-        always_ff @(posedge clk) begin
-    if (state==`SORT) begin
+       always_ff @(posedge clk) begin
+     //       always_comb begin //doesn't work
+  //  if (state==`SORT) begin
         temp_node.ascii_char = 'b0;
         temp_node.frequency = 'b0;
         temp_node.is_leaf_node = '0;
@@ -290,7 +302,7 @@ node_t temp_node;
             end
             end
         end
-    end
+//    end
 end   
 endmodule
 
