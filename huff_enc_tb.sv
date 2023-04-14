@@ -17,7 +17,7 @@ module tb_top;
         data_in = "adity"; //working
         data_in = "anusha";
         data_in = "aabb";
-        data_in = "abc";     //no encoding for single character
+        data_in = "~}|";     //no encoding for single character
      //   data_in = "aaf";     //working 
      //   data_in = "raghavendr";  //working 
      //   data_in = "anushaanua";    //working only if you maintain the max unique character length to be within limits
@@ -26,9 +26,11 @@ module tb_top;
        
 
        // freq_in = {3'h2, 3'h1, 'h1};    //anu
-        freq_in[0] = 1;
-        freq_in[1] = 2;
-        freq_in[2] = 1;
+        freq_in[0] = 7;
+        freq_in[1] = 6;
+        freq_in[2] = 5;
+        // freq_in[3] = 1;
+        // freq_in[4] = 1;
 
          #5 reset = 0;
         #15; //increase if you increase the string length
