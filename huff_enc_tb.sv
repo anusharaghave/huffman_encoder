@@ -2,8 +2,9 @@
 
 module tb_top;
   
-  logic [`MAX_STRING_LENGTH-1:0][7:0] data_in;
-  logic [0:`MAX_STRING_LENGTH-1][2:0] freq_in;
+ logic [`MAX_CHAR_COUNT-1:0][7:0] data_in;
+ // logic [`MAX_CHAR_COUNT-1:0][3:0] data_in, string_input;
+  logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in;
   logic [`MAX_CHAR_COUNT*`MAX_CHAR_COUNT-1:0] encoded_value;
   logic data_en;
   logic clk, reset, done;
@@ -16,12 +17,13 @@ module tb_top;
         data_in = "adity"; //working
         data_in = "anusha";
         data_in = "aabb";
-        data_in = "anu";     //no encoding for single character
+        data_in = "abc";     //no encoding for single character
      //   data_in = "aaf";     //working 
      //   data_in = "raghavendr";  //working 
      //   data_in = "anushaanua";    //working only if you maintain the max unique character length to be within limits
      //   data_in = "~{~zz";
 
+       
 
        // freq_in = {3'h2, 3'h1, 'h1};    //anu
         freq_in[0] = 1;

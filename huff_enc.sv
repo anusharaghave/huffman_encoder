@@ -18,12 +18,14 @@
 //2. sorting logic- use some fields of nodes (don't pass entire node list)   , also can only find min and second min 
 //3. limit the characters that can be encoded - no much help
 //4. Use huff tree[0] as root node- accordingly change the indexing
+//5. Use only minimal subset of characters - like from a ('h61) to 0 ('h6F)
+
 
 `timescale 1us/1ps
 
 //5,3,2
 
-`define MAX_STRING_LENGTH 3
+//`define MAX_CHAR_COUNT 3
 `define MAX_CHAR_COUNT 3
 `define BIT_WIDTH 2
 
@@ -40,15 +42,17 @@
 //left and right nodes are 0 for leaf nodes
 typedef struct {
     logic [8:0] ascii_char; //7 max bits + 1
+    //logic [4:0] ascii_char;
     logic [2:0] frequency;
     logic is_leaf_node;
-    logic [8:0] left_node;  //stores the index
-    logic [8:0] right_node; //stores the index
+     logic [8:0] left_node;  //stores the index
+     logic [8:0] right_node; //stores the index
 } node_t;
 
 typedef struct {
     integer ascii_char; 
-    logic [2:0] frequency;
+    //logic [9:0] ascii_char;
+   // logic [2:0] frequency;
     logic is_leaf_node;
     logic [8:0] left_node;  //stores the index
     logic [8:0] right_node; //stores the index
@@ -57,7 +61,7 @@ typedef struct {
 } huff_tree_node_t; 
 
 //main encoder module  
-module huff_encoder (input logic clk, input logic reset, input logic [`MAX_STRING_LENGTH-1:0][7:0] data_in, input logic [0:`MAX_STRING_LENGTH-1][2:0] freq_in, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_value, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_mask, output logic done);
+module huff_encoder (input logic clk, input logic reset, input logic [`MAX_CHAR_COUNT-1:0][7:0] data_in, input logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_value, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_mask, output logic done);
 
 logic [0:`MAX_CHAR_COUNT-1][6:0] character;
 logic [`BIT_WIDTH-1:0] count;
@@ -159,11 +163,9 @@ always_ff @(posedge clk) begin : huffman_enc
             count = count - 1'b1;
             if (count == 0) begin
                 state <= `ENCODE;
-             //   ll = 0;
             end
             else begin
                 state <= `SORT;
-            //    ll = ll + 1;
             end
         end
 
@@ -205,31 +207,19 @@ always_ff @(posedge clk) begin : huffman_enc
 
      //extract only encodings for unique characters 
     `SEND_OUTPUT: begin     //state=7
-     //   m = 0;
-        /*
-        for (int n=1; n< (2*`MAX_CHAR_COUNT); n++) begin
-            if (huff_tree[n].is_leaf_node == 1) begin
-                encoded_mask[m] = (1'b1 << huff_tree[n].level) -1;
-                character[m] = huff_tree[n].ascii_char;
-                level = huff_tree[n].level;
-                encoded_value[m] = encoded_value_h[n];
-                m = m+1;
-                end //if loop
-        end //for loop
-        */
 
         foreach(data_in[i]) begin
         for (int n=1; n< (2*`MAX_CHAR_COUNT); n++) begin
             if (huff_tree[n].ascii_char == data_in[i]) begin
-                encoded_mask[i] = (1'b1 << huff_tree[n].level) -1;
-                character[i] = huff_tree[n].ascii_char;
+                encoded_mask[i] = (1'b1 << huff_tree[n].level)-1'b1;
+             //   character[i] = {3'b110, huff_tree[n].ascii_char[3:0]};
+             character[i] = huff_tree[n].ascii_char;
              //   level = huff_tree[n].level;
                 encoded_value[i] = encoded_value_h[n];
              //   m = m+1;
                 end //if loop
         end //for loop
         end
-
 
         done = 1'b1;    //used in SV tb to stop the simulation
         end
@@ -244,7 +234,7 @@ end //posedge_clk
 endmodule
 
 
-module freq_calc(input logic [0:`MAX_STRING_LENGTH-1][7:0] data_in, input logic [0:`MAX_STRING_LENGTH-1][2:0] freq_in, output node_t node[`MAX_CHAR_COUNT]);
+module freq_calc(input logic [0:`MAX_CHAR_COUNT-1][7:0] data_in, input logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in, output node_t node[`MAX_CHAR_COUNT]);
 
 always_comb begin
         for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
@@ -265,37 +255,59 @@ module node_sorter(input logic clk, input node_t input_node[`MAX_CHAR_COUNT], ou
  
 node_t temp_node;
        always_ff @(posedge clk) begin
-     //       always_comb begin //doesn't work
-  //  if (state==`SORT) begin
-        // temp_node.ascii_char = 'b0;
-        // temp_node.frequency = 'b0;
-        // temp_node.is_leaf_node = '0;
-        // temp_node.left_node = '0;
-        // temp_node.right_node = '0;
         for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
             output_node = input_node;
         end
         //sorting logic 
         for(int j=0; j< `MAX_CHAR_COUNT-1; j++)  begin  
             for (int k= 0; k< `MAX_CHAR_COUNT-1; k++) begin
-                if (!(output_node[k].ascii_char == 0 || output_node[k+1].ascii_char == 0)) begin
-                if ((output_node[k].frequency == output_node[k+1].frequency) && (output_node[k].ascii_char > output_node[k+1].ascii_char)) begin
+                if (((output_node[k].frequency >= output_node[k+1].frequency) && (output_node[k].ascii_char > output_node[k+1].ascii_char)) || (output_node[k].frequency > output_node[k+1].frequency)) begin
+                    temp_node = output_node[k];
+                    output_node[k] = output_node[k+1];
+                    output_node[k+1] = temp_node;
+                    end
+
+            end
+        end
+//    end
+end   
+endmodule
+
+
+//make it sequential 
+module node_sorter1(input logic clk, input node_t input_node[`MAX_CHAR_COUNT], output node_t output_node[`MAX_CHAR_COUNT]);
+ 
+node_t temp_node;
+       always_ff @(posedge clk) begin
+        for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
+            output_node = input_node;
+        end
+        //sorting logic 
+        for(int j=0; j< `MAX_CHAR_COUNT-1; j++)  begin  
+            for (int k= 0; k< `MAX_CHAR_COUNT-1; k++) begin
+            //    if (!(output_node[k].ascii_char == 0 || output_node[k+1].ascii_char == 0)) begin
+                if ((output_node[k].frequency >= output_node[k+1].frequency) && (output_node[k].ascii_char > output_node[k+1].ascii_char)) begin
                 //    if (output_node[k].ascii_char > output_node[k+1].ascii_char) begin
                     temp_node = output_node[k];
                     output_node[k] = output_node[k+1];
                     output_node[k+1] = temp_node;
                     end
                 //end
+                /*
                 else if (output_node[k].frequency > output_node[k+1].frequency) begin
                     temp_node = output_node[k];
                     output_node[k] = output_node[k+1];
                     output_node[k+1] = temp_node;
                 end
-            end //first if
+                */
+           // end //first if
             end
         end
 //    end
-end   
+end 
+
+
+
 endmodule
 
 module merge_nodes(input node_t min_node, input node_t second_min_node, output node_t merged_node);
@@ -306,70 +318,3 @@ module merge_nodes(input node_t min_node, input node_t second_min_node, output n
     assign merged_node.is_leaf_node = 1'b0;    
 endmodule
 
-
-
-/*
-//For synthesis
-module m_design (
-    input logic clk100, // 100MHz clock- this should be 1MHz???
-    input logic reset_n, // Active-low reset
-
-    // output logic [7:0] base_led, // LEDs on the far right side of the board
-    // output logic [23:0] led, // LEDs in the middle of the board
-
-    // input logic [23:0] sw, // The tiny slide-switches
-
-    // output logic [3:0] display_sel, // Select between the 4 segments
-    // output logic [7:0] display // Seven-segment display
-    input logic [7:0] data[`MAX_CHAR_COUNT], 
-    input logic sw, 
-    output logic [`MAX_CHAR_COUNT-1:0] encoded_value[`MAX_CHAR_COUNT], 
-    output logic [`MAX_CHAR_COUNT-1:0] encoded_mask[`MAX_CHAR_COUNT], 
-    output logic[7:0] character[`MAX_CHAR_COUNT]
-);
-
-    logic clk; // 25MHz, generated by PLL
-    logic [0:`MAX_CHAR_COUNT-1] [7:0] input_string;
-    logic [7:0] data_in[`MAX_CHAR_COUNT];
-
-    // blinky my_blinky (
-    //     .clk, .reset_n, .led
-    // );
-
-     huff_encoder DUT(.clk(clk), .reset(reset_n), .data(data_in), .data_en(sw), .encoded_value(encoded_value), .encoded_mask(), .character(character));
-
-    initial begin
-        input_string = "anush"; //working
-       // input_string = "after"; //working
-      //  input_string = "aaaaa";     //no encoding for single character
-     //   input_string = "after";     //working  
-        foreach(input_string[i]) begin
-            data_in[i] = {input_string[i]};   //check in waves 
-        end
-    //    data_en = 1'b1;
-        #100; //this should match the char count *20 (clock period)- else it will create x in data_in
-    //    data_en = 1'b0;
-    end
-
-    // 100MHz -> 25MHz
-    SB_PLL40_CORE #(
-//        .FEEDBACK_PATH("SIMPLE"),
-//        .DIVR(4'b0000),         // DIVR =  0
-//        .DIVF(7'b0000111),      // DIVF =  7
-//        .DIVQ(3'b101),          // DIVQ =  5
-//        .FILTER_RANGE(3'b101)   // FILTER_RANGE = 5
-.FEEDBACK_PATH("SIMPLE"),
-.DIVR(4'b0000),         // DIVR =  0
-.DIVF(7'b0000111),      // DIVF =  7
-.DIVQ(3'b100),          // DIVQ =  4
-.FILTER_RANGE(3'b101)   // FILTER_RANGE = 5    
-) pll (
-        .LOCK(),
-        .RESETB(1'b1),
-        .BYPASS(1'b0),
-        .REFERENCECLK(clk100),
-        .PLLOUTCORE(clk)
-    );
-
-endmodule
-*/
