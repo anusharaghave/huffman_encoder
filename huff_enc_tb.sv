@@ -26,20 +26,20 @@ module tb_top;
        
 
        // freq_in = {3'h2, 3'h1, 'h1};    //anu
-        freq_in[0] = 7;
+        freq_in[0] = 6;
         freq_in[1] = 6;
-        freq_in[2] = 5;
+        freq_in[2] = 6;
         // freq_in[3] = 1;
         // freq_in[4] = 1;
 
          #5 reset = 0;
-        #15; //increase if you increase the string length
+        #70; //increase if you increase the string length
         $finish;
     end
 
     always @(done) begin
         if (done ==1) begin
-            #1;
+            #10;
             $finish;
         end
     end
@@ -70,8 +70,11 @@ module tb_top;
         $display("OUTPUT character:%s, encoded mask[%0d]:%b, encoded values[%0d]:%b\n", DUT.character[i], i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
         end
 
+        $display("state:%p,n=%d\n", DUT.state, DUT.n);
  
         end //`DEBUG
 
     end
 endmodule 
+
+
