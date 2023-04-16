@@ -191,26 +191,11 @@ always_ff @(posedge clk) begin : huffman_enc
         state <= `LEVEL;
         end
 
-/*
-        `LEVEL: begin
-            if (((huff_tree[n].ascii_char == huff_tree[m].left_node) || (huff_tree[n].ascii_char == huff_tree[m].right_node)) && (huff_tree[m].is_leaf_node != 1'b1)) begin
-                huff_tree[n].level = huff_tree[m].level + 1;
-            end
-            m <= (n == 3'd6) ? m+1'b1: m;
-            n <= (n < 3'd6)? (n + 1'b1) : 1'b0;
-            if ((m == 3'd6) && (n == 3'd6)) begin
-                state <= `ENCODE_VALUE;
-            end
-            else begin
-                state <= `LEVEL;
 
-        end
-        end
-*/
 
     //assigning levels
     `LEVEL: begin
-        for (n=2; n < (2*`MAX_CHAR_COUNT); n++) begin
+        for (int n=2; n < (2*`MAX_CHAR_COUNT); n++) begin
                 huff_tree[n].level = huff_tree[huff_tree[n].parent].level + 1'b1;
         end
         state <= `ENCODE_VALUE;
@@ -220,21 +205,20 @@ always_ff @(posedge clk) begin : huffman_enc
 
     `ENCODE_VALUE: begin
 
-            encoded_value_h[2][0] = 'b0;
-            encoded_value_h[3][0] = 'b1;
-
-
-
-           for (n=4; n < (2*`MAX_CHAR_COUNT); n++) begin  //1-root node
+         for (int n=2; n < (2*`MAX_CHAR_COUNT); n++) begin  //1-root node
                 encoded_value_l = encoded_value_h[huff_tree[n].parent] << 1'b1;
                 encoded_value_r = (encoded_value_h[huff_tree[n].parent] << 1'b1) | 1'b1;
                 is_n_odd = n[0]; 
-                    encoded_value_h[n] = (is_n_odd) ? encoded_value_r: encoded_value_l;
-           
+                if (huff_tree[n].parent != 1'b1) begin   
+                    encoded_value_h[n] = (is_n_odd) ? encoded_value_l: encoded_value_r;
+                end
+                else if (huff_tree[n].parent == 1'b1) begin
+                     encoded_value_h[n][0] = (is_n_odd) ? {1'b0}: {1'b1};
+                end
             end
             state <= `SEND_OUTPUT;
-        end
-    
+    end
+
 
      //extract only encodings for unique characters 
     `SEND_OUTPUT: begin     //state=7
@@ -304,31 +288,7 @@ node_t temp_node;
 end   
 endmodule
 
-/*
-//make it sequential 
-module node_sorter1(input logic clk, input node_t input_node[`MAX_CHAR_COUNT], output node_t output_node[`MAX_CHAR_COUNT]);
- 
-node_t temp_node;
-       always_ff @(posedge clk) begin
-        for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
-            output_node = input_node;
-        end
-        //sorting logic 
-        for(int j=0; j< `MAX_CHAR_COUNT-1; j++)  begin  
-            for (int k= 0; k< `MAX_CHAR_COUNT-1; k++) begin
-            //    if (!(output_node[k].ascii_char == 0 || output_node[k+1].ascii_char == 0)) begin
-                if ((output_node[k].frequency >= output_node[k+1].frequency) && (output_node[k].ascii_char > output_node[k+1].ascii_char)) begin
-                //    if (output_node[k].ascii_char > output_node[k+1].ascii_char) begin
-                    temp_node = output_node[k];
-                    output_node[k] = output_node[k+1];
-                    output_node[k+1] = temp_node;
-                    end
-            end
-        end
-//    end
-end 
-endmodule
-*/
+
 
 module merge_nodes(input node_t min_node, input node_t second_min_node, output node_t merged_node);
 //always_comb begin
@@ -340,156 +300,3 @@ module merge_nodes(input node_t min_node, input node_t second_min_node, output n
 //end   
 endmodule
 
-`define COMPARE 1'b1
-`define DONE 1'b0
-
-//make it sequential 
-module node_sorter_seq(input logic clk, input logic reset, input logic [3:0] state, input node_t input_node[`MAX_CHAR_COUNT], output node_t output_node[`MAX_CHAR_COUNT], output logic sort_done);
- 
-node_t temp_node;
-logic is_compare_done_f, is_compare_done_a, is_compare_done;
-logic is_greater_a, is_greater_f;
-logic is_equal_a, is_equal_f;
-logic is_less_than_a, is_less_than_f;
-logic compare_start;
-
-logic [`MAX_CHAR_COUNT:0] freq_temp_A, freq_temp_B;
-logic [8:0] ascii_temp_A, ascii_temp_B, A, B;
-
-integer num_of_bits, j, k;
-
-logic sort_state;
-
-assign is_compare_done = is_compare_done_a && is_compare_done_f;
-
-
-       always_ff @(posedge clk) begin
-            if(reset) begin
-                sort_done <= 1'b0;
-                output_node = input_node;
-                compare_start <= (state == `SORT);
-                A <= 'b0;
-                B <= 'b0;
-                j = 0;
-                k = 0;
-                sort_state <= `COMPARE;
-            end
-
-        else begin
-        case(sort_state)
-
-        `COMPARE: begin
-        //sorting logic 
-        // for(int j=0; j< `MAX_CHAR_COUNT-1; j++)  begin  
-        //     for (int k= 0; k< `MAX_CHAR_COUNT-1; k++) begin
-            // if (((output_node[k].frequency == output_node[k+1].frequency) && (output_node[k].ascii_char > output_node[k+1].ascii_char)) || (output_node[k].frequency > output_node[k+1].frequency)) begin
-           if(compare_start) begin
-            freq_temp_A <= output_node[k].frequency;
-            freq_temp_B <= output_node[k+1].frequency;
-            ascii_temp_A <= output_node[k].ascii_char;
-            ascii_temp_B <= output_node[k+1].ascii_char;
-            A <= freq_temp_A;
-            B <= freq_temp_B;
-            if (is_compare_done_f && is_greater_f) begin
-                    temp_node = output_node[k];
-                    output_node[k] = output_node[k+1];
-                    output_node[k+1] = temp_node;
-            end
-            else if ((is_compare_done_f && is_equal_f)) begin
-                A <= ascii_temp_A;
-                B <= ascii_temp_B;
-                if (is_compare_done_a && is_greater_a) begin
-                    temp_node = output_node[k];
-                    output_node[k] = output_node[k+1];
-                    output_node[k+1] = temp_node;
-                end
-            end
-            sort_done <= ((k==`MAX_CHAR_COUNT-1) && (j==`MAX_CHAR_COUNT-1));
-                if(is_compare_done_a && is_compare_done_f) begin
-                    j = (k==`MAX_CHAR_COUNT-1)? j+1 : j;
-                    k = (k==`MAX_CHAR_COUNT-1)? 'b0 : k+1;
-                    sort_state <= `COMPARE;
-                end
-                else if(sort_done) begin
-                    sort_state <= `DONE;
-                end
-           end //if
-            end// compare
-
-        `DONE: begin
-            //nothing for now
-        end
-
-
-        endcase
-    end //else 
-            end   //always
-    
-
-//comparator freq_comp(.clk(clk), .reset(reset), .compare_start(compare_start), .num_of_bits(9), .A({5'b0,freq_temp_A}), .B({5'b0,freq_temp_B}), .is_compare_done(is_compare_done_f), .is_equal(is_equal_f), .is_greater(is_greater_f), .is_less_than(is_less_than_f));
-//comparator ascii_comp(.clk(clk), .reset(reset), .compare_start(compare_start), .num_of_bits(9), .A(ascii_temp_A), .B(ascii_temp_B), .is_compare_done(is_compare_done_a), .is_equal(is_equal_a), .is_greater(is_greater_a), .is_less_than(is_less_than_a));
-
-comparator1 freq_comp(.A({freq_temp_A}), .B({freq_temp_B}), .is_equal(is_equal_f), .is_greater(is_greater_f));
-comparator1 ascii_comp(.A(ascii_temp_A), .B(ascii_temp_B), .is_equal(is_equal_a), .is_greater(is_greater_a));
-
-endmodule
-
-
-module comparator1 (input logic A, input logic B, output logic is_equal, output logic is_greater, output logic is_less_than);
-
-assign is_equal = (A == B);
-assign is_greater = (A > B);
-assign is_less_than = (A < B);
-
-endmodule
-
-
-
-module comparator (input logic clk, input logic reset, input logic compare_start, input integer num_of_bits, input logic [8:0] A, input logic [8:0] B, output logic is_compare_done, output logic is_equal, output logic is_greater);
-
-logic break1, break2;
-integer m;
-//1-bit comparator 
-always_ff @(posedge clk) begin
-    if (reset) begin
-    //    m <= num_of_bits;
-        break1 <= 1'b1; //reset everytime for new input
-        break2 <= 1'b1;
-        is_compare_done <= 1'b0;
-        is_greater <= 'b0;
-        is_equal <= 'b0;
-    //    is_less_than <= 'b0;
-        m <= 'b0;
-    end
-    else begin
-
-    if (break1 && compare_start) begin
-            m <= num_of_bits - 1'b1; 
-            is_compare_done <= 1'b0;
-            break2 <= 1'b0;
-            break1 <= break2;
-    end
-    else if (!is_compare_done) begin
-        if (A[m] > B[m]) begin  //greater than
-            is_greater <= 1'b1;
-            is_compare_done <= 1'b1;
-        end
-        else if (A[m] < B[m]) begin
-        //    is_less_than <= 1'b1;
-            is_compare_done <= 1'b1;
-        end
-        else if ((A[m] == B[m]) && (m != 'b0)) begin
-        //    is_equal <= 1'b1;
-            is_compare_done <= 1'b0;
-        end
-        else begin  //when m=0
-            is_equal <= 1'b1;
-            is_compare_done <= 1'b1;
-        end
-        m <= m - 1'b1;
-   end
-    end //else 
-
-end
-
-endmodule

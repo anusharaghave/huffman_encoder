@@ -26,9 +26,9 @@ module tb_top;
        
 
        // freq_in = {3'h2, 3'h1, 'h1};    //anu
-        freq_in[0] = 6;
+        freq_in[0] = 7;
         freq_in[1] = 6;
-        freq_in[2] = 6;
+        freq_in[2] = 7;
         // freq_in[3] = 1;
         // freq_in[4] = 1;
 
