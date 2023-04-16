@@ -30,15 +30,15 @@
 `define BIT_WIDTH 2
 
 
-`define INIT 4'b0000
-`define DATA_COLLECT 4'b0001
-`define FREQ_CALC 4'b0010
-`define SORT 4'b0011
-`define MERGE_BUILD 4'b0100
-`define ENCODE 4'b0101  
-`define LEVEL 4'b0110
-`define ENCODE_VALUE 4'b0111
-`define SEND_OUTPUT 4'b1000
+//`define INIT 3'b000
+`define DATA_COLLECT 3'b001
+`define FREQ_CALC 3'b010
+`define SORT 3'b011
+`define MERGE_BUILD 3'b100
+`define ENCODE 3'b101  
+//`define LEVEL 3'b110
+`define ENCODE_VALUE 3'b110
+`define SEND_OUTPUT 3'b111
 
 
 //left and right nodes are 0 for leaf nodes
@@ -63,20 +63,27 @@ typedef struct {
 } huff_tree_node_t; 
 
 //main encoder module  
-module huff_encoder (input logic clk, input logic reset, input logic [`MAX_CHAR_COUNT-1:0][7:0] data_in, input logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_value, output logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_mask, output logic done);
+module huff_encoder (input logic clk, input logic reset, input logic [11:0] io_in, output logic [11:0] io_out);
 
-logic [0:`MAX_CHAR_COUNT-1][6:0] character;
+
+logic [0:`MAX_CHAR_COUNT-1][7:0] data_in;
+logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in;
 logic [`BIT_WIDTH-1:0] count;
 logic [`MAX_CHAR_COUNT-1:0] odd_idx, even_idx;
 node_t initial_node[`MAX_CHAR_COUNT];
-logic [3:0] state;
+logic [2:0] state;
 huff_tree_node_t huff_tree[`MAX_CHAR_COUNT*2];
 node_t in_huff_tree[0:`MAX_CHAR_COUNT-1];
 node_t out_huff_tree[0:`MAX_CHAR_COUNT]; 
 node_t merged_node; 
+logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_value;
+logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_mask;
+logic done;
+
+logic [0:`MAX_CHAR_COUNT-1][7:0] character;
 
 logic [`MAX_CHAR_COUNT-1:0] encoded_value_h[2*`MAX_CHAR_COUNT];
-logic [`MAX_CHAR_COUNT-1:0] n;
+logic [`MAX_CHAR_COUNT-1:0] a, b, c;
 
 logic [`MAX_CHAR_COUNT-1:0] encoded_value_l;
 logic [`MAX_CHAR_COUNT-1:0] encoded_value_r;
@@ -90,14 +97,17 @@ logic is_n_odd;
 
 always_ff @(posedge clk) begin : huffman_enc
     if (reset) begin    //active high reset
-        state <= `INIT;
+        state <= `DATA_COLLECT;
      //   level = 'b0;
      //  m <= 3'd1;
-       n <= 3'd2;
+       a <= 3'd0;
+       b <= 3'b0;
+       c <= 3'b0;
+        done = 'b0;
+         //   ll = 'b0;
            for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
-            //    encoded_value[i] = 'b0;
+                encoded_value[i] = 'b0;
                 encoded_mask[i] = 'b0;
-                character[i] = 'b0;
                 in_huff_tree[i].ascii_char = 'b0;
                 in_huff_tree[i].frequency = 'b0;
                 in_huff_tree[i].is_leaf_node = 'b0;
@@ -105,15 +115,7 @@ always_ff @(posedge clk) begin : huffman_enc
                 in_huff_tree[i].right_node = 'b0;
             end
 
-    end
-
-    else begin
-    case (state) 
-    
-        `INIT : begin
-            done = 'b0;
-         //   ll = 'b0;
-            
+         
             for (int i=0; i < (2*`MAX_CHAR_COUNT); i++) begin
                 encoded_value_h[i] = 'b0;
                 huff_tree[i].ascii_char = 'b0;
@@ -124,12 +126,19 @@ always_ff @(posedge clk) begin : huffman_enc
                 huff_tree[i].level = 'b0;
             end
             
-                state <= `DATA_COLLECT;
-            
-        end
+        io_out <= 'b0;
 
-        `DATA_COLLECT: begin    
-                state <= `FREQ_CALC;
+    end
+
+    else begin
+    case (state) 
+    
+        `DATA_COLLECT: begin  
+            done = 'b0;  
+                data_in[c] <= io_in[7:0];
+                freq_in[c] <= io_in[10:8];
+                c <= io_in[11] ? c + 1'b1 : 'b0;
+                state <= (c == `MAX_CHAR_COUNT-1)? `FREQ_CALC : `DATA_COLLECT;
         end
 
         `FREQ_CALC: begin
@@ -188,18 +197,23 @@ always_ff @(posedge clk) begin : huffman_enc
             end
         end
         end
-        state <= `LEVEL;
-        end
 
-
-
-    //assigning levels
-    `LEVEL: begin
         for (int n=2; n < (2*`MAX_CHAR_COUNT); n++) begin
                 huff_tree[n].level = huff_tree[huff_tree[n].parent].level + 1'b1;
         end
         state <= `ENCODE_VALUE;
+      
         end
+
+
+
+    // //assigning levels
+    // `LEVEL: begin
+    //     // for (int n=2; n < (2*`MAX_CHAR_COUNT); n++) begin
+    //     //         huff_tree[n].level = huff_tree[huff_tree[n].parent].level + 1'b1;
+    //     // end
+    //     // state <= `ENCODE_VALUE;
+    //     end
 
 
 
@@ -216,6 +230,16 @@ always_ff @(posedge clk) begin : huffman_enc
                      encoded_value_h[n][0] = (is_n_odd) ? {1'b0}: {1'b1};
                 end
             end
+
+         foreach(data_in[i]) begin
+         for (int n=1; n< (2*`MAX_CHAR_COUNT); n++) begin
+            if (huff_tree[n].ascii_char == data_in[i]) begin
+                encoded_mask[i] = (1'b1 << huff_tree[n].level)-1'b1;
+                encoded_value[i] = encoded_value_h[n];
+                character[i] = huff_tree[n].ascii_char;
+                end //if loop
+         end //for loop
+         end
             state <= `SEND_OUTPUT;
     end
 
@@ -223,24 +247,18 @@ always_ff @(posedge clk) begin : huffman_enc
      //extract only encodings for unique characters 
     `SEND_OUTPUT: begin     //state=7
 
-
-        foreach(data_in[i]) begin
-        for (int n=1; n< (2*`MAX_CHAR_COUNT); n++) begin
-            if (huff_tree[n].ascii_char == data_in[i]) begin
-                encoded_mask[i] = (1'b1 << huff_tree[n].level)-1'b1;
-             character[i] = huff_tree[n].ascii_char;
-                encoded_value[i] = encoded_value_h[n];
-                end //if loop
-        end //for loop
-        end
-       
-
         done = 1'b1;    //used in SV tb to stop the simulation
+       // io_out[11:8] <= 'b0;
+        io_out[8:0] <= (b[0] == 1'b0) ? {done, character[a]} : {done, 2'b0, encoded_mask[a], encoded_value[a]};
+        b <= b + 1'b1;
+        a <= (b[0] == 1'b1)? a+1: a;     // 1 cycle delay
+        state <= (a == `MAX_CHAR_COUNT)? `DATA_COLLECT : `SEND_OUTPUT; 
         end
 
         default : begin
-            state <= `INIT;
+            state <= `DATA_COLLECT;
         end
+
     endcase
     end
 
