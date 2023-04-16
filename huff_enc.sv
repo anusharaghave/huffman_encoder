@@ -84,7 +84,7 @@ logic is_n_odd;
 
 
     freq_calc freq_calc_ins(.data_in(data_in), .freq_in(freq_in), .node(initial_node));
-        node_sorter node_sorter_ins(.clk(clk), .input_node(in_huff_tree[0:`MAX_CHAR_COUNT-1]), .output_node(out_huff_tree[0:`MAX_CHAR_COUNT-1]));
+    node_sorter node_sorter_ins(.clk(clk), .input_node(in_huff_tree[0:`MAX_CHAR_COUNT-1]), .output_node(out_huff_tree[0:`MAX_CHAR_COUNT-1]));
  //node_sorter_seq node_sorter_ins(.clk(clk), .reset(reset), .state(state), .input_node(in_huff_tree[0:`MAX_CHAR_COUNT-1]), .output_node(out_huff_tree[0:`MAX_CHAR_COUNT-1]), .sort_done(sort_done));
     merge_nodes merge_nodes_ins(.min_node(out_huff_tree[0]), .second_min_node(out_huff_tree[1]), .merged_node(merged_node));
 
@@ -95,7 +95,7 @@ always_ff @(posedge clk) begin : huffman_enc
      //  m <= 3'd1;
        n <= 3'd2;
            for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
-                encoded_value[i] = 'b0;
+            //    encoded_value[i] = 'b0;
                 encoded_mask[i] = 'b0;
                 character[i] = 'b0;
                 in_huff_tree[i].ascii_char = 'b0;
@@ -124,8 +124,6 @@ always_ff @(posedge clk) begin : huffman_enc
                 huff_tree[i].level = 'b0;
             end
             
-            
-        
                 state <= `DATA_COLLECT;
             
         end
@@ -183,19 +181,19 @@ always_ff @(posedge clk) begin : huffman_enc
 
         `ENCODE: begin  //state=6
           //assigning parent field for a node if that node is present as a child node either in left or right node 
-     for (int l=(2*`MAX_CHAR_COUNT)-1; l > 1; l--) begin
+        for (int l=(2*`MAX_CHAR_COUNT)-1; l > 1; l--) begin
         for (int n=1; n< (2*`MAX_CHAR_COUNT); n++) begin
-            if (huff_tree[n].left_node == huff_tree[l].ascii_char | huff_tree[n].right_node == huff_tree[l].ascii_char) begin
+            if (huff_tree[n].left_node == huff_tree[l].ascii_char || huff_tree[n].right_node == huff_tree[l].ascii_char) begin
                 huff_tree[l].parent = n;
             end
         end
         end
-    state <= `LEVEL;
+        state <= `LEVEL;
         end
 
 /*
         `LEVEL: begin
-            if (((huff_tree[n].ascii_char == huff_tree[m].left_node) | (huff_tree[n].ascii_char == huff_tree[m].right_node)) && (huff_tree[m].is_leaf_node != 1'b1)) begin
+            if (((huff_tree[n].ascii_char == huff_tree[m].left_node) || (huff_tree[n].ascii_char == huff_tree[m].right_node)) && (huff_tree[m].is_leaf_node != 1'b1)) begin
                 huff_tree[n].level = huff_tree[m].level + 1;
             end
             m <= (n == 3'd6) ? m+1'b1: m;
@@ -211,8 +209,6 @@ always_ff @(posedge clk) begin : huffman_enc
 */
 
     //assigning levels
-    
-
     `LEVEL: begin
         for (n=2; n < (2*`MAX_CHAR_COUNT); n++) begin
                 huff_tree[n].level = huff_tree[huff_tree[n].parent].level + 1'b1;
@@ -224,8 +220,8 @@ always_ff @(posedge clk) begin : huffman_enc
 
     `ENCODE_VALUE: begin
 
-            encoded_value_h[2][0] = 1'b0;
-            encoded_value_h[3][0] = 1'b1;
+            encoded_value_h[2][0] = 'b0;
+            encoded_value_h[3][0] = 'b1;
 
 
 
@@ -234,8 +230,6 @@ always_ff @(posedge clk) begin : huffman_enc
                 encoded_value_r = (encoded_value_h[huff_tree[n].parent] << 1'b1) | 1'b1;
                 is_n_odd = n[0]; 
                     encoded_value_h[n] = (is_n_odd) ? encoded_value_r: encoded_value_l;
-            //encoded_value_h[4] = encoded_value_l;
-            //encoded_value_h[5] = encoded_value_r;
            
             end
             state <= `SEND_OUTPUT;
@@ -244,6 +238,7 @@ always_ff @(posedge clk) begin : huffman_enc
 
      //extract only encodings for unique characters 
     `SEND_OUTPUT: begin     //state=7
+
 
         foreach(data_in[i]) begin
         for (int n=1; n< (2*`MAX_CHAR_COUNT); n++) begin
@@ -254,6 +249,7 @@ always_ff @(posedge clk) begin : huffman_enc
                 end //if loop
         end //for loop
         end
+       
 
         done = 1'b1;    //used in SV tb to stop the simulation
         end
