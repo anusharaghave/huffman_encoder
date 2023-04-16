@@ -4,7 +4,7 @@ module tb_top;
   
  logic [0:`MAX_CHAR_COUNT-1][7:0] data_in;
  // logic [`MAX_CHAR_COUNT-1:0][3:0] data_in, string_input;
-  logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in;
+  logic [0:`MAX_CHAR_COUNT-1][1:0] freq_in;
   logic [`MAX_CHAR_COUNT*`MAX_CHAR_COUNT-1:0] encoded_value;
   logic data_en;
   logic clk, reset, done;
@@ -19,14 +19,18 @@ module tb_top;
         // data_in = "adity"; //working
         // data_in = "anusha";
         // data_in = "aabb";
-        data_in[0] = "~";   //7e    //no encoding for single character
-        data_in[1] = "|";   //7c
-        data_in[2] = "}";   //7d
+        // data_in[0] = "~";   //7e    //no encoding for single character
+        // data_in[1] = "|";   //7c
+        // data_in[2] = "}";   //7d
+
+        data_in[0] = "o";   //7e    //no encoding for single character
+        data_in[1] = "n";   //7c
+        data_in[2] = "m";   //7d
 
        // freq_in = {3'h2, 3'h1, 'h1};    //anu
-        freq_in[0] = 7;
-        freq_in[1] = 6;
-        freq_in[2] = 7;
+        freq_in[0] = 3;
+        freq_in[1] = 1;
+        freq_in[2] = 2;
         // freq_in[3] = 1;
         // freq_in[4] = 1;
          #5 reset = 0;
@@ -82,7 +86,8 @@ module tb_top;
         end
 
         for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
-        $display("OUTPUT: character[%0d]:%s, encoded mask[%0d]:%b, encoded values[%0d]:%b\n", i, DUT.character[i], i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
+     //   $display("OUTPUT: character[%0d]:%s, encoded mask[%0d]:%b, encoded values[%0d]:%b\n", i, DUT.character[i], i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
+$display("OUTPUT: encoded mask[%0d]:%b, encoded values[%0d]:%b\n", i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
         end
 
         $display("state:%p\n", DUT.state);
