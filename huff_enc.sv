@@ -31,34 +31,30 @@
 `define BIT_WIDTH 2
 
 
-//`define INIT 3'b000
+
 `define DATA_COLLECT 3'b001
 `define FREQ_CALC 3'b010
 `define SORT 3'b011
 `define MERGE_BUILD 3'b100
 `define ENCODE 3'b101  
-//`define LEVEL 3'b110
 `define ENCODE_VALUE 3'b110
 `define SEND_OUTPUT 3'b111
 
 
 //left and right nodes are 0 for leaf nodes
 typedef struct {
-    logic [`BIT_WIDTH+2:0] ascii_char; //7 max bits + 1
-    //logic [4:0] ascii_char;
-    logic [`MAX_CHAR_COUNT-2:0] frequency;
+    logic [4:0] ascii_char; //4 max + 1
+    logic [2:0] frequency;   //only 2 bits+1
     logic is_leaf_node;
-     logic [`BIT_WIDTH+2:0] left_node;  //stores the index
-     logic [`BIT_WIDTH+2:0] right_node; //stores the index
+     logic [4:0] left_node;  //stores the index
+     logic [4:0] right_node; //stores the index
 } node_t;
 
 typedef struct {
-    logic [`BIT_WIDTH+2:0] ascii_char; 
-    //logic [9:0] ascii_char;
-   // logic [2:0] frequency;
+    logic [4:0] ascii_char; 
     logic is_leaf_node;
-    logic [`BIT_WIDTH+2:0] left_node;  //stores the index
-    logic [`BIT_WIDTH+2:0] right_node; //stores the index
+    logic [4:0] left_node;  //stores the index
+    logic [4:0] right_node; //stores the index
     logic [`BIT_WIDTH-1:0] parent;
     logic [`BIT_WIDTH-1:0] level;
 } huff_tree_node_t; 
@@ -68,9 +64,9 @@ module huff_encoder (input logic clk, input logic reset, input logic [11:0] io_i
 
 
 logic [0:`MAX_CHAR_COUNT-1][7:0] data_in;
-logic [0:`MAX_CHAR_COUNT-1][1:0] freq_in;
+logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in;
 logic [`BIT_WIDTH-1:0] count;
-logic [`MAX_CHAR_COUNT-1:0] odd_idx, even_idx;
+logic [`BIT_WIDTH+1:0] odd_idx, even_idx;
 node_t initial_node[`MAX_CHAR_COUNT];
 logic [2:0] state;
 huff_tree_node_t huff_tree[`MAX_CHAR_COUNT*2];
@@ -81,14 +77,14 @@ logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_value;
 logic [0:`MAX_CHAR_COUNT-1][`MAX_CHAR_COUNT-1:0] encoded_mask;
 logic done;
 
-//logic [0:`MAX_CHAR_COUNT-1][7:0] character;
+logic [0:`MAX_CHAR_COUNT-1][4:0] character;
 
 logic [`MAX_CHAR_COUNT-1:0] encoded_value_h[2*`MAX_CHAR_COUNT];
-logic [`MAX_CHAR_COUNT-1:0] b, c;
+logic [`MAX_CHAR_COUNT-1:0] a, b, c;
 
 logic [`MAX_CHAR_COUNT-1:0] encoded_value_l;
 logic [`MAX_CHAR_COUNT-1:0] encoded_value_r;
-//logic is_n_odd;
+logic is_n_odd;
 
 
     freq_calc freq_calc_ins(.data_in(data_in), .freq_in(freq_in), .node(initial_node));
@@ -98,7 +94,7 @@ logic [`MAX_CHAR_COUNT-1:0] encoded_value_r;
 always_ff @(posedge clk) begin : huffman_enc
     if (reset) begin    //active high reset
         state <= `DATA_COLLECT;
-    //   a <= 3'd0;
+       a <= 3'd0;
        b <= 3'b0;
        c <= 3'b0;
         done = 'b0;
@@ -111,6 +107,7 @@ always_ff @(posedge clk) begin : huffman_enc
                 in_huff_tree[i].is_leaf_node = 'b0;
                 in_huff_tree[i].left_node = 'b0;
                 in_huff_tree[i].right_node = 'b0;
+                character[i] = 'b0;
             end
 
          
@@ -123,7 +120,9 @@ always_ff @(posedge clk) begin : huffman_enc
                 huff_tree[i].right_node = 'b0;
                 huff_tree[i].level = 'b0;
             end
-            
+
+        encoded_value_l = 'b0;
+        encoded_value_r = 'b0;      
         io_out <= 'b0;
 
     end
@@ -137,7 +136,7 @@ always_ff @(posedge clk) begin : huffman_enc
                 freq_in[c] <= io_in[10:8];
               //  c <= io_in[11] ? c + 1'b1 : 'b0;
                 c <= c + 1'b1;
-                state <= (c == 'd2)? `FREQ_CALC : `DATA_COLLECT;
+                state <= (c > `MAX_CHAR_COUNT)? `FREQ_CALC : `DATA_COLLECT;
         end
 
         `FREQ_CALC: begin
@@ -191,7 +190,7 @@ always_ff @(posedge clk) begin : huffman_enc
           //assigning parent field for a node if that node is present as a child node either in left or right node 
         for (int l=(2*`MAX_CHAR_COUNT)-1; l > 1; l--) begin
         for (int n=1; n< (2*`MAX_CHAR_COUNT); n++) begin
-            if (huff_tree[n].left_node == huff_tree[l].ascii_char || huff_tree[n].right_node == huff_tree[l].ascii_char) begin
+            if ((huff_tree[n].is_leaf_node == 'b0) && (huff_tree[n].left_node == huff_tree[l].ascii_char || huff_tree[n].right_node == huff_tree[l].ascii_char)) begin
                 huff_tree[l].parent = n;
             end
         end
@@ -204,34 +203,27 @@ always_ff @(posedge clk) begin : huffman_enc
       
         end
 
-
-
-
     `ENCODE_VALUE: begin
 
-            encoded_value_h[2][0] = 1'b0; 
-            encoded_value_h[3][0] = 1'b1; 
 
-       //  for (int n=4; n < (2*`MAX_CHAR_COUNT); n++) begin  //1-root node
-                encoded_value_l = encoded_value_h[huff_tree[4].parent] << 1'b1;
-                encoded_value_r = (encoded_value_h[huff_tree[5].parent] << 1'b1) | 1'b1;
-              //  is_n_odd = n[0]; 
-              //  if (huff_tree[n].parent != 1'b1) begin   
-              //      encoded_value_h[n] = (is_n_odd) ? encoded_value_l: encoded_value_r;
-                    encoded_value_h[4] =  encoded_value_l;
-                    encoded_value_h[5] =  encoded_value_r;
-              //  end
-                // else if (huff_tree[n].parent == 1'b1) begin
-                //      encoded_value_h[n][0] = (is_n_odd) ? {1'b0}: {1'b1};
-                // end
-       //     end
+        for (int n=2; n < (2*`MAX_CHAR_COUNT); n++) begin  //1-root node
+                 encoded_value_l = encoded_value_h[huff_tree[n].parent] << 1'b1;
+                 encoded_value_r = (encoded_value_h[huff_tree[n].parent] << 1'b1) | 1'b1;
+                is_n_odd = n[0]; 
+                if (huff_tree[n].parent != 1'b1) begin   
+                    encoded_value_h[n] = (is_n_odd) ? encoded_value_r: encoded_value_l;
+                end
+                 else if (huff_tree[n].parent == 1'b1) begin
+                      encoded_value_h[n][0] = (is_n_odd) ? {1'b1}: {1'b0};
+                 end
+            end
 
          foreach(data_in[i]) begin
          for (int n=1; n< (2*`MAX_CHAR_COUNT); n++) begin
-            if (huff_tree[n].ascii_char == data_in[i][3:0]) begin
+            if (huff_tree[n].ascii_char == data_in[i][3:0] && (huff_tree[n].is_leaf_node == 'b1)) begin
                 encoded_mask[i] = (1'b1 << huff_tree[n].level)-1'b1;
                 encoded_value[i] = encoded_value_h[n];
-            //    character[i] = huff_tree[n].ascii_char;
+                character[i] = huff_tree[n].ascii_char;
                 end //if loop
          end //for loop
          end
@@ -244,12 +236,11 @@ always_ff @(posedge clk) begin : huffman_enc
 
         done = 1'b1;    //used in SV tb to stop the simulation
        // io_out[11:8] <= 'b0;
-       // io_out[`BIT_WIDTH+1:0] <= (b[0] == 1'b0) ? {done, character[a]} : {done, 2'b0, encoded_mask[a], encoded_value[a]};
-     //  io_out[`BIT_WIDTH+1:0] <= (b[0] == 1'b0) ? {done, 8'b0} : {done, 2'b0, encoded_mask[a], encoded_value[a]};
-       io_out[8:0] <= {done, 2'b0, encoded_mask[b], encoded_value[b]};
+        io_out[8:0] <= (b[0] == 1'b0) ? {done, 3'b011, character[a]} : {done, 2'b0, encoded_mask[a], encoded_value[a]};
+     //  io_out[8:0] <= {done, 2'b0, encoded_mask[b], encoded_value[b]};
         b <= b + 1'b1;
-     //   a <= (b[0] == 1'b1)? a+1: a;     // 1 cycle delay
-        state <= (b[0] && b[1])? `DATA_COLLECT : `SEND_OUTPUT; 
+        a <= (b[0] == 1'b1)? a+1: a;     // 1 cycle delay
+        state <= (a > `MAX_CHAR_COUNT)? `DATA_COLLECT : `SEND_OUTPUT; 
         end
 
         default : begin
@@ -265,7 +256,7 @@ end //posedge_clk
 endmodule
 
 
-module freq_calc(input logic [0:`MAX_CHAR_COUNT-1][7:0] data_in, input logic [0:`MAX_CHAR_COUNT-1][1:0] freq_in, output node_t node[`MAX_CHAR_COUNT]);
+module freq_calc(input logic [0:`MAX_CHAR_COUNT-1][7:0] data_in, input logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in, output node_t node[`MAX_CHAR_COUNT]);
 
 always_comb begin
         for (int i=0; i< `MAX_CHAR_COUNT; i++) begin

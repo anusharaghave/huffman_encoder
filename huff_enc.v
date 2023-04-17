@@ -1,340 +1,233 @@
-`default_nettype wire
 module huff_encoder (
 	clk,
 	reset,
-	data,
-	data_en,
-	encoded_value,
-	encoded_mask,
-	character
+	io_in,
+	io_out
 );
 	input wire clk;
 	input wire reset;
-	input wire [34:0] data;
-	input wire data_en;
-	output reg [24:0] encoded_value;
-	output reg [24:0] encoded_mask;
-	output reg [34:0] character;
-	integer count;
-	integer unique_char_count;
-	reg [128:0] node [0:4];
-	wire [644:0] initial_node;
-	reg [34:0] data_in;
+	input wire [11:0] io_in;
+	output reg [11:0] io_out;
+	reg [23:0] data_in;
+	reg [8:0] freq_in;
+	reg [1:0] count;
+	reg [3:0] odd_idx;
+	reg [3:0] even_idx;
+	wire [56:0] initial_node;
 	reg [2:0] state;
-	integer index;
-	integer ll;
-	reg [192:0] huff_tree [0:9];
-	reg [644:0] in_huff_tree [0:4];
-	reg [128:0] out_huff_tree [0:4][0:5];
-	wire [128:0] merged_nodes_list;
-	wire [644:0] out_huff_tree_s;
-	reg [4:0] encoded_mask_h [0:9];
-	reg [4:0] encoded_value_h [0:9];
-	reg signed [31:0] j;
-	reg signed [31:0] itr;
-	wire data_collect;
-	wire sort_done;
+	reg [19:0] huff_tree [0:5];
+	reg [56:0] in_huff_tree;
+	wire [75:0] out_huff_tree;
+	wire [18:0] merged_node;
+	reg [8:0] encoded_value;
+	reg [8:0] encoded_mask;
+	reg done;
+	reg [14:0] character;
+	reg [2:0] encoded_value_h [0:5];
+	reg [2:0] a;
+	reg [2:0] b;
+	reg [2:0] c;
+	reg [2:0] encoded_value_l;
+	reg [2:0] encoded_value_r;
+	reg is_n_odd;
 	freq_calc freq_calc_ins(
-		.clk(clk),
-		.reset(reset),
 		.data_in(data_in),
-		.data_en(data_en),
-		.node(initial_node),
-		.count(unique_char_count)
+		.freq_in(freq_in),
+		.node(initial_node)
 	);
 	node_sorter node_sorter_ins(
 		.clk(clk),
-		.count(unique_char_count),
-		.node(in_huff_tree[ll][0+:645]),
-		.output_node(out_huff_tree_s[0+:645])
+		.input_node(in_huff_tree[0+:57]),
+		.output_node(out_huff_tree[19+:57])
 	);
 	merge_nodes merge_nodes_ins(
-		.min_node(out_huff_tree_s[516+:129]),
-		.second_min_node(out_huff_tree_s[387+:129]),
-		.merged_node(merged_nodes_list)
+		.min_node(out_huff_tree[57+:19]),
+		.second_min_node(out_huff_tree[38+:19]),
+		.merged_node(merged_node)
 	);
 	always @(posedge clk) begin : huffman_enc
-		if (~reset)
-			state = 3'b000;
-		case (state)
-			3'b000: begin
-				ll = 0;
-				begin : sv2v_autoblock_1
-					reg signed [31:0] i;
-					for (i = 0; i < 10; i = i + 1)
-						begin
-							encoded_value[(4 - i) * 5+:5] = 'bz;
-							encoded_mask[(4 - i) * 5+:5] = 'b0;
-							encoded_value_h[i] = 'bz;
-							encoded_mask_h[i] = 'b0;
-							huff_tree[i][192-:32] = 'bz;
-							huff_tree[i][160-:32] = 0;
-							huff_tree[i][128] = 1'b0;
-							huff_tree[i][63-:32] = 'b0;
-							huff_tree[i][127-:32] = 'b0;
-							huff_tree[i][95-:32] = 'b0;
-							huff_tree[i][31-:32] = 'b0;
-						end
-				end
-				begin : sv2v_autoblock_2
-					reg signed [31:0] j;
-					for (j = 0; j < 5; j = j + 1)
-						begin
-							node[j][128-:32] = 0;
-							node[j][96-:32] = 0;
-							node[j][63-:32] = 0;
-							node[j][31-:32] = 0;
-							node[j][64] = 1'b1;
-						end
-				end
-				state <= 3'b001;
+		if (reset) begin
+			state <= 3'b001;
+			a <= 3'd0;
+			b <= 3'b000;
+			c <= 3'b000;
+			done = 'b0;
+			begin : sv2v_autoblock_1
+				reg signed [31:0] i;
+				for (i = 0; i < 3; i = i + 1)
+					begin
+						encoded_value[(2 - i) * 3+:3] = 'b0;
+						encoded_mask[(2 - i) * 3+:3] = 'b0;
+						in_huff_tree[((2 - i) * 19) + 18-:5] = 'b0;
+						in_huff_tree[((2 - i) * 19) + 13-:3] = 'b0;
+						in_huff_tree[((2 - i) * 19) + 10] = 'b0;
+						in_huff_tree[((2 - i) * 19) + 9-:5] = 'b0;
+						in_huff_tree[((2 - i) * 19) + 4-:5] = 'b0;
+						character[(2 - i) * 5+:5] = 'b0;
+					end
 			end
-			3'b001: begin
-				data_in = data;
-				state <= 3'b010;
+			begin : sv2v_autoblock_2
+				reg signed [31:0] i;
+				for (i = 0; i < 6; i = i + 1)
+					begin
+						encoded_value_h[i] = 'b0;
+						huff_tree[i][19-:5] = 'b0;
+						huff_tree[i][14] = 1'b0;
+						huff_tree[i][3-:2] = 'b0;
+						huff_tree[i][13-:5] = 'b0;
+						huff_tree[i][8-:5] = 'b0;
+						huff_tree[i][1-:2] = 'b0;
+					end
 			end
-			3'b010: begin
-				begin : sv2v_autoblock_3
-					reg signed [31:0] j;
-					for (j = 0; j < 5; j = j + 1)
-						node[j] = initial_node[(4 - j) * 129+:129];
+			encoded_value_l = 'b0;
+			encoded_value_r = 'b0;
+			io_out <= 'b0;
+		end
+		else
+			case (state)
+				3'b001: begin
+					done = 'b0;
+					data_in[(2 - c) * 8+:8] <= io_in[7:0];
+					freq_in[(2 - c) * 3+:3] <= io_in[10:8];
+					c <= c + 1'b1;
+					state <= (c > 3 ? 3'b010 : 3'b001);
 				end
-				count = unique_char_count;
-				begin : sv2v_autoblock_4
-					reg signed [31:0] i;
-					for (i = 0; i < unique_char_count; i = i + 1)
-						in_huff_tree[0][(4 - i) * 129+:129] = initial_node[(4 - i) * 129+:129];
-				end
-				state <= 3'b011;
-			end
-			3'b011: state <= 3'b100;
-			3'b100: begin
-				begin : sv2v_autoblock_5
-					reg signed [31:0] i;
-					for (i = 0; i < unique_char_count; i = i + 1)
-						out_huff_tree[ll][i] = out_huff_tree_s[(4 - i) * 129+:129];
-				end
-				in_huff_tree[ll + 1][0+:645] = {merged_nodes_list, out_huff_tree[ll][2:5]};
-				count = count - 1;
-				if (count == 0) begin
-					state <= 3'b101;
-					ll = 0;
-				end
-				else begin
+				3'b010: begin
+					count = 3;
+					begin : sv2v_autoblock_3
+						reg signed [31:0] i;
+						for (i = 0; i < 3; i = i + 1)
+							in_huff_tree[(2 - i) * 19+:19] = initial_node[(2 - i) * 19+:19];
+					end
 					state <= 3'b011;
-					ll = ll + 1;
 				end
-			end
-			3'b101: begin
-				begin : sv2v_autoblock_6
-					reg signed [31:0] l;
-					for (l = 0; l < unique_char_count; l = l + 1)
-						begin
-							j = (unique_char_count - 1) - l;
-							if (j != 0) begin
-								huff_tree[2 * j][192-:32] = out_huff_tree[l][0][128-:32];
-								huff_tree[(2 * j) + 1][192-:32] = out_huff_tree[l][1][128-:32];
-								huff_tree[2 * j][128] = out_huff_tree[l][0][64];
-								huff_tree[(2 * j) + 1][128] = out_huff_tree[l][1][64];
-								huff_tree[2 * j][160-:32] = out_huff_tree[l][0][96-:32];
-								huff_tree[(2 * j) + 1][160-:32] = out_huff_tree[l][1][96-:32];
-								huff_tree[2 * j][127-:32] = out_huff_tree[l][0][63-:32];
-								huff_tree[(2 * j) + 1][127-:32] = out_huff_tree[l][1][63-:32];
-								huff_tree[2 * j][95-:32] = out_huff_tree[l][0][31-:32];
-								huff_tree[(2 * j) + 1][95-:32] = out_huff_tree[l][1][31-:32];
+				3'b011: state <= 3'b100;
+				3'b100: begin
+					in_huff_tree[38+:19] = merged_node;
+					in_huff_tree[0+:38] = out_huff_tree[0+:38];
+					count = count - 1'b1;
+					even_idx = count << 1'b1;
+					odd_idx = even_idx + 1'b1;
+					huff_tree[even_idx][19-:5] = out_huff_tree[75-:5];
+					huff_tree[odd_idx][19-:5] = out_huff_tree[56-:5];
+					huff_tree[even_idx][14] = out_huff_tree[67];
+					huff_tree[odd_idx][14] = out_huff_tree[48];
+					huff_tree[even_idx][13-:5] = out_huff_tree[66-:5];
+					huff_tree[odd_idx][13-:5] = out_huff_tree[47-:5];
+					huff_tree[even_idx][8-:5] = out_huff_tree[61-:5];
+					huff_tree[odd_idx][8-:5] = out_huff_tree[42-:5];
+					huff_tree[1][19-:5] = out_huff_tree[75-:5];
+					huff_tree[1][14] = out_huff_tree[67];
+					huff_tree[1][13-:5] = out_huff_tree[66-:5];
+					huff_tree[1][8-:5] = out_huff_tree[61-:5];
+					if (!(count[0] | count[1]))
+						state <= 3'b101;
+					else
+						state <= 3'b011;
+				end
+				3'b101: begin
+					begin : sv2v_autoblock_4
+						reg signed [31:0] l;
+						for (l = 5; l > 1; l = l - 1)
+							begin : sv2v_autoblock_5
+								reg signed [31:0] n;
+								for (n = 1; n < 6; n = n + 1)
+									if ((huff_tree[n][14] == 'b0) && ((huff_tree[n][13-:5] == huff_tree[l][19-:5]) || (huff_tree[n][8-:5] == huff_tree[l][19-:5])))
+										huff_tree[l][3-:2] = n;
 							end
-							else if (j == 0) begin
-								huff_tree[(2 * j) + 1][192-:32] = out_huff_tree[l][0][128-:32];
-								huff_tree[(2 * j) + 1][128] = out_huff_tree[l][0][64];
-								huff_tree[(2 * j) + 1][160-:32] = out_huff_tree[l][0][96-:32];
-								huff_tree[(2 * j) + 1][127-:32] = out_huff_tree[l][0][63-:32];
-								huff_tree[(2 * j) + 1][95-:32] = out_huff_tree[l][0][31-:32];
+					end
+					begin : sv2v_autoblock_6
+						reg signed [31:0] n;
+						for (n = 2; n < 6; n = n + 1)
+							huff_tree[n][1-:2] = huff_tree[huff_tree[n][3-:2]][1-:2] + 1'b1;
+					end
+					state <= 3'b110;
+				end
+				3'b110: begin
+					begin : sv2v_autoblock_7
+						reg signed [31:0] n;
+						for (n = 2; n < 6; n = n + 1)
+							begin
+								encoded_value_l = encoded_value_h[huff_tree[n][3-:2]] << 1'b1;
+								encoded_value_r = (encoded_value_h[huff_tree[n][3-:2]] << 1'b1) | 1'b1;
+								is_n_odd = n[0];
+								if (huff_tree[n][3-:2] != 1'b1)
+									encoded_value_h[n] = (is_n_odd ? encoded_value_r : encoded_value_l);
+								else if (huff_tree[n][3-:2] == 1'b1)
+									encoded_value_h[n][0] = (is_n_odd ? 1'b1 : 1'b0);
 							end
-						end
-				end
-				begin : sv2v_autoblock_7
-					reg signed [31:0] l;
-					for (l = (2 * unique_char_count) - 1; l > 1; l = l - 1)
-						begin : sv2v_autoblock_8
-							reg signed [31:0] n;
-							for (n = 1; n < (2 * unique_char_count); n = n + 1)
-								if ((huff_tree[n][127-:32] == huff_tree[l][192-:32]) | (huff_tree[n][95-:32] == huff_tree[l][192-:32]))
-									huff_tree[l][63-:32] = n;
-						end
-				end
-				begin : sv2v_autoblock_9
-					reg signed [31:0] m;
-					for (m = 1; m < 10; m = m + 1)
-						if (huff_tree[m][128] != 1) begin : sv2v_autoblock_10
-							reg signed [31:0] n;
-							for (n = 2; n < 10; n = n + 1)
-								begin
-									if (huff_tree[n][192-:32] == huff_tree[m][127-:32])
-										huff_tree[n][31-:32] = huff_tree[m][31-:32] + 1;
-									if (huff_tree[n][192-:32] == huff_tree[m][95-:32])
-										huff_tree[n][31-:32] = huff_tree[m][31-:32] + 1;
-								end
-						end
-				end
-				state <= 3'b110;
-			end
-			3'b110: begin
-				begin : sv2v_autoblock_11
-					reg signed [31:0] n;
-					for (n = 2; n < (2 * unique_char_count); n = n + 1)
-						begin
-							encoded_mask_h[n] = (1'b1 << huff_tree[n][31-:32]) - 1;
-							if (huff_tree[n][63-:32] != 1)
-								encoded_value_h[n] = ((n % 2) == 0 ? encoded_value_h[huff_tree[n][63-:32]] << 1'b1 : (encoded_value_h[huff_tree[n][63-:32]] << 1'b1) | 1'b1);
-							else if (huff_tree[n][63-:32] == 1)
-								encoded_value_h[n][0] = ((n % 2) == 0 ? 1'b0 : 1'b1);
-						end
-				end
-				state <= 3'b111;
-			end
-			3'b111: begin
-				itr = 0;
-				begin : sv2v_autoblock_12
-					reg signed [31:0] n;
-					for (n = 0; n < (2 * unique_char_count); n = n + 1)
-						begin
-							if (huff_tree[n][128] == 1) begin
-								encoded_mask[(4 - itr) * 5+:5] = encoded_mask_h[n];
-								encoded_value[(4 - itr) * 5+:5] = encoded_value_h[n];
-								character[(4 - itr) * 7+:7] = huff_tree[n][192-:32];
-								itr = itr + 1;
+					end
+					begin : sv2v_autoblock_8
+						integer i;
+						for (i = 0; i <= 2; i = i + 1)
+							begin : sv2v_autoblock_9
+								reg signed [31:0] n;
+								for (n = 1; n < 6; n = n + 1)
+									if ((huff_tree[n][19-:5] == data_in[((2 - i) * 8) + 3-:4]) && (huff_tree[n][14] == 'b1)) begin
+										encoded_mask[(2 - i) * 3+:3] = (1'b1 << huff_tree[n][1-:2]) - 1'b1;
+										encoded_value[(2 - i) * 3+:3] = encoded_value_h[n];
+										character[(2 - i) * 5+:5] = huff_tree[n][19-:5];
+									end
 							end
-							$display("Output sent\n");
-						end
-				end
-				if (data_en)
-					state <= 3'b000;
-				else
+					end
 					state <= 3'b111;
-			end
-			default: state <= 3'b000;
-		endcase
+				end
+				3'b111: begin
+					done = 1'b1;
+					io_out[8:0] <= (b[0] == 1'b0 ? {done, 3'b011, character[(2 - a) * 5+:5]} : {done, 2'b00, encoded_mask[(2 - a) * 3+:3], encoded_value[(2 - a) * 3+:3]});
+					b <= b + 1'b1;
+					a <= (b[0] == 1'b1 ? a + 1 : a);
+					state <= (a > 3 ? 3'b001 : 3'b111);
+				end
+				default: state <= 3'b001;
+			endcase
 	end
 endmodule
 module freq_calc (
-	clk,
-	reset,
 	data_in,
-	data_en,
-	node,
-	count
+	freq_in,
+	node
 );
-	input wire clk;
-	input wire reset;
-	input wire [34:0] data_in;
-	input wire data_en;
-	output reg [644:0] node;
-	output integer count;
-	integer cnt;
-	integer index;
-	reg node_create;
-	reg matched;
-	reg break1;
-	integer ctr;
-	always @(posedge clk)
-		if (~reset) begin : sv2v_autoblock_1
-			reg signed [31:0] i;
-			for (i = 0; i < 5; i = i + 1)
-				begin
-					node[((4 - i) * 129) + 128-:32] = 'b0;
-					node[((4 - i) * 129) + 96-:32] = 'b0;
-					node[((4 - i) * 129) + 63-:32] = 'b0;
-					node[((4 - i) * 129) + 31-:32] = 'b0;
-					node[((4 - i) * 129) + 64] = 1'b0;
-				end
-		end
-		else if (data_en) begin
-			node_create = 1;
-			ctr = 0;
-			begin : sv2v_autoblock_2
-				integer i;
-				for (i = 0; i <= 4; i = i + 1)
-					begin
-						matched = 0;
-						break1 = 0;
-						cnt = 1'b1;
-						index = ctr;
-						node[((4 - index) * 129) + 64] = 1'b1;
-						begin : sv2v_autoblock_3
-							reg signed [31:0] j;
-							for (j = 0; j < i; j = j + 1)
-								if (break1 == 0)
-									if (data_in[(4 - i) * 7+:7] == node[((4 - j) * 129) + 128-:32]) begin
-										cnt = node[((4 - j) * 129) + 96-:32] + 1;
-										index = j;
-										matched = 1;
-										break1 = 1;
-									end
-									else begin
-										matched = 0;
-										break1 = 0;
-									end
-						end
-						if (i == 0)
-							ctr = ctr + 1;
-						else
-							ctr = (matched ? ctr : ctr + 1);
-						node[((4 - index) * 129) + 128-:32] = data_in[(4 - i) * 7+:7];
-						node[((4 - index) * 129) + 96-:32] = cnt;
-					end
+	input wire [23:0] data_in;
+	input wire [8:0] freq_in;
+	output reg [56:0] node;
+	always @(*) begin : sv2v_autoblock_1
+		reg signed [31:0] i;
+		for (i = 0; i < 3; i = i + 1)
+			begin
+				node[((2 - i) * 19) + 18-:5] = data_in[(2 - i) * 8+:8];
+				node[((2 - i) * 19) + 13-:3] = freq_in[(2 - i) * 3+:3];
+				node[((2 - i) * 19) + 9-:5] = 'b0;
+				node[((2 - i) * 19) + 4-:5] = 'b0;
+				node[((2 - i) * 19) + 10] = 1'b1;
 			end
-			node_create = 1'b1;
-		end
-	always @(*)
-		if (node_create) begin
-			count = 0;
-			begin : sv2v_autoblock_4
-				reg signed [31:0] i;
-				for (i = 0; i < 5; i = i + 1)
-					if (node[((4 - i) * 129) + 128-:32] != 0)
-						count = count + 1;
-			end
-		end
+	end
 endmodule
 module node_sorter (
 	clk,
-	count,
-	node,
+	input_node,
 	output_node
 );
 	input wire clk;
-	input integer count;
-	input wire [644:0] node;
-	output reg [644:0] output_node;
-	reg [128:0] temp_node;
+	input wire [56:0] input_node;
+	output reg [56:0] output_node;
+	reg [18:0] temp_node;
 	always @(posedge clk) begin
-		temp_node[128-:32] = 1'sb0;
-		temp_node[96-:32] = 1'sb0;
-		temp_node[64] = 1'sb0;
-		temp_node[63-:32] = 1'sb0;
-		temp_node[31-:32] = 1'sb0;
 		begin : sv2v_autoblock_1
 			reg signed [31:0] i;
-			for (i = 0; i < 5; i = i + 1)
-				output_node = node;
+			for (i = 0; i < 3; i = i + 1)
+				output_node = input_node;
 		end
 		begin : sv2v_autoblock_2
 			reg signed [31:0] j;
-			for (j = 0; j < 4; j = j + 1)
+			for (j = 0; j < 2; j = j + 1)
 				begin : sv2v_autoblock_3
 					reg signed [31:0] k;
-					for (k = j + 1; k < 4; k = k + 1)
-						if (output_node[((4 - j) * 129) + 96-:32] == output_node[((4 - k) * 129) + 96-:32]) begin
-							if (output_node[((4 - j) * 129) + 128-:32] > output_node[((4 - k) * 129) + 128-:32]) begin
-								temp_node = output_node[(4 - j) * 129+:129];
-								output_node[(4 - j) * 129+:129] = output_node[(4 - k) * 129+:129];
-								output_node[(4 - k) * 129+:129] = temp_node;
-							end
-						end
-						else if (output_node[((4 - j) * 129) + 96-:32] > output_node[((4 - k) * 129) + 96-:32]) begin
-							temp_node = output_node[(4 - j) * 129+:129];
-							output_node[(4 - j) * 129+:129] = output_node[(4 - k) * 129+:129];
-							output_node[(4 - k) * 129+:129] = temp_node;
+					for (k = 0; k < 2; k = k + 1)
+						if (((output_node[((2 - k) * 19) + 13-:3] == output_node[((2 - (k + 1)) * 19) + 13-:3]) && (output_node[((2 - k) * 19) + 18-:5] > output_node[((2 - (k + 1)) * 19) + 18-:5])) || (output_node[((2 - k) * 19) + 13-:3] > output_node[((2 - (k + 1)) * 19) + 13-:3])) begin
+							temp_node = output_node[(2 - k) * 19+:19];
+							output_node[(2 - k) * 19+:19] = output_node[(2 - (k + 1)) * 19+:19];
+							output_node[(2 - (k + 1)) * 19+:19] = temp_node;
 						end
 				end
 		end
@@ -345,14 +238,12 @@ module merge_nodes (
 	second_min_node,
 	merged_node
 );
-	input wire [128:0] min_node;
-	input wire [128:0] second_min_node;
-	output reg [128:0] merged_node;
-	always @(*) begin
-		merged_node[128-:32] = {min_node[128-:32] + second_min_node[128-:32]};
-		merged_node[96-:32] = min_node[96-:32] + second_min_node[96-:32];
-		merged_node[63-:32] = min_node[128-:32];
-		merged_node[31-:32] = second_min_node[128-:32];
-		merged_node[64] = 1'b0;
-	end
+	input wire [18:0] min_node;
+	input wire [18:0] second_min_node;
+	output wire [18:0] merged_node;
+	assign merged_node[18-:5] = min_node[18-:5] + second_min_node[18-:5];
+	assign merged_node[13-:3] = min_node[13-:3] + second_min_node[13-:3];
+	assign merged_node[9-:5] = min_node[18-:5];
+	assign merged_node[4-:5] = second_min_node[18-:5];
+	assign merged_node[10] = 1'b0;
 endmodule
