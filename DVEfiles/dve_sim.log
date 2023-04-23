@@ -1,36 +1,42 @@
-21:06:48    16 -->                                                             [tcl] ucliGUI::connect -toolargs -ucligui -toolexe simv -pid 4547 -toolin /tmp/vcs_20230417010646_4546_araghave..stdin -toolout /tmp/vcs_20230417010646_4546_araghave..stdout  
-21:06:48    17 -->                                                                 [tcl] set ucliGUI::state
-21:06:49    18 -->                                                                     [tcl] gui_update_simulator_buttons
-21:06:50    19 -->                                                                         [tcl] set ucliGUI::state
-21:06:50    20 -->                                                                             [tcl] ucliCore::getToolPID
-21:06:50    21 -->                                                                                 [tcl] synopsys::env hasTB
-21:06:50    22 -->                                                                                     [tcl] trigger_hier_stack_context_switch 0
-21:06:50    23 -->                                                                                         [tcl] synUtils::setDVEInitPhase 1
-21:06:50    24 -->                                                                                             [tcl] gui_get_env SIMSETUP::SIMVPD
-21:06:50    25 --> ...  [tcl] synopsys::dump -type VPD -file /afs/ece.cmu.edu/usr/araghave/18624/project/inter.vpd -locking
-21:06:50    26 --> ...      [tcl] synopsys::dump -autoflush on -fid VPD0
-21:06:50    27 --> ...          [tcl] set ::dve_fid VPD0
-21:06:50    28 --> ...              [tcl] synUtils::setDVEInitPhase 0
-21:06:50    29 --> ...                  [tcl] ucliCore::getToolPID
-21:06:50    30 --> ...                      [tcl] synUtils::sendTool -active _icl_setToolSocket /tmp/smlnpnycz6H
-21:06:50    31 --> ...                          [tcl] synUtils::sendTool -active {_icl_start_rpc -version "T-2022.06_Full64" -sync_file /tmp/vcs_dve_rpc.araghave.4547}
-21:06:50    32 --> ...                              [tcl] synUtils::sendTool -active {_icl_createSharedMemory /tmp/vcs_dve_general.araghave.4547}
-21:06:50    33 --> ...                                  [tcl] dveMisc::vbusExpand tb_top
-21:06:50    34 --> ...                                      [tcl] dveMisc::vbusExpand _vcs_unit__3435024639
-21:06:50    35 --> ...                                          [tcl] config endofsim noexit
-21:06:50    36 --> ...                                              [tcl] config onfail enable all
-21:06:50    37 --> ...                                                  [tcl] config syscaddplainmembers
-21:06:50    38 --> ...                                                      [tcl] config syscaddsourcenames
-21:06:50    39 --> ...                                                          [tcl] config syscaddstructtypes
-21:06:50    40 --> ...                                                              [tcl] synopsys::listing -disable
-21:06:57    41 --> ...                                                                  [tcl] dveMisc::vbusExpand tb_top.DUT
-21:06:59    42 --> ...                                                                      [tcl] synopsys::dump -add {tb_top.DUT.a tb_top.DUT.b tb_top.DUT.c tb_top.DUT.character tb_top.DUT.clk tb_top.DUT.count tb_top.DUT.data_in tb_top.DUT.done tb_top.DUT.encoded_mask tb_top.DUT.encoded_value tb_top.DUT.encoded_value_h tb_top.DUT.encoded_value_l tb_top.DUT.encoded_value_r tb_top.DUT.even_idx tb_top.DUT.freq_in tb_top.DUT.huff_tree tb_top.DUT.in_huff_tree tb_top.DUT.initial_node tb_top.DUT.io_in tb_top.DUT.io_out tb_top.DUT.is_n_odd tb_top.DUT.merged_node tb_top.DUT.odd_idx tb_top.DUT.out_huff_tree tb_top.DUT.reset tb_top.DUT.state } -aggregates  -fid VPD0
-21:07:02    43 --> ...                                                                          [tcl] synopsys::run
-21:07:02    44 --> ...                                                                              [tcl] set ucliGUI::state
-21:07:02    45 --> ...                                                                                  [tcl] gui_update_simulator_buttons
-21:07:02    46 --> ...                                                                                      [tcl] set ucliGUI::state
-21:07:02    47 --> ...                                                                                          [tcl] set ucliGUI::state
-21:07:02    48 --> ...                                                                                              [tcl] set ucliGUI::state
-21:07:02    49 --> ...                                                                                                  [tcl] catch {senv activeDomain} dveMisc::result 
-21:07:02    50 --> ...  [tcl] set dveMisc::result
-21:07:02    51 --> ...      [tcl] gui_update_simulator_buttons
+12:44:03    16 -->                                                             [tcl] ucliGUI::connect -toolargs -ucligui -toolexe simv -pid 20830 -toolin /tmp/vcs_20230423164400_20816_araghave..stdin -toolout /tmp/vcs_20230423164400_20816_araghave..stdout  
+12:44:03    17 -->                                                                 [tcl] set ucliGUI::state
+12:44:03    18 -->                                                                     [tcl] gui_update_simulator_buttons
+12:44:04    19 -->                                                                         [tcl] set ucliGUI::state
+12:44:04    20 -->                                                                             [tcl] ucliCore::getToolPID
+12:44:04    21 -->                                                                                 [tcl] synopsys::env hasTB
+12:44:04    22 -->                                                                                     [tcl] trigger_hier_stack_context_switch 0
+12:44:04    23 -->                                                                                         [tcl] synopsys::xml set_array_limit <data limit="50" />
+12:44:04    24 -->                                                                                             [tcl] synopsys::xml set_depth_limit <data limit="100" />
+12:44:04    25 --> ...  [tcl] synopsys::xml set_string_limit <data limit="1000" />
+12:44:04    26 --> ...      [tcl] synopsys::xml set_only_active_frame <data value="1" />
+12:44:04    27 --> ...          [tcl] synopsys::xml set_variable_frame_id <data value="1" />
+12:44:04    28 --> ...              [tcl] synUtils::setDVEInitPhase 1
+12:44:04    29 --> ...                  [tcl] gui_get_env SIMSETUP::SIMVPD
+12:44:04    30 --> ...                      [tcl] synopsys::dump -type VPD -file /afs/ece.cmu.edu/usr/araghave/18624/project/inter.vpd -locking
+12:44:04    31 --> ...                          [tcl] synopsys::dump -autoflush on -fid VPD0
+12:44:04    32 --> ...                              [tcl] set ::dve_fid VPD0
+12:44:04    33 --> ...                                  [tcl] synUtils::setDVEInitPhase 0
+12:44:04    34 --> ...                                      [tcl] ucliCore::getToolPID
+12:44:04    35 --> ...                                          [tcl] synUtils::sendTool -active _icl_setToolSocket /tmp/smlnpomIuYr
+12:44:04    36 --> ...                                              [tcl] synUtils::sendTool -active {_icl_start_rpc -version "T-2022.06_Full64" -sync_file /tmp/vcs_dve_rpc.araghave.20830}
+12:44:04    37 --> ...                                                  [tcl] synUtils::sendTool -active {_icl_createSharedMemory /tmp/vcs_dve_general.araghave.20830}
+12:44:04    38 --> ...                                                      [tcl] dveMisc::vbusExpand tb_top
+12:44:05    39 --> ...                                                          [tcl] dveMisc::vbusExpand _vcs_unit__3435024639
+12:44:05    40 --> ...                                                              [tcl] config endofsim noexit
+12:44:05    41 --> ...                                                                  [tcl] config onfail enable all
+12:44:05    42 --> ...                                                                      [tcl] config syscaddplainmembers
+12:44:05    43 --> ...                                                                          [tcl] config syscaddsourcenames
+12:44:05    44 --> ...                                                                              [tcl] config syscaddstructtypes
+12:44:05    45 --> ...                                                                                  [tcl] synopsys::listing -disable
+12:44:10    46 --> ...                                                                                      [tcl] dveMisc::vbusExpand tb_top.DUT
+12:44:27    47 --> ...                                                                                          [tcl] if [catch {gui_sim_terminate}] {gui_sim_terminate -kill}
+12:44:27    48 --> ...                                                                                              [tcl] synopsys::finish
+12:44:27    49 --> ...                                                                                                  [tcl] set ucliGUI::state
+12:44:27    50 --> ...  [tcl] gui_update_simulator_buttons
+12:44:27    51 --> ...      [tcl] set ucliGUI::state
+12:44:27    52 --> ...          [tcl] catch {senv activeDomain} dveMisc::result 
+12:44:27    53 --> ...              [tcl] set dveMisc::result
+12:44:27    54 --> ...                  [tcl] gui_update_simulator_buttons
+12:44:27    55 --> ...                      [tcl] catch {senv activeDomain} dveMisc::result 
+12:44:27    56 --> ...                          [tcl] set dveMisc::result
+12:44:27    57 --> ...                              [tcl] ucli_exit

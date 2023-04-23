@@ -50,7 +50,7 @@ def printNodes(node, val=''):
 
 		char_b = bin(ord(node.symbol))
 		char_b = char_b[2:]
-		print('00010'+char_b)
+		print('00010'+char_b, file=output_file)
 
 		mask_length = len(newVal)
 		mask = bin((1<<mask_length) - 1)
@@ -60,7 +60,10 @@ def printNodes(node, val=''):
 		final_mask = char_len1.format(int(mask,2))
 		final_val = char_len1.format(int(newVal,2))
 
-		print('000100'+final_mask+final_val)
+		print('000100'+final_mask+final_val, file=output_file)
+
+output_file = open('expected_out.txt', 'w')
+input_file = open('input_string.txt', 'w')
 
 vector_num = 0
 #can only input characters between a and 0 (hex61 to hex6F)
@@ -68,17 +71,19 @@ vector_num = 0
 with open('input_vector.txt', 'r') as f:
 	for line in f:
 		vector_num +=1
+		#print("//Vector =", vector_num, file=output_file)
 		string, *freq = line.strip().split(',')
 		freq = [int(value) for value in freq]
 		chars = list(string)
+		print(string,file=input_file)
 		# characters for huffman tree
 		#chars = ['a', 'n', 'm']
 
 		# frequency of characters
 		#freq = [4, 2, 2]
 		#print(string, freq)
-		print("//character")
-		print("//{mask, encoded_value}")
+		#print("//character", file=output_file)
+		#print("//{mask, encoded_value}", file=output_file)
 
 # list containing unused nodes
 		nodes = []
@@ -107,4 +112,5 @@ with open('input_vector.txt', 'r') as f:
 
 # Huffman Tree is ready!
 		printNodes(nodes[0])
-		print("Vector ", vector_num, " done\n")
+		print("\n", file=output_file)
+		

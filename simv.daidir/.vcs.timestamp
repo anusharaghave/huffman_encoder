@@ -1,5 +1,5 @@
 0 
-33
+30
 +itf+/afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/vcsdp_lite.tab
 +vcsd1
 +vpi
@@ -23,17 +23,14 @@
 -Xvcs_run_simv=1
 -debug_access+all
 -gen_obj
--nc
 -picarchive
--q
--sverilog
 -sverilog
 -top
 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/bin/vcs1
 tb_top
 huff_enc.sv
 huff_enc_tb.sv
-71
+74
 no_proxy=localhost,127.0.0.1,.cmu.edu,.cmu.local
 https_proxy=http://proximus.ece.cmu.edu:3128/
 http_proxy=http://proximus.ece.cmu.edu:3128/
@@ -43,7 +40,7 @@ _CE_CONDA=
 XDG_SESSION_ID=2141
 XDG_RUNTIME_DIR=/run/user/2687578
 XDG_DATA_DIRS=/afs/ece.cmu.edu/usr/araghave/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
-VSCODE_IPC_HOOK_CLI=/run/user/2687578/vscode-ipc-9b81e1d0-1616-4bba-adab-4e1fd233ea64.sock
+VSCODE_IPC_HOOK_CLI=/run/user/2687578/vscode-ipc-02837aab-7d64-4404-907d-b8750c6ee66b.sock
 VSCODE_GIT_IPC_HANDLE=/run/user/2687578/vscode-git-d6149a53c7.sock
 VSCODE_GIT_ASKPASS_NODE=/afs/ece.cmu.edu/usr/araghave/.vscode-server/bin/704ed70d4fd1c6bd6342c436f1ede30d1cff4710/node
 VSCODE_GIT_ASKPASS_MAIN=/afs/ece.cmu.edu/usr/araghave/.vscode-server/bin/704ed70d4fd1c6bd6342c436f1ede30d1cff4710/extensions/git/dist/askpass-main.js
@@ -85,6 +82,9 @@ OVA_UUM=0
 NO_PROXY=localhost,127.0.0.1,.cmu.edu,.cmu.local
 MODULESHOME=/usr/share/Modules
 MODULEPATH=/usr/share/Modules/modulefiles:/etc/modulefiles
+MFLAGS=
+MAKELEVEL=1
+MAKEFLAGS=
 LOADEDMODULES=
 LESSOPEN=||/usr/bin/lesspipe.sh %s
 LC_ALL=C
@@ -108,7 +108,7 @@ AKLOG=/usr/bin/aklog
 0
 0
 3
-1682218843 huff_enc_tb.sv
+1682285698 huff_enc_tb.sv
 1682217453 huff_enc.sv
 1654052745 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/vcsdp_lite.tab
 4
@@ -116,5 +116,5 @@ AKLOG=/usr/bin/aklog
 1654053585 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/liberrorinf.so
 1654053489 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/libsnpsmalloc.so
 1654053565 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/libvfs.so
-1682259135 simv.daidir
+1682285705 simv.daidir
 -1 partitionlib
