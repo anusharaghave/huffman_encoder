@@ -9,17 +9,16 @@ synopsys::dump -autoflush on -fid VPD0
 set ::dve_fid VPD0
 synUtils::setDVEInitPhase 0
 ucliCore::getToolPID
-synUtils::sendTool -active _icl_setToolSocket /tmp/smlnpvUxKrv
-synUtils::sendTool -active {_icl_start_rpc -version "T-2022.06_Full64" -sync_file /tmp/vcs_dve_rpc.araghave.32149}
-synUtils::sendTool -active {_icl_createSharedMemory /tmp/vcs_dve_general.araghave.32149}
+synUtils::sendTool -active _icl_setToolSocket /tmp/smlnpnycz6H
+synUtils::sendTool -active {_icl_start_rpc -version "T-2022.06_Full64" -sync_file /tmp/vcs_dve_rpc.araghave.4547}
+synUtils::sendTool -active {_icl_createSharedMemory /tmp/vcs_dve_general.araghave.4547}
 config endofsim noexit
 config onfail enable all
 config syscaddplainmembers
 config syscaddsourcenames
 config syscaddstructtypes
 synopsys::listing -disable
-synopsys::dump -add {tb_top.DUT3.encoded_value } -aggregates  -fid VPD0
-synopsys::dump -add {tb_top.encoded_value } -aggregates  -fid VPD0
+synopsys::dump -add {tb_top.DUT.a tb_top.DUT.b tb_top.DUT.c tb_top.DUT.character tb_top.DUT.clk tb_top.DUT.count tb_top.DUT.data_in tb_top.DUT.done tb_top.DUT.encoded_mask tb_top.DUT.encoded_value tb_top.DUT.encoded_value_h tb_top.DUT.encoded_value_l tb_top.DUT.encoded_value_r tb_top.DUT.even_idx tb_top.DUT.freq_in tb_top.DUT.huff_tree tb_top.DUT.in_huff_tree tb_top.DUT.initial_node tb_top.DUT.io_in tb_top.DUT.io_out tb_top.DUT.is_n_odd tb_top.DUT.merged_node tb_top.DUT.odd_idx tb_top.DUT.out_huff_tree tb_top.DUT.reset tb_top.DUT.state } -aggregates  -fid VPD0
 synopsys::run
 set ucliGUI::state
 set ucliGUI::state

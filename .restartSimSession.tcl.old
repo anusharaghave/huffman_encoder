@@ -1,15 +1,15 @@
 # Begin_DVE_Session_Save_Info
 # DVE restart session
-# Saved on Fri Mar 31 12:27:58 2023
+# Saved on Sun Apr 16 16:31:24 2023
 # Designs open: 1
 #   Sim: /afs/ece.cmu.edu/usr/araghave/18624/project/simv
 # Toplevel windows open: 2
 # 	TopLevel.1
 # 	TopLevel.2
 #   Source.1: tb_top
-#   Wave.1: 7 signals
+#   Wave.1: 39 signals
 #   Group count = 1
-#   Group Group1 signal count = 7
+#   Group Group1 signal count = 39
 # End_DVE_Session_Save_Info
 
 # DVE version: T-2022.06_Full64
@@ -59,7 +59,7 @@ gui_sync_global -id ${TopLevel.2} -option true
 
 # MDI window settings
 set Wave.1 Wave.1
-gui_update_layout -id ${Wave.1} {{show_state maximized} {dock_state undocked} {dock_on_new_line false} {child_wave_left 434} {child_wave_right 1477} {child_wave_colname 224} {child_wave_colvalue 206} {child_wave_col1 0} {child_wave_col2 1}}
+gui_update_layout -id ${Wave.1} {{show_state maximized} {dock_state undocked} {dock_on_new_line false} {child_wave_left 555} {child_wave_right 1355} {child_wave_colname 275} {child_wave_colvalue 275} {child_wave_col1 0} {child_wave_col2 1}}
 
 # End MDI window settings
 
@@ -92,11 +92,7 @@ set _session_group_1 Group1
 gui_sg_create "$_session_group_1"
 set Group1 "$_session_group_1"
 
-gui_sg_addsignal -group "$_session_group_1" { tb_top.DUT.encoded_value tb_top.DUT.encoded_mask tb_top.DUT.count tb_top.DUT.unique_char_count tb_top.DUT.state tb_top.DUT.encoded_mask_h tb_top.DUT.encoded_value_h }
-gui_set_radix -radix {decimal} -signals {Sim:tb_top.DUT.count}
-gui_set_radix -radix {twosComplement} -signals {Sim:tb_top.DUT.count}
-gui_set_radix -radix {decimal} -signals {Sim:tb_top.DUT.unique_char_count}
-gui_set_radix -radix {twosComplement} -signals {Sim:tb_top.DUT.unique_char_count}
+gui_sg_addsignal -group "$_session_group_1" { tb_top.DUT.io_out tb_top.DUT.encoded_value tb_top.DUT.encoded_mask tb_top.DUT.clk tb_top.DUT.reset tb_top.DUT.io_in tb_top.DUT.done tb_top.DUT.io_out {tb_top.DUT.io_out[11]} {tb_top.DUT.io_out[10]} {tb_top.DUT.io_out[9]} {tb_top.DUT.io_out[8]} {tb_top.DUT.io_out[7]} {tb_top.DUT.io_out[6]} {tb_top.DUT.io_out[5]} {tb_top.DUT.io_out[4]} {tb_top.DUT.io_out[3]} {tb_top.DUT.io_out[2]} {tb_top.DUT.io_out[1]} {tb_top.DUT.io_out[0]} tb_top.DUT.data_in tb_top.DUT.freq_in tb_top.DUT.initial_node tb_top.DUT.state tb_top.DUT.huff_tree tb_top.DUT.in_huff_tree tb_top.DUT.out_huff_tree tb_top.DUT.character tb_top.DUT.count tb_top.DUT.odd_idx tb_top.DUT.even_idx tb_top.DUT.merged_node tb_top.DUT.a tb_top.DUT.b tb_top.DUT.c tb_top.DUT.encoded_value_l tb_top.DUT.encoded_value_r tb_top.DUT.is_n_odd tb_top.DUT.encoded_value_h }
 
 # Global: Highlighting
 
@@ -134,9 +130,10 @@ gui_view_scroll -id ${Hier.1} -horizontal -set 0
 gui_list_set_filter -id ${Data.1} -list { {Buffer 1} {Input 1} {Others 1} {Linkage 1} {Output 1} {LowPower 1} {Parameter 1} {All 1} {Aggregate 1} {LibBaseMember 1} {Event 1} {Assertion 1} {Constant 1} {Interface 1} {BaseMembers 1} {Signal 1} {$unit 1} {Inout 1} {Variable 1} }
 gui_list_set_filter -id ${Data.1} -text {*}
 gui_list_show_data -id ${Data.1} {tb_top.DUT}
+gui_list_expand -id ${Data.1} tb_top.DUT.io_out
 gui_show_window -window ${Data.1}
-catch { gui_list_select -id ${Data.1} {tb_top.DUT.encoded_mask_h tb_top.DUT.encoded_value_h }}
-gui_view_scroll -id ${Data.1} -vertical -set 35
+catch { gui_list_select -id ${Data.1} {tb_top.DUT.encoded_value tb_top.DUT.encoded_mask tb_top.DUT.clk tb_top.DUT.reset tb_top.DUT.io_in tb_top.DUT.done tb_top.DUT.io_out {tb_top.DUT.io_out[11]} {tb_top.DUT.io_out[10]} {tb_top.DUT.io_out[9]} {tb_top.DUT.io_out[8]} {tb_top.DUT.io_out[7]} {tb_top.DUT.io_out[6]} {tb_top.DUT.io_out[5]} {tb_top.DUT.io_out[4]} {tb_top.DUT.io_out[3]} {tb_top.DUT.io_out[2]} {tb_top.DUT.io_out[1]} {tb_top.DUT.io_out[0]} {tb_top.DUT.io_out[11]} {tb_top.DUT.io_out[10]} {tb_top.DUT.io_out[9]} {tb_top.DUT.io_out[8]} {tb_top.DUT.io_out[7]} {tb_top.DUT.io_out[6]} {tb_top.DUT.io_out[5]} {tb_top.DUT.io_out[4]} {tb_top.DUT.io_out[3]} {tb_top.DUT.io_out[2]} {tb_top.DUT.io_out[1]} {tb_top.DUT.io_out[0]} tb_top.DUT.data_in tb_top.DUT.freq_in tb_top.DUT.initial_node tb_top.DUT.state tb_top.DUT.huff_tree tb_top.DUT.in_huff_tree tb_top.DUT.out_huff_tree tb_top.DUT.character tb_top.DUT.count tb_top.DUT.odd_idx tb_top.DUT.even_idx tb_top.DUT.merged_node tb_top.DUT.a tb_top.DUT.b tb_top.DUT.c tb_top.DUT.encoded_value_l tb_top.DUT.encoded_value_r tb_top.DUT.is_n_odd tb_top.DUT.encoded_value_h }}
+gui_view_scroll -id ${Data.1} -vertical -set 0
 gui_view_scroll -id ${Data.1} -horizontal -set 0
 gui_view_scroll -id ${Hier.1} -vertical -set 0
 gui_view_scroll -id ${Hier.1} -horizontal -set 0
@@ -144,8 +141,8 @@ gui_view_scroll -id ${Hier.1} -horizontal -set 0
 # Source 'Source.1'
 gui_src_value_annotate -id ${Source.1} -switch false
 gui_set_env TOGGLE::VALUEANNOTATE 0
-gui_open_source -id ${Source.1}  -replace -active tb_top /afs/ece.cmu.edu/usr/araghave/18624/project/huff_enc.sv
-gui_view_scroll -id ${Source.1} -vertical -set 6736
+gui_open_source -id ${Source.1}  -replace -active tb_top /afs/ece.cmu.edu/usr/araghave/18624/project/huff_enc_tb.sv
+gui_view_scroll -id ${Source.1} -vertical -set 640
 gui_src_set_reusable -id ${Source.1}
 
 # View 'Wave.1'
@@ -156,10 +153,8 @@ set origWaveHeight [gui_get_pref_value -category Wave -key waveRowHeight]
 gui_list_set_height -id Wave -height 25
 set origGroupCreationState [gui_list_create_group_when_add -wave]
 gui_list_create_group_when_add -wave -disable
-gui_wv_zoom_timerange -id ${Wave.1} 17992828 37498446
+gui_wv_zoom_timerange -id ${Wave.1} 0 25500000
 gui_list_add_group -id ${Wave.1} -after {New Group} {Group1}
-gui_list_expand -id ${Wave.1} tb_top.DUT.encoded_value
-gui_list_expand -id ${Wave.1} tb_top.DUT.encoded_mask
 gui_seek_criteria -id ${Wave.1} {Any Edge}
 
 
@@ -181,14 +176,14 @@ gui_view_scroll -id ${Wave.1} -vertical -set 0
 gui_show_grid -id ${Wave.1} -enable false
 # Restore toplevel window zorder
 # The toplevel window could be closed if it has no view/pane
+if {[gui_exist_window -window ${TopLevel.2}]} {
+	gui_set_active_window -window ${TopLevel.2}
+	gui_set_active_window -window ${Wave.1}
+}
 if {[gui_exist_window -window ${TopLevel.1}]} {
 	gui_set_active_window -window ${TopLevel.1}
 	gui_set_active_window -window ${Source.1}
 	gui_set_active_window -window ${DLPane.1}
-}
-if {[gui_exist_window -window ${TopLevel.2}]} {
-	gui_set_active_window -window ${TopLevel.2}
-	gui_set_active_window -window ${Wave.1}
 }
 #</Session>
 

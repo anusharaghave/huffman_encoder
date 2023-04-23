@@ -1,9 +1,9 @@
-{"vcs1":{"timestamp_begin":1678802396.929465190, "rt":0.69, "ut":0.31, "st":0.13}}
-{"vcselab":{"timestamp_begin":1678802397.652980438, "rt":0.85, "ut":0.19, "st":0.08}}
-{"link":{"timestamp_begin":1678802398.525444336, "rt":0.38, "ut":0.06, "st":0.11}}
-{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1678802396.665604993}
-{"VCS_COMP_START_TIME": 1678802396.665604993}
-{"VCS_COMP_END_TIME": 1678802399.420247561}
-{"VCS_USER_OPTIONS": "-q -nc -sverilog -sverilog -R -top tb_top -debug_access+all huff_enc.sv"}
-{"vcs1": {"peak_mem": 339940}}
-{"stitch_vcselab": {"peak_mem": 238992}}
+{"vcs1":{"timestamp_begin":1681692646.186119923, "rt":0.74, "ut":0.24, "st":0.13}}
+{"vcselab":{"timestamp_begin":1681692646.963465522, "rt":0.85, "ut":0.19, "st":0.14}}
+{"link":{"timestamp_begin":1681692647.841849145, "rt":0.81, "ut":0.07, "st":0.41}}
+{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1681692645.893353270}
+{"VCS_COMP_START_TIME": 1681692645.893353270}
+{"VCS_COMP_END_TIME": 1681692649.245907743}
+{"VCS_USER_OPTIONS": "-q -nc -sverilog -sverilog -R -top tb_top -debug_access+all huff_enc.sv huff_enc_tb.sv"}
+{"vcs1": {"peak_mem": 341112}}
+{"stitch_vcselab": {"peak_mem": 222604}}

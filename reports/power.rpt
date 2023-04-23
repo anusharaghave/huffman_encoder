@@ -1,0 +1,48 @@
+Loading db file '/afs/ece.cmu.edu/usr/araghave/nv_small/hw/tubgemm/NangateOpenCellLibrary_typical_ccs.db'
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated primary inputs. (PWR-414)
+Warning: Design has unannotated sequential cell outputs. (PWR-415)
+ 
+****************************************
+Report : power
+        -hier
+        -analysis_effort low
+Design : huff_encoder
+Version: T-2022.03-SP2
+Date   : Thu Apr  6 15:14:24 2023
+****************************************
+
+
+Library(s) Used:
+
+    NangateOpenCellLibrary (File: /afs/ece.cmu.edu/usr/araghave/nv_small/hw/tubgemm/NangateOpenCellLibrary_typical_ccs.db)
+
+
+Operating Conditions: typical   Library: NangateOpenCellLibrary
+Wire Load Model Mode: top
+
+Design        Wire Load Model            Library
+------------------------------------------------
+huff_encoder           5K_hvratio_1_1    NangateOpenCellLibrary
+
+
+Global Operating Voltage = 1.1  
+Power-specific unit information :
+    Voltage Units = 1V
+    Capacitance Units = 1.000000ff
+    Time Units = 1ns
+    Dynamic Power Units = 1uW    (derived from V,C,T units)
+    Leakage Power Units = 1nW
+
+
+--------------------------------------------------------------------------------
+                                       Switch   Int      Leak     Total
+Hierarchy                              Power    Power    Power    Power    %
+--------------------------------------------------------------------------------
+huff_encoder                            306.933 1.19e+03 1.14e+05 1.61e+03 100.0
+  merge_nodes_ins (merge_nodes)           1.920    3.092 1.28e+03    6.290   0.4
+    add_325 (merge_nodes_DW01_add_0_DW01_add_1)
+                                          0.757    1.505  557.092    2.819   0.2
+  node_sorter_ins (node_sorter)          69.255  230.608 2.42e+04  324.043  20.1
+  freq_calc_ins (freq_calc)              28.721   99.284 1.39e+04  141.943   8.8
+1

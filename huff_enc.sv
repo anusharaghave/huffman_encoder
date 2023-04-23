@@ -20,13 +20,11 @@
 //4. Use huff tree[0] as root node- accordingly change the indexing
 //5. Use only minimal subset of characters - like from a ('h61) to 0 ('h6F)- This is working, but you have to give hex inputs
 
-
+//TODO:
+//done signal is high for 1 extra cycle - fix it
 
 `timescale 1us/1ps
 
-//5,3,2
-
-//`define MAX_CHAR_COUNT 3
 `define MAX_CHAR_COUNT 3    //fixed as increasing to 5 increases gates by 4 times
 `define BIT_WIDTH 2
 

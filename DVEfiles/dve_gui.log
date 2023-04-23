@@ -1,632 +1,1008 @@
 Chronologic VCS simulator copyright 1991-2022
 Contains Synopsys proprietary information.
-Compiler version T-2022.06_Full64; Runtime version T-2022.06_Full64;  Mar 18 15:14 2023
+Compiler version T-2022.06_Full64; Runtime version T-2022.06_Full64;  Apr 16 21:06 2023
 VCD+ Writer T-2022.06_Full64 Copyright (c) 1991-2022 by Synopsys Inc.
 The file '/afs/ece.cmu.edu/usr/araghave/18624/project/inter.vpd' was opened successfully.
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+time:                   0, Input data: data_en:x, state:x
 
-Input data: data_in:24933
+INPUT datain:xxxxxx
 
-Input node:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+INPUT freqin0:x, freqin1:x, freqin2:x
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+Initial node:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-Input data: data_in:24933
+in_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+out_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-Input data: data_in:24933
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+binary_tree:  huff_tree[0]:'{ascii_char:'hxx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx, parent:'hx, level:'hx}, encoded_values_h[0]:xxx
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[1]:'{ascii_char:'hxx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx, parent:'hx, level:'hx}, encoded_values_h[1]:xxx
 
+binary_tree:  huff_tree[2]:'{ascii_char:'hxx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx, parent:'hx, level:'hx}, encoded_values_h[2]:xxx
 
+binary_tree:  huff_tree[3]:'{ascii_char:'hxx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx, parent:'hx, level:'hx}, encoded_values_h[3]:xxx
 
+binary_tree:  huff_tree[4]:'{ascii_char:'hxx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx, parent:'hx, level:'hx}, encoded_values_h[4]:xxx
 
-out_huff_tree[0]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[5]:'{ascii_char:'hxx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx, parent:'hx, level:'hx}, encoded_values_h[5]:xxx
 
+OUTPUT: character[0]:xx, encoded mask[0]:xxx, encoded values[0]:xxx
 
-in_huff_tree[1]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[1]:xx, encoded mask[1]:xxx, encoded values[1]:xxx
 
+OUTPUT: character[2]:xx, encoded mask[2]:xxx, encoded values[2]:xxx
 
+state:x
 
+time:             1000000, Input data: data_en:x, state:x
 
-out_huff_tree[1]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+INPUT datain:xxxxxx
 
+INPUT freqin0:x, freqin1:x, freqin2:x
 
-in_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+Initial node:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
+in_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}} 
 
 
+out_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-out_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-Input data: data_in:24933
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-out_huff_tree[0]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
+state:x
 
-in_huff_tree[1]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+time:             1000000, Input data: data_en:x, state:1
 
+INPUT datain:xxxxxx
 
+INPUT freqin0:x, freqin1:x, freqin2:x
 
+Initial node:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-out_huff_tree[1]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+in_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}} 
 
 
-in_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+out_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-out_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
-Input data: data_in:24933
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
+state:1
 
+time:             2000000, Input data: data_en:x, state:1
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+INPUT datain:xxxxxx
 
+INPUT freqin0:x, freqin1:x, freqin2:x
 
-in_huff_tree[1]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+Initial node:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
+in_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}} 
 
 
+out_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-out_huff_tree[1]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-in_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
-out_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:0, level:2}
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzzz0
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:0, level:2}
+state:1
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxxx1
+time:             6000000, Input data: data_en:x, state:1
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+INPUT datain:61xxxx
 
-Input data: data_in:24933
+INPUT freqin0:3, freqin1:x, freqin2:x
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+Initial node:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+in_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}} 
 
 
+out_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-in_huff_tree[1]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-out_huff_tree[1]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-in_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
+state:1
 
+time:             6000000, Input data: data_en:x, state:1
 
+INPUT datain:61xxxx
 
-out_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+INPUT freqin0:3, freqin1:x, freqin2:x
 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:0, level:2}
+in_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}} 
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzzz0
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:0, level:2}
+out_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxxx1
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-Input data: data_in:24933
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-in_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+state:1
 
+time:             7000000, Input data: data_en:x, state:1
 
+INPUT datain:616exx
 
+INPUT freqin0:3, freqin1:3, freqin2:x
 
-out_huff_tree[1]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
+in_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}} 
 
-in_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
 
+out_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-out_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:0, level:2}
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzzz0
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:0, level:2}
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxxx1
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-Input data: data_in:24933
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+state:1
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+time:             7000000, Input data: data_en:x, state:1
 
+INPUT datain:616exx
 
+INPUT freqin0:3, freqin1:3, freqin2:x
 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+in_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}} 
 
 
-in_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+out_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-out_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-in_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-out_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
+state:1
 
-binary_tree:  huff_tree[2]:'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32, parent:0, level:1}
+time:             8000000, Input data: data_en:x, state:1
 
-OUTPUT encoded mask[2]:000000000000001, encoded values[2]:zzzzzzzzzzzzzzz
+INPUT datain:616e6d
 
-binary_tree:  huff_tree[3]:'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0, parent:0, level:1}
+INPUT freqin0:3, freqin1:3, freqin2:2
 
-OUTPUT encoded mask[3]:000000000000001, encoded values[3]:xxxxxxxxxxxxxx1
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+in_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}} 
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzzz0
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+out_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxxx1
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-Input data: data_in:24933
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-in_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+state:1
 
+time:             8000000, Input data: data_en:x, state:1
 
+INPUT datain:616e6d
 
+INPUT freqin0:3, freqin1:3, freqin2:2
 
-out_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
+in_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}} 
 
-in_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
 
+out_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-out_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-binary_tree:  huff_tree[2]:'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32, parent:0, level:1}
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-OUTPUT encoded mask[2]:000000000000001, encoded values[2]:zzzzzzzzzzzzzzz
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
-binary_tree:  huff_tree[3]:'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0, parent:0, level:1}
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-OUTPUT encoded mask[3]:000000000000001, encoded values[3]:xxxxxxxxxxxxxx1
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzzz0
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+state:1
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxxx1
+time:            10000000, Input data: data_en:x, state:2
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+INPUT datain:616e6d
 
-Input data: data_in:24933
+INPUT freqin0:3, freqin1:3, freqin2:2
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+in_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}} 
 
 
+out_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-in_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-out_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-in_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
+state:2
 
+time:            11000000, Input data: data_en:x, state:2
 
+INPUT datain:616e6d
 
-out_huff_tree[2]:'{'{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+INPUT freqin0:3, freqin1:3, freqin2:2
 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-binary_tree:  huff_tree[2]:'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32, parent:0, level:1}
+in_huff_tree:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-OUTPUT encoded mask[2]:000000000000001, encoded values[2]:zzzzzzzzzzzzzzz
 
-binary_tree:  huff_tree[3]:'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0, parent:0, level:1}
+out_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-OUTPUT encoded mask[3]:000000000000001, encoded values[3]:xxxxxxxxxxxxxx1
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzzz0
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxxx1
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
-Input data: data_in:24933
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
+state:2
 
+time:            11000000, Input data: data_en:x, state:3
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+INPUT datain:616e6d
 
+INPUT freqin0:3, freqin1:3, freqin2:2
 
-in_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
+in_huff_tree:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
 
+out_huff_tree:'{'{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'h0, frequency:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-out_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-in_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
-out_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-binary_tree:  huff_tree[1]:'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97, parent:0, level:0}
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-OUTPUT encoded mask[1]:000000000000000, encoded values[1]:zzzzzzzzzzzzzzz
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-binary_tree:  huff_tree[2]:'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32, parent:1, level:1}
+state:3
 
-OUTPUT encoded mask[2]:000000000000001, encoded values[2]:zzzzzzzzzzzzzz0
+time:            12000000, Input data: data_en:x, state:3
 
-binary_tree:  huff_tree[3]:'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0, parent:1, level:1}
+INPUT datain:616e6d
 
-OUTPUT encoded mask[3]:000000000000001, encoded values[3]:zzzzzzzzzzzzzz1
+INPUT freqin0:3, freqin1:3, freqin2:2
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzz00
+in_huff_tree:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxx01
+out_huff_tree:'{'{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
 
-Input data: data_in:24933
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-in_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
+state:3
 
+time:            12000000, Input data: data_en:x, state:4
 
+INPUT datain:616e6d
 
-out_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+INPUT freqin0:3, freqin1:3, freqin2:2
 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-in_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+in_huff_tree:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
 
+out_huff_tree:'{'{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
-out_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
+binary_tree:  huff_tree[1]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-binary_tree:  huff_tree[1]:'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97, parent:0, level:0}
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-OUTPUT encoded mask[1]:000000000000000, encoded values[1]:zzzzzzzzzzzzzzz
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-binary_tree:  huff_tree[2]:'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32, parent:1, level:1}
+binary_tree:  huff_tree[4]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
-OUTPUT encoded mask[2]:000000000000001, encoded values[2]:zzzzzzzzzzzzzz0
+binary_tree:  huff_tree[5]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-binary_tree:  huff_tree[3]:'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0, parent:1, level:1}
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-OUTPUT encoded mask[3]:000000000000001, encoded values[3]:zzzzzzzzzzzzzz1
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzz00
+state:4
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+time:            13000000, Input data: data_en:x, state:4
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxx01
+INPUT datain:616e6d
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+INPUT freqin0:3, freqin1:3, freqin2:2
 
-Input data: data_in:24933
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+in_huff_tree:'{'{ascii_char:'he, frequency:'h1, is_leaf_node:'h0, left_node:'hd, right_node:'h1}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
 
+out_huff_tree:'{'{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[1]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-in_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-out_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-in_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+state:4
 
+time:            13000000, Input data: data_en:x, state:3
 
+INPUT datain:616e6d
 
+INPUT freqin0:3, freqin1:3, freqin2:2
 
-out_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
+in_huff_tree:'{'{ascii_char:'he, frequency:'h1, is_leaf_node:'h0, left_node:'hd, right_node:'h1}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-binary_tree:  huff_tree[1]:'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97, parent:0, level:0}
 
-OUTPUT encoded mask[1]:000000000000000, encoded values[1]:zzzzzzzzzzzzzzz
+out_huff_tree:'{'{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-binary_tree:  huff_tree[2]:'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32, parent:1, level:1}
 
-OUTPUT encoded mask[2]:000000000000001, encoded values[2]:zzzzzzzzzzzzzz0
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-binary_tree:  huff_tree[3]:'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0, parent:1, level:1}
+binary_tree:  huff_tree[1]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-OUTPUT encoded mask[3]:000000000000001, encoded values[3]:zzzzzzzzzzzzzz1
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzz00
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxx01
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-Input data: data_in:24933
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+state:3
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+time:            14000000, Input data: data_en:x, state:3
 
+INPUT datain:616e6d
 
+INPUT freqin0:3, freqin1:3, freqin2:2
 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+in_huff_tree:'{'{ascii_char:'he, frequency:'h1, is_leaf_node:'h0, left_node:'hd, right_node:'h1}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
-in_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+out_huff_tree:'{'{ascii_char:'he, frequency:'h1, is_leaf_node:'h0, left_node:'hd, right_node:'h1}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
+binary_tree:  huff_tree[1]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-out_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-in_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-out_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
+state:3
 
-binary_tree:  huff_tree[1]:'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97, parent:0, level:0}
+time:            14000000, Input data: data_en:x, state:4
 
-OUTPUT encoded mask[1]:000000000000000, encoded values[1]:zzzzzzzzzzzzzzz
+INPUT datain:616e6d
 
-binary_tree:  huff_tree[2]:'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32, parent:1, level:1}
+INPUT freqin0:3, freqin1:3, freqin2:2
 
-OUTPUT encoded mask[2]:000000000000001, encoded values[2]:zzzzzzzzzzzzzz0
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-binary_tree:  huff_tree[3]:'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0, parent:1, level:1}
+in_huff_tree:'{'{ascii_char:'he, frequency:'h1, is_leaf_node:'h0, left_node:'hd, right_node:'h1}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-OUTPUT encoded mask[3]:000000000000001, encoded values[3]:zzzzzzzzzzzzzz1
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+out_huff_tree:'{'{ascii_char:'he, frequency:'h1, is_leaf_node:'h0, left_node:'hd, right_node:'h1}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzz00
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxx01
+binary_tree:  huff_tree[1]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
+binary_tree:  huff_tree[2]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-Input data: data_in:24933
+binary_tree:  huff_tree[3]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+state:4
 
+time:            15000000, Input data: data_en:x, state:4
 
-in_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+INPUT datain:616e6d
 
+INPUT freqin0:3, freqin1:3, freqin2:2
 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
+in_huff_tree:'{'{ascii_char:'h1c, frequency:'h0, is_leaf_node:'h0, left_node:'he, right_node:'he}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-out_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
 
+out_huff_tree:'{'{ascii_char:'he, frequency:'h1, is_leaf_node:'h0, left_node:'hd, right_node:'h1}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-in_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
+binary_tree:  huff_tree[1]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
+binary_tree:  huff_tree[2]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-out_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[3]:'{ascii_char:'he, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
-binary_tree:  huff_tree[1]:'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97, parent:0, level:0}
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-OUTPUT encoded mask[1]:000000000000000, encoded values[1]:zzzzzzzzzzzzzzz
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-binary_tree:  huff_tree[2]:'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32, parent:1, level:1}
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-OUTPUT encoded mask[2]:000000000000001, encoded values[2]:zzzzzzzzzzzzzz0
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-binary_tree:  huff_tree[3]:'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0, parent:1, level:1}
+state:4
 
-OUTPUT encoded mask[3]:000000000000001, encoded values[3]:zzzzzzzzzzzzzz1
+time:            15000000, Input data: data_en:x, state:3
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+INPUT datain:616e6d
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzz00
+INPUT freqin0:3, freqin1:3, freqin2:2
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxx01
+in_huff_tree:'{'{ascii_char:'h1c, frequency:'h0, is_leaf_node:'h0, left_node:'he, right_node:'he}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-Input data: data_in:'{'h61, 'h65, 'h20, 'h61, 'h61} 
 
-Input data: data_in:24933
+out_huff_tree:'{'{ascii_char:'he, frequency:'h1, is_leaf_node:'h0, left_node:'hd, right_node:'h1}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
-Input node:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}} 
 
-in_huff_tree[0]:'{'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
+binary_tree:  huff_tree[1]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
+binary_tree:  huff_tree[2]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
+binary_tree:  huff_tree[3]:'{ascii_char:'he, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-out_huff_tree[0]:'{'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-in_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
+state:3
 
-out_huff_tree[1]:'{'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32}, '{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+time:            16000000, Input data: data_en:x, state:3
 
+INPUT datain:616e6d
 
-in_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+INPUT freqin0:3, freqin1:3, freqin2:2
 
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
 
+in_huff_tree:'{'{ascii_char:'h1c, frequency:'h0, is_leaf_node:'h0, left_node:'he, right_node:'he}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
-out_huff_tree[2]:'{'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:0, is_leaf_node:'h1, left_node:0, right_node:0}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}, '{ascii_char:x, frequency:x, is_leaf_node:'hx, left_node:x, right_node:x}} 
+out_huff_tree:'{'{ascii_char:'h1c, frequency:'h0, is_leaf_node:'h0, left_node:'he, right_node:'he}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
 
 
-binary_tree:  huff_tree[1]:'{ascii_char:230, frequency:5, is_leaf_node:'h0, left_node:133, right_node:97, parent:0, level:0}
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
 
-OUTPUT encoded mask[1]:000000000000000, encoded values[1]:zzzzzzzzzzzzzzz
+binary_tree:  huff_tree[1]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h0, level:'h0}, encoded_values_h[1]:000
 
-binary_tree:  huff_tree[2]:'{ascii_char:133, frequency:2, is_leaf_node:'h0, left_node:101, right_node:32, parent:1, level:1}
+binary_tree:  huff_tree[2]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h0, level:'h0}, encoded_values_h[2]:000
 
-OUTPUT encoded mask[2]:000000000000001, encoded values[2]:zzzzzzzzzzzzzz0
+binary_tree:  huff_tree[3]:'{ascii_char:'he, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
 
-binary_tree:  huff_tree[3]:'{ascii_char:97, frequency:3, is_leaf_node:'h1, left_node:0, right_node:0, parent:1, level:1}
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
 
-OUTPUT encoded mask[3]:000000000000001, encoded values[3]:zzzzzzzzzzzzzz1
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
 
-binary_tree:  huff_tree[4]:'{ascii_char:101, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
 
-OUTPUT encoded mask[4]:000000000000011, encoded values[4]:zzzzzzzzzzzzz00
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
 
-binary_tree:  huff_tree[5]:'{ascii_char:32, frequency:1, is_leaf_node:'h1, left_node:0, right_node:0, parent:2, level:2}
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
 
-OUTPUT encoded mask[5]:000000000000011, encoded values[5]:xxxxxxxxxxxxx01
+state:3
 
-$finish called from file "huff_enc.sv", line 314.
-$finish at simulation time                10000
-Simulation complete, time is 10000.
+time:            16000000, Input data: data_en:x, state:4
+
+INPUT datain:616e6d
+
+INPUT freqin0:3, freqin1:3, freqin2:2
+
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
+
+in_huff_tree:'{'{ascii_char:'h1c, frequency:'h0, is_leaf_node:'h0, left_node:'he, right_node:'he}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+out_huff_tree:'{'{ascii_char:'h1c, frequency:'h0, is_leaf_node:'h0, left_node:'he, right_node:'he}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+binary_tree:  huff_tree[0]:'{ascii_char:'h0, is_leaf_node:'h0, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[0]:000
+
+binary_tree:  huff_tree[1]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h0, level:'h0}, encoded_values_h[1]:000
+
+binary_tree:  huff_tree[2]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h0, level:'h0}, encoded_values_h[2]:000
+
+binary_tree:  huff_tree[3]:'{ascii_char:'he, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
+
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
+
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
+
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
+
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
+
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
+
+state:4
+
+time:            17000000, Input data: data_en:x, state:4
+
+INPUT datain:616e6d
+
+INPUT freqin0:3, freqin1:3, freqin2:2
+
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
+
+in_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h0, left_node:'h1c, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+out_huff_tree:'{'{ascii_char:'h1c, frequency:'h0, is_leaf_node:'h0, left_node:'he, right_node:'he}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+binary_tree:  huff_tree[0]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[0]:000
+
+binary_tree:  huff_tree[1]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[1]:000
+
+binary_tree:  huff_tree[2]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h0, level:'h0}, encoded_values_h[2]:000
+
+binary_tree:  huff_tree[3]:'{ascii_char:'he, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
+
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
+
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
+
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
+
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
+
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
+
+state:4
+
+time:            17000000, Input data: data_en:x, state:5
+
+INPUT datain:616e6d
+
+INPUT freqin0:3, freqin1:3, freqin2:2
+
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
+
+in_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h0, left_node:'h1c, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+out_huff_tree:'{'{ascii_char:'h1c, frequency:'h0, is_leaf_node:'h0, left_node:'he, right_node:'he}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+binary_tree:  huff_tree[0]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[0]:000
+
+binary_tree:  huff_tree[1]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[1]:000
+
+binary_tree:  huff_tree[2]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h0, level:'h0}, encoded_values_h[2]:000
+
+binary_tree:  huff_tree[3]:'{ascii_char:'he, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[3]:000
+
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[4]:000
+
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h0, level:'h0}, encoded_values_h[5]:000
+
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
+
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
+
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
+
+state:5
+
+time:            18000000, Input data: data_en:x, state:5
+
+INPUT datain:616e6d
+
+INPUT freqin0:3, freqin1:3, freqin2:2
+
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
+
+in_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h0, left_node:'h1c, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+out_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h0, left_node:'h1c, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+binary_tree:  huff_tree[0]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[0]:000
+
+binary_tree:  huff_tree[1]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[1]:000
+
+binary_tree:  huff_tree[2]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h1, level:'h1}, encoded_values_h[2]:000
+
+binary_tree:  huff_tree[3]:'{ascii_char:'he, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h1, level:'h1}, encoded_values_h[3]:000
+
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h2, level:'h2}, encoded_values_h[4]:000
+
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h2, level:'h2}, encoded_values_h[5]:000
+
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
+
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
+
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
+
+state:5
+
+time:            18000000, Input data: data_en:x, state:6
+
+INPUT datain:616e6d
+
+INPUT freqin0:3, freqin1:3, freqin2:2
+
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
+
+in_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h0, left_node:'h1c, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+out_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h0, left_node:'h1c, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+binary_tree:  huff_tree[0]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[0]:000
+
+binary_tree:  huff_tree[1]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[1]:000
+
+binary_tree:  huff_tree[2]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h1, level:'h1}, encoded_values_h[2]:000
+
+binary_tree:  huff_tree[3]:'{ascii_char:'he, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h1, level:'h1}, encoded_values_h[3]:000
+
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h2, level:'h2}, encoded_values_h[4]:000
+
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h2, level:'h2}, encoded_values_h[5]:000
+
+OUTPUT: character[0]:00, encoded mask[0]:000, encoded values[0]:000
+
+OUTPUT: character[1]:00, encoded mask[1]:000, encoded values[1]:000
+
+OUTPUT: character[2]:00, encoded mask[2]:000, encoded values[2]:000
+
+state:6
+
+time:            19000000, Input data: data_en:x, state:6
+
+INPUT datain:616e6d
+
+INPUT freqin0:3, freqin1:3, freqin2:2
+
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
+
+in_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h0, left_node:'h1c, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+out_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h0, left_node:'h1c, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+binary_tree:  huff_tree[0]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[0]:000
+
+binary_tree:  huff_tree[1]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[1]:000
+
+binary_tree:  huff_tree[2]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h1, level:'h1}, encoded_values_h[2]:000
+
+binary_tree:  huff_tree[3]:'{ascii_char:'he, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h1, level:'h1}, encoded_values_h[3]:001
+
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h2, level:'h2}, encoded_values_h[4]:000
+
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h2, level:'h2}, encoded_values_h[5]:001
+
+OUTPUT: character[0]:01, encoded mask[0]:011, encoded values[0]:001
+
+OUTPUT: character[1]:0e, encoded mask[1]:001, encoded values[1]:001
+
+OUTPUT: character[2]:0d, encoded mask[2]:011, encoded values[2]:000
+
+state:6
+
+time:            19000000, Input data: data_en:x, state:7
+
+INPUT datain:616e6d
+
+INPUT freqin0:3, freqin1:3, freqin2:2
+
+Initial node:'{'{ascii_char:'h1, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'he, frequency:'h3, is_leaf_node:'h1, left_node:'h0, right_node:'h0}, '{ascii_char:'hd, frequency:'h2, is_leaf_node:'h1, left_node:'h0, right_node:'h0}} 
+
+in_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h0, left_node:'h1c, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+out_huff_tree:'{'{ascii_char:'hxx, frequency:'hx, is_leaf_node:'h0, left_node:'h1c, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}, '{ascii_char:'hxx, frequency:'hx, is_leaf_node:'hx, left_node:'hxx, right_node:'hxx}} 
+
+
+binary_tree:  huff_tree[0]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[0]:000
+
+binary_tree:  huff_tree[1]:'{ascii_char:'h1c, is_leaf_node:'h0, left_node:'he, right_node:'he, parent:'h0, level:'h0}, encoded_values_h[1]:000
+
+binary_tree:  huff_tree[2]:'{ascii_char:'he, is_leaf_node:'h0, left_node:'hd, right_node:'h1, parent:'h1, level:'h1}, encoded_values_h[2]:000
+
+binary_tree:  huff_tree[3]:'{ascii_char:'he, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h1, level:'h1}, encoded_values_h[3]:001
+
+binary_tree:  huff_tree[4]:'{ascii_char:'hd, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h2, level:'h2}, encoded_values_h[4]:000
+
+binary_tree:  huff_tree[5]:'{ascii_char:'h1, is_leaf_node:'h1, left_node:'h0, right_node:'h0, parent:'h2, level:'h2}, encoded_values_h[5]:001
+
+OUTPUT: character[0]:01, encoded mask[0]:011, encoded values[0]:001
+
+OUTPUT: character[1]:0e, encoded mask[1]:001, encoded values[1]:001
+
+OUTPUT: character[2]:0d, encoded mask[2]:011, encoded values[2]:000
+
+state:7
+
+io_out:000101100001
+
+io_out:000100011001
+
+io_out:000101101110
+
+io_out:000100001001
+
+io_out:000101101101
+
+io_out:000100011000
+
+io_out:0001011xxxxx
+
+$finish called from file "huff_enc_tb.sv", line 61.
+$finish at simulation time             27500000
+Simulation complete, time is 27500000 ps.
