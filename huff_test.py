@@ -72,8 +72,9 @@ with open('input_vector.txt', 'r') as f:
 	for line in f:
 		vector_num +=1
 		#print("//Vector =", vector_num, file=output_file)
-		*freq, string = line.strip().split(',')
+		freq = line.strip().split(',')
 		freq = [int(value) for value in freq]
+		string = next(f).strip()
 		chars = list(string)
 		print(string,file=input_file)
 		# characters for huffman tree
