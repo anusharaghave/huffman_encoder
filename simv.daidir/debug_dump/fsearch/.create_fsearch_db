@@ -5,5 +5,5 @@ PYTHONPATH=/afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06
 export PYTHONPATH
 LD_LIBRARY_PATH=/afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib:/afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/pylib27
 export LD_LIBRARY_PATH
-/afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/bin/vcsfind_create_index.exe  -z  "/afs/ece.cmu.edu/usr/araghave/18624/project/simv.daidir/debug_dump/fsearch/./idents_54MmBi.xml.gz" "/afs/ece.cmu.edu/usr/araghave/18624/project/simv.daidir/debug_dump/fsearch/./idents_tapi.xml.gz" -o "/afs/ece.cmu.edu/usr/araghave/18624/project/simv.daidir/debug_dump/fsearch/fsearch.db_tmp"
+/afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/bin/vcsfind_create_index.exe  -z  "/afs/ece.cmu.edu/usr/araghave/18624/project/simv.daidir/debug_dump/fsearch/./idents_FXO7qx.xml.gz" "/afs/ece.cmu.edu/usr/araghave/18624/project/simv.daidir/debug_dump/fsearch/./idents_tapi.xml.gz" -o "/afs/ece.cmu.edu/usr/araghave/18624/project/simv.daidir/debug_dump/fsearch/fsearch.db_tmp"
 \mv "/afs/ece.cmu.edu/usr/araghave/18624/project/simv.daidir/debug_dump/fsearch/fsearch.db_tmp" "/afs/ece.cmu.edu/usr/araghave/18624/project/simv.daidir/debug_dump/fsearch/fsearch.db"

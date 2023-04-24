@@ -1,0 +1,5 @@
+{"vcs1":{"timestamp_begin":1682293221.598590175, "rt":0.13, "ut":0.07, "st":0.04}}
+{"SNPS_VCS_INTERNAL_ROOT_START_TIME": 1682293221.300440228}
+{"VCS_COMP_START_TIME": 1682293221.300440228}
+{"VCS_COMP_END_TIME": 1682293222.128821593}
+{"VCS_USER_OPTIONS": "-q -nc -sverilog -sverilog -R -top tb_top -debug_access+all huff_enc.sv huff_enc_tb.sv"}

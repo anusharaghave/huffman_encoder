@@ -121,7 +121,7 @@ always_ff @(posedge clk) begin : huffman_enc
 
         encoded_value_l = 'b0;
         encoded_value_r = 'b0;      
-        io_out <= 'b0;
+        
 
     end
 
@@ -130,11 +130,16 @@ always_ff @(posedge clk) begin : huffman_enc
     
         `DATA_COLLECT: begin  
             done = 'b0;  
+            io_out <= 'b0;
+            a <= 'b0;
+            b <= 'b0;
+            if (io_in[11]== 1'b1) begin //data_en
                 data_in[c] <= io_in[7:0];
                 freq_in[c] <= io_in[10:8];
               //  c <= io_in[11] ? c + 1'b1 : 'b0;
                 c <= c + 1'b1;
-                state <= (c > `MAX_CHAR_COUNT)? `FREQ_CALC : `DATA_COLLECT;
+            end
+                state <= (c == `MAX_CHAR_COUNT)? `FREQ_CALC : `DATA_COLLECT;
         end
 
         `FREQ_CALC: begin
@@ -231,14 +236,14 @@ always_ff @(posedge clk) begin : huffman_enc
 
      //extract only encodings for unique characters 
     `SEND_OUTPUT: begin     //state=7
-
+        c <= 'b0;
         done = 1'b1;    //used in SV tb to stop the simulation
        // io_out[11:8] <= 'b0;
         io_out[8:0] <= (b[0] == 1'b0) ? {done, 3'b011, character[a]} : {done, 2'b0, encoded_mask[a], encoded_value[a]};
      //  io_out[8:0] <= {done, 2'b0, encoded_mask[b], encoded_value[b]};
         b <= b + 1'b1;
         a <= (b[0] == 1'b1)? a+1: a;     // 1 cycle delay
-        state <= (a > `MAX_CHAR_COUNT)? `DATA_COLLECT : `SEND_OUTPUT; 
+        state <= (a > `MAX_CHAR_COUNT-1)? `DATA_COLLECT : `SEND_OUTPUT; 
         end
 
         default : begin
