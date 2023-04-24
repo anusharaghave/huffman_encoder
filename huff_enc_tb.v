@@ -1,8 +1,8 @@
 module tb_top;
 	reg [23:0] data_in [0:4];
-	wire signed [31:0] freq [0:4];
-	string input_string;
-	string temp;
+	reg [2:0] freq [0:4];
+	reg [23:0] temp;
+	reg [40:0] input_string;
 	reg [8:0] freq_in [0:4];
 	reg data_en;
 	reg clk;
@@ -11,7 +11,7 @@ module tb_top;
 	integer i;
 	wire [11:0] io_out;
 	reg [11:0] io_in;
-	wire [11:0] temp1;
+	reg [11:0] temp1;
 	reg [71:0] expected_out [0:4];
 	integer j;
 	integer vector_num;
@@ -20,10 +20,12 @@ module tb_top;
 	reg signed [31:0] f;
 	reg signed [31:0] f1;
 	reg vector_done;
-	reg signed [31:0] line;
+	wire signed [31:0] line;
 	reg signed [31:0] iter;
 	reg signed [31:0] line1;
 	reg signed [31:0] line2;
+	wire signed [31:0] line3;
+	wire signed [31:0] line4;
 	huff_encoder DUT(
 		.clk(clk),
 		.reset(reset),
@@ -38,12 +40,10 @@ module tb_top;
 		num = 0;
 		test_num = 0;
 		f = $fopen("input_vector.txt", "r");
-		f1 = $fopen("expected_out.txt", "r");
+		f1 = $fopen("expected_out.txt", "rb");
 		while (!$feof(f1)) begin
-			line1 = $fgets(input_string, f1);
-			line2 = $sscanf(input_string, "%b\n", temp1);
-			if (line2 == 1) begin
-				$display("line1:%d, line2:%d", line1, line2);
+			line1 = $fscanf(f1, "%b", temp1);
+			if (line1 == 1) begin
 				expected_out[test_num][(5 - num) * 12+:12] = temp1;
 				$display("expected_out[%0d][%0d]=%b, num=%0d\n", test_num, num, temp1, num);
 				test_num = (num == 'd5 ? test_num + 1 : test_num);
@@ -51,20 +51,24 @@ module tb_top;
 			end
 		end
 		while (!$feof(f)) begin
-			line = $fgets(input_string, f);
-			line = $sscanf(input_string, "%0d,%0d,%0d,%s\n", freq[0], freq[1], freq[2], temp);
-			$display("line:%d", line);
-			data_in[vector_num] = temp;
-			freq_in[vector_num][6+:3] = freq[0];
-			freq_in[vector_num][3+:3] = freq[1];
-			freq_in[vector_num][0+:3] = freq[2];
-			$display("out=%s, freq0:%0d, freq1:%0d, freq2:%0d\n", temp, freq[0], freq[1], freq[2]);
-			vector_num = vector_num + 1;
+			line1 = $fgets(input_string, f);
+			if (line1 == 5) begin
+				line2 = $sscanf(input_string, "%3d,%3d,%3d\n", freq[0], freq[1], freq[2]);
+				freq_in[vector_num][6+:3] = freq[0];
+				freq_in[vector_num][3+:3] = freq[1];
+				freq_in[vector_num][0+:3] = freq[2];
+			end
+			else if (line1 == 4) begin
+				line2 = $sscanf(input_string, "%s\n", temp);
+				data_in[vector_num] = temp;
+				$display("data_in=%h, freq0:%0d, freq1:%0d, freq2:%0d\n", temp, freq[0], freq[1], freq[2]);
+				vector_num = vector_num + 1;
+			end
 		end
 		$fclose(f);
 		$fclose(f1);
 		#(5) reset = 0;
-		#(50)
+		#(150)
 			;
 		$finish;
 	end

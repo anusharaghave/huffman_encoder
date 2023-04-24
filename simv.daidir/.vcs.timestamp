@@ -33,7 +33,7 @@
 tb_top
 huff_enc.sv
 huff_enc_tb.sv
-71
+74
 no_proxy=localhost,127.0.0.1,.cmu.edu,.cmu.local
 https_proxy=http://proximus.ece.cmu.edu:3128/
 http_proxy=http://proximus.ece.cmu.edu:3128/
@@ -49,6 +49,8 @@ VSCODE_GIT_ASKPASS_NODE=/afs/ece.cmu.edu/usr/araghave/.vscode-server/bin/704ed70
 VSCODE_GIT_ASKPASS_MAIN=/afs/ece.cmu.edu/usr/araghave/.vscode-server/bin/704ed70d4fd1c6bd6342c436f1ede30d1cff4710/extensions/git/dist/askpass-main.js
 VSCODE_GIT_ASKPASS_EXTRA_ARGS=
 VMR_MODE_FLAG=32
+VIRTUAL_ENV=OSS CAD Suite
+VERILATOR_ROOT=/afs/club.cc.cmu.edu/projects/stuco-open-eda/oss-cad-suite/share/verilator
 VCS_TARGET_ARCH=linux64
 VCS_PATHMAP_PRELOAD_DONE=1
 VCS_MX_HOME_INTERNAL=1
@@ -94,6 +96,7 @@ HTTP_PROXY=http://proximus.ece.cmu.edu:3128/
 HTTPS_PROXY=http://proximus.ece.cmu.edu:3128/
 HISTCONTROL=ignoredups
 GIT_ASKPASS=/afs/ece.cmu.edu/usr/araghave/.vscode-server/bin/704ed70d4fd1c6bd6342c436f1ede30d1cff4710/extensions/git/dist/askpass.sh
+GHDL_PREFIX=/afs/club.cc.cmu.edu/projects/stuco-open-eda/oss-cad-suite/lib/ghdl
 FTP_PROXY=http://proximus.ece.cmu.edu:3128/
 CVS_RSH=ssh
 CONDA_SHLVL=1
@@ -108,7 +111,7 @@ AKLOG=/usr/bin/aklog
 0
 0
 3
-1682329332 huff_enc_tb.sv
+1682329737 huff_enc_tb.sv
 1682301007 huff_enc.sv
 1654052745 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/vcsdp_lite.tab
 4
@@ -116,5 +119,5 @@ AKLOG=/usr/bin/aklog
 1654053585 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/liberrorinf.so
 1654053489 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/libsnpsmalloc.so
 1654053565 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/libvfs.so
-1682329349 simv.daidir
+1682329743 simv.daidir
 -1 partitionlib

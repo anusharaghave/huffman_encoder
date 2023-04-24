@@ -7,28 +7,25 @@
 module tb_top;
   
  logic [0:`MAX_CHAR_COUNT-1][7:0] data_in[0:`ITER_NUM-1];
- // logic [0:`MAX_CHAR_COUNT-1][7:0] testvectors[0:`ITER_NUM-1];
-//logic [16:0] testvectors[0:`ITER_NUM-1];
-  logic [2:0] freq[0:`ITER_NUM-1];
-  //string testvectors[0:`ITER_NUM-1];
-  //string input_string, temp;
-  logic [23:0] temp;
-  logic [40:0] input_string;
-  logic [11:0] input_string1;
+  reg [2:0] freq[0:`ITER_NUM-1];
+  
+  reg [23:0] temp;
+  reg [40:0] input_string;
+  
   logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in[0:`ITER_NUM-1];
- // logic [`MAX_CHAR_COUNT*`MAX_CHAR_COUNT-1:0] encoded_value;
+
   logic data_en;
   logic clk, reset, done;
   integer i;
   logic [11:0] io_out, io_in;
-  logic [11:0] temp1;
+  reg [11:0] temp1;
   logic [0:2*`MAX_CHAR_COUNT-1][11:0] expected_out[0:`ITER_NUM-1];
   integer j, vector_num, num, test_num;
     int f, f1;
 logic vector_done;
 
     int line, iter, line1, line2, line3, line4;
-   //  string output_string;
+  
 
     huff_encoder DUT(.clk(clk), .reset(reset), .io_in(io_in), .io_out(io_out));
 
@@ -45,37 +42,10 @@ logic vector_done;
        //$readmemh("input_string.txt", testvectors); // Read vectors
        // $readmemh("expected_out.txt", expected_out); // Read vectors
        
-        //data_in = "anm";
-
-        // $readmemh("input_vector.hex", testvectors, 0, 2);
-
-        // for(int i=0; i < `ITER_NUM; i++) begin
-        //      $display("vectornum:%d, %h", i, testvectors[i]);
-        // end
-
-        //f = $fopen("input_string.txt", "r");
+    
         f = $fopen("input_vector.txt", "r");
         f1 = $fopen("expected_out.txt", "rb");
 
-
-/*
-         while (!$feof(f1)) begin
-        line1 = $fgets(input_string1, f1);     //line1 = 13
-        line2 =  $sscanf(input_string1, "%d\n", temp1);
-        $display("line1:%d, line2:%d", line1, line2);
-     if (line2 == 1) begin
-        
-        expected_out[test_num][num] = temp1;
-    
-        $display("expected_out[%0d][%0d]=%b, num=%0d\n",  test_num, num, temp1, num);
-    //    $display("vectornum:%d, %h", vector_num, testvectors[vector_num]);
-        test_num = (num == 'd5)? test_num + 1: test_num;
-        num =  (num < 'd5) ? num+1 : 'd0;
-       
-       // if (test_num == 'd6) $finish;
-         end
-        end
-*/
        while (!$feof(f1)) begin
         line1 = $fscanf(f1, "%b", temp1);
     //    $display("line1:%d", line1);
@@ -124,7 +94,7 @@ logic vector_done;
 */
 
          #5 reset = 0;
-        #50; //increase if you increase the string length
+        #150; //increase if you increase the string length
         $finish;
     end
 
