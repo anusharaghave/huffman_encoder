@@ -1,7 +1,7 @@
 `define DEBUG 0
 `define MAX_CHAR_COUNT 3    //fixed as increasing to 5 increases gates by 4 times
 `define BIT_WIDTH 2
-`define ITER_NUM 6
+`define ITER_NUM 5
 
 
 module tb_top;
@@ -17,15 +17,15 @@ module tb_top;
   logic data_en;
   logic clk, reset, done;
   integer i;
-  logic [11:0] io_out, io_in;
-  logic [0:2*`MAX_CHAR_COUNT-1][11:0] expected_out;
-  integer j, vector_num;
-int f;
+  logic [11:0] io_out, io_in, temp1;
+  logic [0:2*`MAX_CHAR_COUNT-1][11:0] expected_out[0:`ITER_NUM-1];
+  integer j, vector_num, num, test_num;
+    int f, f1;
 logic vector_done;
 
    // logic [0:`MAX_CHAR_COUNT-1] input_string[$];
 
-    int line, iter;
+    int line, iter, line1, line2;
    //  string output_string;
 
     huff_encoder DUT(.clk(clk), .reset(reset), .io_in(io_in), .io_out(io_out));
@@ -35,6 +35,8 @@ logic vector_done;
         reset = 1;
         vector_num = 0;
         done = 1'b0;
+        num = 0;
+        test_num = 0;
       //  data_en = 1'b0;
        // iter = 'b0;
 
@@ -51,6 +53,25 @@ logic vector_done;
 
         //f = $fopen("input_string.txt", "r");
         f = $fopen("input_vector.txt", "r");
+        f1 = $fopen("expected_out.txt", "r");
+
+         while (!$feof(f1)) begin
+        line1 = $fgets(input_string, f1);     //line1 = 13
+        line2 =  $sscanf(input_string, "%b\n", temp1);
+     if (line2 == 1) begin
+        $display("line1:%d, line2:%d", line1, line2);
+        expected_out[test_num][num] = temp1;
+    
+        $display("expected_out[%0d][%0d]=%b, num=%0d\n",  test_num, num, temp1, num);
+    //    $display("vectornum:%d, %h", vector_num, testvectors[vector_num]);
+        test_num = (num == 'd5)? test_num + 1: test_num;
+        num =  (num < 'd5) ? num+1 : 'd0;
+       
+
+         end
+        end
+
+
         while (!$feof(f)) begin
         line = $fgets(input_string, f);     //line = 3
         line =  $sscanf(input_string, "%0d,%0d,%0d,%s\n", freq[0], freq[1], freq[2], temp);
@@ -66,7 +87,8 @@ logic vector_done;
         vector_num = vector_num+1;
      //   if (vector_num == `ITER_NUM-1) data_en = 1;
         end
-        $fclose(f);        
+        $fclose(f); 
+        $fclose(f1);       
 
      
     //   {freq_in[0], freq_in[1], freq_in[2]} = {3'h4,3'h2,3'h2};
@@ -81,7 +103,7 @@ logic vector_done;
 */
 
          #5 reset = 0;
-        #100; //increase if you increase the string length
+        #50; //increase if you increase the string length
         $finish;
     end
 
@@ -118,8 +140,8 @@ logic vector_done;
             vector_done <= 'b0;
         end
         else if (io_out[8] && !vector_done) begin
-            $display("io_out:%b, expected_out[%0d]=%b\n", io_out, j, expected_out[j]);
-            assert (io_out[8:0] == expected_out[j]) 
+            $display("io_out:%b, expected_out[%0d][%0d]=%b\n", io_out, iter, j, expected_out[iter][j]);
+            assert (io_out[8:0] == expected_out[iter][j]) 
             else   $display("Failed for io_out:%b\n", io_out);
             j <= (j == 2*`MAX_CHAR_COUNT-1)? 'b0 : j + 1;
             $display("j:%d, vector_done=%b\n", j, vector_done);

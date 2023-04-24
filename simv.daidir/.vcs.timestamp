@@ -108,13 +108,13 @@ AKLOG=/usr/bin/aklog
 0
 0
 3
-1682300910 huff_enc_tb.sv
-1682300951 huff_enc.sv
+1682303959 huff_enc_tb.sv
+1682301007 huff_enc.sv
 1654052745 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/vcsdp_lite.tab
 4
 1654054205 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/libvirsim.so
 1654053585 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/liberrorinf.so
 1654053489 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/libsnpsmalloc.so
 1654053565 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/libvfs.so
-1682300960 simv.daidir
+1682304164 simv.daidir
 -1 partitionlib
