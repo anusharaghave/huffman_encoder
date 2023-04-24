@@ -40,10 +40,10 @@ http_proxy=http://proximus.ece.cmu.edu:3128/
 ftp_proxy=http://proximus.ece.cmu.edu:3128/
 _CE_M=
 _CE_CONDA=
-XDG_SESSION_ID=2141
+XDG_SESSION_ID=2285
 XDG_RUNTIME_DIR=/run/user/2687578
 XDG_DATA_DIRS=/afs/ece.cmu.edu/usr/araghave/.local/share/flatpak/exports/share:/var/lib/flatpak/exports/share:/usr/local/share:/usr/share
-VSCODE_IPC_HOOK_CLI=/run/user/2687578/vscode-ipc-02837aab-7d64-4404-907d-b8750c6ee66b.sock
+VSCODE_IPC_HOOK_CLI=/run/user/2687578/vscode-ipc-757af622-cb58-452f-b2f6-ee9101e1a8c9.sock
 VSCODE_GIT_IPC_HANDLE=/run/user/2687578/vscode-git-d6149a53c7.sock
 VSCODE_GIT_ASKPASS_NODE=/afs/ece.cmu.edu/usr/araghave/.vscode-server/bin/704ed70d4fd1c6bd6342c436f1ede30d1cff4710/node
 VSCODE_GIT_ASKPASS_MAIN=/afs/ece.cmu.edu/usr/araghave/.vscode-server/bin/704ed70d4fd1c6bd6342c436f1ede30d1cff4710/extensions/git/dist/askpass-main.js
@@ -65,8 +65,8 @@ TERM_PROGRAM=vscode
 SYNOPSYS_SYN_ROOT=/afs/ece/support/synopsys/synopsys.release/T-Foundation/syn
 SYNOPSYS_ROOT=/afs/ece/support/synopsys/synopsys.release/T-Foundation
 SYNOPSYS=/afs/ece/support/synopsys
-SSH_CONNECTION=172.31.65.38 55209 172.19.136.224 22
-SSH_CLIENT=172.31.65.38 55209 22
+SSH_CONNECTION=172.31.65.12 56699 172.19.136.224 22
+SSH_CLIENT=172.31.65.12 56699 22
 SSH_ASKPASS=/usr/libexec/openssh/gnome-ssh-askpass
 SNPS_VCS_CLANG_PATH=/afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/clang
 SNPS_INTERNAL_VCS_LINUX_OS=linux
@@ -108,7 +108,7 @@ AKLOG=/usr/bin/aklog
 0
 0
 3
-1682303959 huff_enc_tb.sv
+1682329332 huff_enc_tb.sv
 1682301007 huff_enc.sv
 1654052745 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/vcsdp_lite.tab
 4
@@ -116,5 +116,5 @@ AKLOG=/usr/bin/aklog
 1654053585 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/liberrorinf.so
 1654053489 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/libsnpsmalloc.so
 1654053565 /afs/ece/support/synopsys/synopsys.release/T-Foundation/vcs/T-2022.06/linux64/lib/libvfs.so
-1682304164 simv.daidir
+1682329349 simv.daidir
 -1 partitionlib

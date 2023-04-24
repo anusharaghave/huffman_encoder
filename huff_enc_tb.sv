@@ -9,23 +9,25 @@ module tb_top;
  logic [0:`MAX_CHAR_COUNT-1][7:0] data_in[0:`ITER_NUM-1];
  // logic [0:`MAX_CHAR_COUNT-1][7:0] testvectors[0:`ITER_NUM-1];
 //logic [16:0] testvectors[0:`ITER_NUM-1];
-  int freq[0:`ITER_NUM-1];
+  logic [2:0] freq[0:`ITER_NUM-1];
   //string testvectors[0:`ITER_NUM-1];
-  string input_string, temp;
+  //string input_string, temp;
+  logic [23:0] temp;
+  logic [40:0] input_string;
+  logic [11:0] input_string1;
   logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in[0:`ITER_NUM-1];
  // logic [`MAX_CHAR_COUNT*`MAX_CHAR_COUNT-1:0] encoded_value;
   logic data_en;
   logic clk, reset, done;
   integer i;
-  logic [11:0] io_out, io_in, temp1;
+  logic [11:0] io_out, io_in;
+  logic [11:0] temp1;
   logic [0:2*`MAX_CHAR_COUNT-1][11:0] expected_out[0:`ITER_NUM-1];
   integer j, vector_num, num, test_num;
     int f, f1;
 logic vector_done;
 
-   // logic [0:`MAX_CHAR_COUNT-1] input_string[$];
-
-    int line, iter, line1, line2;
+    int line, iter, line1, line2, line3, line4;
    //  string output_string;
 
     huff_encoder DUT(.clk(clk), .reset(reset), .io_in(io_in), .io_out(io_out));
@@ -53,13 +55,16 @@ logic vector_done;
 
         //f = $fopen("input_string.txt", "r");
         f = $fopen("input_vector.txt", "r");
-        f1 = $fopen("expected_out.txt", "r");
+        f1 = $fopen("expected_out.txt", "rb");
 
+
+/*
          while (!$feof(f1)) begin
-        line1 = $fgets(input_string, f1);     //line1 = 13
-        line2 =  $sscanf(input_string, "%b\n", temp1);
-     if (line2 == 1) begin
+        line1 = $fgets(input_string1, f1);     //line1 = 13
+        line2 =  $sscanf(input_string1, "%d\n", temp1);
         $display("line1:%d, line2:%d", line1, line2);
+     if (line2 == 1) begin
+        
         expected_out[test_num][num] = temp1;
     
         $display("expected_out[%0d][%0d]=%b, num=%0d\n",  test_num, num, temp1, num);
@@ -67,26 +72,42 @@ logic vector_done;
         test_num = (num == 'd5)? test_num + 1: test_num;
         num =  (num < 'd5) ? num+1 : 'd0;
        
-
+       // if (test_num == 'd6) $finish;
          end
         end
+*/
+       while (!$feof(f1)) begin
+        line1 = $fscanf(f1, "%b", temp1);
+    //    $display("line1:%d", line1);
+        if (line1 == 1) begin
+        expected_out[test_num][num] = temp1;
+        $display("expected_out[%0d][%0d]=%b, num=%0d\n",  test_num, num, temp1, num);
+        test_num = (num == 'd5)? test_num + 1: test_num;
+        num =  (num < 'd5) ? num+1 : 'd0;
+        end
+      //   if (test_num == 'd6) $finish;
+       end
 
 
         while (!$feof(f)) begin
-        line = $fgets(input_string, f);     //line = 3
-        line =  $sscanf(input_string, "%0d,%0d,%0d,%s\n", freq[0], freq[1], freq[2], temp);
-        
-        $display("line:%d", line);
-        data_in[vector_num] = temp;
-        freq_in[vector_num][0] = freq[0];
-        freq_in[vector_num][1] = freq[1];
-        freq_in[vector_num][2] = freq[2];
-    
-        $display("out=%s, freq0:%0d, freq1:%0d, freq2:%0d\n", temp, freq[0], freq[1], freq[2]);
-    //    $display("vectornum:%d, %h", vector_num, testvectors[vector_num]);
-        vector_num = vector_num+1;
-     //   if (vector_num == `ITER_NUM-1) data_en = 1;
+        line1 = $fgets(input_string, f);     //line = 3
+       // $display("line1:%d", line1);
+        if (line1 == 5) begin
+            line2 =  $sscanf(input_string, "%3d,%3d,%3d\n", freq[0], freq[1], freq[2]);
+            freq_in[vector_num][0] = freq[0];
+            freq_in[vector_num][1] = freq[1];
+            freq_in[vector_num][2] = freq[2];
         end
+        else if (line1 == 4) begin
+            line2 =  $sscanf(input_string, "%s\n", temp);
+             data_in[vector_num] = temp; 
+             $display("data_in=%h, freq0:%0d, freq1:%0d, freq2:%0d\n", temp, freq[0], freq[1], freq[2]);
+            vector_num = vector_num+1;
+        end
+      //  if (vector_num == `ITER_NUM-1) $finish;
+        end
+        
+
         $fclose(f); 
         $fclose(f1);       
 

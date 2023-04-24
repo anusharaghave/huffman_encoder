@@ -1,6 +1,8 @@
 source /afs/club.cc.cmu.edu/projects/stuco-open-eda/bashrc
 
 sv2v huff_enc.sv > huff_enc.v
+sv2v huff_enc_tb.sv > huff_enc_tb.v
+iverilog -o my_sim huff_enc_tb.v huff_enc.v
 
 
 iverilog -s MatMul_tb -o _mm_tb.vvp _mm_tb.v
