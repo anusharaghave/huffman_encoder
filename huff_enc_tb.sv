@@ -1,25 +1,29 @@
 `define DEBUG 0
 `define MAX_CHAR_COUNT 3    //fixed as increasing to 5 increases gates by 4 times
 `define BIT_WIDTH 2
-`define ITER_NUM 5
+`define VECTOR_NUM 5
 
+`define assert(signal, value) \
+        if (signal !== value) begin \
+            $error("ASSERTION FAILED in %m: signal=%b != value=%b", signal, value);  \
+        end
 
 module tb_top;
   
- logic [0:`MAX_CHAR_COUNT-1][7:0] data_in[0:`ITER_NUM-1];
-  reg [2:0] freq[0:`ITER_NUM-1];
+ logic [0:`MAX_CHAR_COUNT-1][7:0] data_in[0:`VECTOR_NUM-1];
+  reg [2:0] freq[0:`VECTOR_NUM-1];
   
   reg [23:0] temp;
   reg [40:0] input_string;
   
-  logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in[0:`ITER_NUM-1];
+  logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in[0:`VECTOR_NUM-1];
 
   logic data_en;
   logic clk, reset, done;
   integer i;
   logic [11:0] io_out, io_in;
   reg [11:0] temp1;
-  logic [0:2*`MAX_CHAR_COUNT-1][11:0] expected_out[0:`ITER_NUM-1];
+  logic [0:2*`MAX_CHAR_COUNT-1][11:0] expected_out[0:`VECTOR_NUM-1];
   integer j, vector_num, num, test_num;
     int f, f1;
 logic vector_done;
@@ -36,12 +40,8 @@ logic vector_done;
         done = 1'b0;
         num = 0;
         test_num = 0;
-      //  data_en = 1'b0;
-       // iter = 'b0;
-
-       //$readmemh("input_string.txt", testvectors); // Read vectors
-       // $readmemh("expected_out.txt", expected_out); // Read vectors
-       
+      
+       // $system("python huff_test.py"); //golden model to generate the huffman encodings
     
         f = $fopen("input_vector.txt", "r");
         f1 = $fopen("expected_out.txt", "rb");
@@ -51,7 +51,9 @@ logic vector_done;
     //    $display("line1:%d", line1);
         if (line1 == 1) begin
         expected_out[test_num][num] = temp1;
+        if (`DEBUG) begin
         $display("expected_out[%0d][%0d]=%b, num=%0d\n",  test_num, num, temp1, num);
+        end
         test_num = (num == 'd5)? test_num + 1: test_num;
         num =  (num < 'd5) ? num+1 : 'd0;
         end
@@ -71,30 +73,20 @@ logic vector_done;
         else if (line1 == 4) begin
             line2 =  $sscanf(input_string, "%s\n", temp);
              data_in[vector_num] = temp; 
+             if (`DEBUG) begin
              $display("data_in=%h, freq0:%0d, freq1:%0d, freq2:%0d\n", temp, freq[0], freq[1], freq[2]);
+             end
             vector_num = vector_num+1;
         end
-      //  if (vector_num == `ITER_NUM-1) $finish;
+      //  if (vector_num == `VECTOR_NUM-1) $finish;
         end
         
 
         $fclose(f); 
         $fclose(f1);       
 
-     
-    //   {freq_in[0], freq_in[1], freq_in[2]} = {3'h4,3'h2,3'h2};
-
-/*
-        expected_out[0] = 9'b101100001; //a
-        expected_out[1] = 9'b100001001;
-        expected_out[2] = 9'b101101110; //n
-        expected_out[3] = 9'b100011001;
-        expected_out[4] = 9'b101101101; //m
-        expected_out[5] = 9'b100011000;
-*/
-
          #5 reset = 0;
-        #150; //increase if you increase the string length
+        #200; //increase if you increase the string length
         $finish;
     end
 
@@ -116,10 +108,15 @@ logic vector_done;
             end
 
             i <= (vector_done)? 'b0 : (i + 1'b1);    
-        //    iter = vector_done ? iter + 1: (iter == `ITER_NUM-1) ? 'b0 : iter;
             iter = vector_done ? iter + 1: iter;
+            if (`DEBUG) begin
             $display("iter:%d, i:%d, state:%d\n", iter, i, DUT.state);
-                if(iter == `ITER_NUM) begin
+            end
+            if (vector_done) begin
+                $display("******************************************");
+                $display("\nvector starting with num:%d", iter);
+            end
+                if(iter == `VECTOR_NUM) begin
                     $finish;
                 end
         end
@@ -131,14 +128,16 @@ logic vector_done;
             vector_done <= 'b0;
         end
         else if (io_out[8] && !vector_done) begin
+            if (`DEBUG) begin
             $display("io_out:%b, expected_out[%0d][%0d]=%b\n", io_out, iter, j, expected_out[iter][j]);
-            assert (io_out[8:0] == expected_out[iter][j]) 
-            else   $display("Failed for io_out:%b\n", io_out);
+            end
+            `assert(io_out[8:0],expected_out[iter][j]) 
             j <= (j == 2*`MAX_CHAR_COUNT-1)? 'b0 : j + 1;
+            if (`DEBUG) begin
             $display("j:%d, vector_done=%b\n", j, vector_done);
+            end
         end
-        vector_done <= (j == 2*`MAX_CHAR_COUNT-1)? 'b1 : 'b0;
-              
+        vector_done <= (j == 2*`MAX_CHAR_COUNT-1)? 'b1 : 'b0;     
     end
 
     
@@ -147,18 +146,16 @@ logic vector_done;
         #0.5 clk = ~clk;  //1MHz
     end
 
-    always_comb begin
+    always begin
+        #150;
         if (`DEBUG) begin
         //$display("Count:%d\n", DUT.count);
         $display("time:%t, Input data: state:%0d\n", $time, DUT.state);
         $display("INPUT datain:%x\n", DUT.data_in);
         $display("INPUT freqin0:%x, freqin1:%x, freqin2:%x\n", DUT.freq_in[0], DUT.freq_in[1], DUT.freq_in[2]);
         $display("Initial node:%p\n", DUT.initial_node);
-
-        
-       
-                 $display("in_huff_tree:%p\n\n",  DUT.in_huff_tree);
-                 $display("out_huff_tree:%p\n\n", DUT.out_huff_tree);
+        $display("in_huff_tree:%p\n\n",  DUT.in_huff_tree);
+        $display("out_huff_tree:%p\n\n", DUT.out_huff_tree);
         
         
         for (int i=0; i< 2*`MAX_CHAR_COUNT; i++) begin
@@ -166,24 +163,22 @@ logic vector_done;
         end
 
         for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
-        $display("OUTPUT: character[%0d]:%s, encoded mask[%0d]:%b, encoded values[%0d]:%b\n", i, {3'b011,DUT.character[i]}, i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
-    //$display("OUTPUT: encoded mask[%0d]:%b, encoded values[%0d]:%b\n",  i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
+            $display("OUTPUT: character[%0d]:%h, encoded mask[%0d]:%b, encoded values[%0d]:%b\n", i, {3'b011,DUT.character[i]}, i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
         end
 
         $display("state:%p\n", DUT.state);
-
-        
-
         end //`DEBUG
 
         if (io_out[8]) begin
         for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
-            $display("OUTPUT: character[%0d]:%s, encoded mask[%0d]:%b, encoded values[%0d]:%b\n", i, {3'b011,DUT.character[i]}, i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
+            $display("OUTPUT: character[%0d]:%2h(%s), encoded mask[%0d]:%b, encoded values[%0d]:%b\n", i, {3'b011,DUT.character[i]}, {3'b011,DUT.character[i]}, i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
         end
         end
-
-
+        $finish;
     end
+  
+
+
 endmodule 
 
 

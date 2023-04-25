@@ -1,6 +1,6 @@
 # A Huffman Tree Node
 import heapq
-import binascii
+
 
 class node:
 	def __init__(self, freq, symbol, left=None, right=None):
@@ -33,6 +33,7 @@ def printNodes(node, val=''):
 
 	# huffman code for current node
 	newVal = val + str(node.huff)
+	#node_values = {}
 
 	# if node is not an edge node
 	# then traverse inside it
@@ -43,14 +44,13 @@ def printNodes(node, val=''):
 
 		# if node is edge node then
 		# display its huffman code
+	#print(chars)
 	if(not node.left and not node.right):
 		#print(f"{node.symbol} -> {newVal}")
 
-		
-
 		char_b = bin(ord(node.symbol))
-		char_b = char_b[2:]
-		print('00010'+char_b, file=output_file)
+		char_b = '00010'+char_b[2:]
+		#print(char_b, file=output_file)
 
 		mask_length = len(newVal)
 		mask = bin((1<<mask_length) - 1)
@@ -60,31 +60,34 @@ def printNodes(node, val=''):
 		final_mask = char_len1.format(int(mask,2))
 		final_val = char_len1.format(int(newVal,2))
 
-		print('000100'+final_mask+final_val, file=output_file)
+		val = '000100'+final_mask+final_val
+		#print(val, file=output_file)
+		#print("\n")
+		node_values.setdefault(node.symbol, []).append(char_b)
+		node_values[node.symbol].extend([val])
+		#print(node_values)
+		#return char_b, val
+	#return '',''
 
+node_values= {}
+#node_values.setdefault(key, [])
 output_file = open('expected_out.txt', 'w')
-input_file = open('input_string.txt', 'w')
 
 vector_num = 0
 #can only input characters between a and 0 (hex61 to hex6F)
 #string = "anm"  #read from a input vector
 with open('input_vector.txt', 'r') as f:
 	for line in f:
+		node_values.clear()
 		vector_num +=1
+		#print(line)
 		#print("//Vector =", vector_num, file=output_file)
 		freq = line.strip().split(',')
 		freq = [int(value) for value in freq]
 		string = next(f).strip()
 		chars = list(string)
-		print(string,file=input_file)
-		# characters for huffman tree
-		#chars = ['a', 'n', 'm']
-
-		# frequency of characters
-		#freq = [4, 2, 2]
-		#print(string, freq)
-		#print("//character", file=output_file)
-		#print("//{mask, encoded_value}", file=output_file)
+		#print(string,file=input_file)
+		
 
 # list containing unused nodes
 		nodes = []
@@ -97,7 +100,7 @@ with open('input_vector.txt', 'r') as f:
 		while len(nodes) > 1:
 
 	# sort all the nodes in ascending order
-	# based on their frequency
+	# based on their frequency and in case of tie, ascii value
 			left = heapq.heappop(nodes)
 			right = heapq.heappop(nodes)
 
@@ -112,6 +115,27 @@ with open('input_vector.txt', 'r') as f:
 			heapq.heappush(nodes, newNode)
 
 # Huffman Tree is ready!
+	
+		#doesn't work
+		#print(nodes[0])
+		#printNodes(nodes[0])
+
 		printNodes(nodes[0])
+		for c in chars:
+			if c in node_values:
+				print(node_values[c][0], file=output_file)
+				print(node_values[c][1], file=output_file)
+		
 		print("\n", file=output_file)
+	
+		#use for loop to print to output 
+
+		
+
+		#print(char_b, val)
+		#if (char_b != '' and val != ''):
+		#	print("I am here\n")
+		#	node_values[char_b].append(val)
+		#	print(node_values)
+		#	print("\n")
 		

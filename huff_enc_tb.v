@@ -45,7 +45,6 @@ module tb_top;
 			line1 = $fscanf(f1, "%b", temp1);
 			if (line1 == 1) begin
 				expected_out[test_num][(5 - num) * 12+:12] = temp1;
-				$display("expected_out[%0d][%0d]=%b, num=%0d\n", test_num, num, temp1, num);
 				test_num = (num == 'd5 ? test_num + 1 : test_num);
 				num = (num < 'd5 ? num + 1 : 'd0);
 			end
@@ -61,7 +60,6 @@ module tb_top;
 			else if (line1 == 4) begin
 				line2 = $sscanf(input_string, "%s\n", temp);
 				data_in[vector_num] = temp;
-				$display("data_in=%h, freq0:%0d, freq1:%0d, freq2:%0d\n", temp, freq[0], freq[1], freq[2]);
 				vector_num = vector_num + 1;
 			end
 		end
@@ -86,7 +84,10 @@ module tb_top;
 				io_in[11] = 1'b0;
 			i <= (vector_done ? 'b0 : i + 1'b1);
 			iter = (vector_done ? iter + 1 : iter);
-			$display("iter:%d, i:%d, state:%d\n", iter, i, DUT.state);
+			if (vector_done) begin
+				$display("******************************************");
+				$display("\nvector starting with num:%d", iter);
+			end
 			if (iter == 5)
 				$finish;
 		end
@@ -96,17 +97,16 @@ module tb_top;
 			vector_done <= 'b0;
 		end
 		else if (io_out[8] && !vector_done) begin
-			$display("io_out:%b, expected_out[%0d][%0d]=%b\n", io_out, iter, j, expected_out[iter][(5 - j) * 12+:12]);
+			if (io_out[8:0] !== expected_out[iter][(5 - j) * 12+:12])
+				$error("ASSERTION FAILED in %m: signal=%b != value=%b", io_out[8:0], expected_out[iter][(5 - j) * 12+:12]);
 			j <= (j == 5 ? 'b0 : j + 1);
-			$display("j:%d, vector_done=%b\n", j, vector_done);
 		end
 		vector_done <= (j == 5 ? 'b1 : 'b0);
 	end
 	always #(0.5) clk = ~clk;
-	always @(*)
-		if (io_out[8]) begin : sv2v_autoblock_1
-			reg signed [31:0] i;
-			for (i = 0; i < 3; i = i + 1)
-				$display("OUTPUT: character[%0d]:%s, encoded mask[%0d]:%b, encoded values[%0d]:%b\n", i, {3'b011, DUT.character[i]}, i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
-		end
+	always if (io_out[8]) begin : sv2v_autoblock_1
+		reg signed [31:0] i;
+		for (i = 0; i < 3; i = i + 1)
+			$display("OUTPUT: character[%0d]:%2h(%s), encoded mask[%0d]:%b, encoded values[%0d]:%b\n", i, {3'b011, DUT.character[i]}, {3'b011, DUT.character[i]}, i, DUT.encoded_mask[i], i, DUT.encoded_value[i]);
+	end
 endmodule
