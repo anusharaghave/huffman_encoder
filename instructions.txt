@@ -6,31 +6,3 @@ sv2v huff_enc_tb.sv > huff_enc_tb.v
 iverilog -g2012 -o sim huff_enc_tb.sv huff_enc.v
 
 
-iverilog -s MatMul_tb -o _mm_tb.vvp _mm_tb.v
-vvp _mm_tb.vvp
-gtkwave _mm_out.vcd
-
-verilator -Wno-lint --trace --cc MatMul.sv --exe MatMulDemo.cpp
-make -C obj_dir -f VMatMul.mk VMatMul
-./obj_dir/VMatMul
-
-
-read_verilog -sv huff_enc.v
-write_verilog -sv
-
-
-###Synthesis Part
-# Make a build folder
-mkdir build
-
-# Synthesis (can add more SV files, space-separated, if desired)
-yosys -p 'read_verilog -sv huff_enc.v; synth_ice40 -json build/synthesis.json -top m_design'
-
-# Place-and-route
-nextpnr-ice40 --hx8k --json build/synthesis.json --asc build/pnr.asc --package cb132 --pcf constraints.pcf --freq 100 --pre-place constrain.py
-
-# Compress the bitstream
-icepack build/pnr.asc build/bitstream.bit
-
-# Load the bitstream
-iceprog build/bitstream.bit
