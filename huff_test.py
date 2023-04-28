@@ -1,4 +1,6 @@
-# A Huffman Tree Node
+#Reference: 
+#source : Internet(some piece of code)
+# A Huffman Encoder - GOLDEN MODEL
 import heapq
 
 
@@ -26,9 +28,7 @@ class node:
 
 
 
-# utility function to print huffman
-# codes for all symbols in the newly
-# created Huffman tree
+# creating Huffman tree
 def printNodes(node, val=''):
 
 	# huffman code for current node
@@ -44,13 +44,9 @@ def printNodes(node, val=''):
 
 		# if node is edge node then
 		# display its huffman code
-	#print(chars)
 	if(not node.left and not node.right):
-		#print(f"{node.symbol} -> {newVal}")
-
 		char_b = bin(ord(node.symbol))
 		char_b = '00010'+char_b[2:]
-		#print(char_b, file=output_file)
 
 		mask_length = len(newVal)
 		mask = bin((1<<mask_length) - 1)
@@ -61,16 +57,10 @@ def printNodes(node, val=''):
 		final_val = char_len1.format(int(newVal,2))
 
 		val = '000100'+final_mask+final_val
-		#print(val, file=output_file)
-		#print("\n")
 		node_values.setdefault(node.symbol, []).append(char_b)
 		node_values[node.symbol].extend([val])
-		#print(node_values)
-		#return char_b, val
-	#return '',''
 
 node_values= {}
-#node_values.setdefault(key, [])
 output_file = open('expected_out.txt', 'w')
 
 vector_num = 0
@@ -80,13 +70,10 @@ with open('input_vector.txt', 'r') as f:
 	for line in f:
 		node_values.clear()
 		vector_num +=1
-		#print(line)
-		#print("//Vector =", vector_num, file=output_file)
 		freq = line.strip().split(',')
 		freq = [int(value) for value in freq]
 		string = next(f).strip()
 		chars = list(string)
-		#print(string,file=input_file)
 		
 
 # list containing unused nodes
@@ -100,7 +87,7 @@ with open('input_vector.txt', 'r') as f:
 		while len(nodes) > 1:
 
 	# sort all the nodes in ascending order
-	# based on their frequency and in case of tie, ascii value
+	# based on their frequency and in case of tie, sort using ascii value
 			left = heapq.heappop(nodes)
 			right = heapq.heappop(nodes)
 
@@ -111,16 +98,12 @@ with open('input_vector.txt', 'r') as f:
 	# combine the 2 smallest nodes to create
 	# new node as their parent
 			newNode = node(left.freq+right.freq, left.symbol+right.symbol, left, right)
-
 			heapq.heappush(nodes, newNode)
 
-# Huffman Tree is ready!
-	
-		#doesn't work
-		#print(nodes[0])
-		#printNodes(nodes[0])
+		#use for loop to print to output 
 
 		printNodes(nodes[0])
+		#use for loop to print to output 
 		for c in chars:
 			if c in node_values:
 				print(node_values[c][0], file=output_file)
@@ -128,14 +111,7 @@ with open('input_vector.txt', 'r') as f:
 		
 		print("\n", file=output_file)
 	
-		#use for loop to print to output 
 
 		
 
-		#print(char_b, val)
-		#if (char_b != '' and val != ''):
-		#	print("I am here\n")
-		#	node_values[char_b].append(val)
-		#	print(node_values)
-		#	print("\n")
 		

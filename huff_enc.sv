@@ -20,8 +20,6 @@
 //4. Use huff tree[0] as root node- accordingly change the indexing
 //5. Use only minimal subset of characters - like from a ('h61) to 0 ('h6F)- This is working, but you have to give hex inputs
 
-//TODO:
-//done signal is high for 1 extra cycle - fix it
 
 `timescale 1us/1ps
 
@@ -60,7 +58,6 @@ typedef struct {
 //main encoder module  
 module huff_encoder (input logic clk, input logic reset, input logic [11:0] io_in, output logic [11:0] io_out);
 
-
 logic [0:`MAX_CHAR_COUNT-1][7:0] data_in;
 logic [0:`MAX_CHAR_COUNT-1][2:0] freq_in;
 logic [`BIT_WIDTH-1:0] count;
@@ -96,7 +93,6 @@ always_ff @(posedge clk) begin : huffman_enc
        b <= 3'b0;
        c <= 3'b0;
         done = 'b0;
-         //   ll = 'b0;
            for (int i=0; i< `MAX_CHAR_COUNT; i++) begin
                 encoded_value[i] = 'b0;
                 encoded_mask[i] = 'b0;
@@ -136,7 +132,6 @@ always_ff @(posedge clk) begin : huffman_enc
             if (io_in[11]== 1'b1) begin //data_en
                 data_in[c] <= io_in[7:0];
                 freq_in[c] <= io_in[10:8];
-              //  c <= io_in[11] ? c + 1'b1 : 'b0;
                 c <= c + 1'b1;
             end
                 state <= (c == `MAX_CHAR_COUNT)? `FREQ_CALC : `DATA_COLLECT;
@@ -179,7 +174,6 @@ always_ff @(posedge clk) begin : huffman_enc
                 huff_tree[1].left_node = out_huff_tree[0].left_node;
                 huff_tree[1].right_node = out_huff_tree[0].right_node;
                
-           // if (count == 1'b0) begin
             if (!(count[0] | count[1])) begin    
                 state <= `ENCODE;
             end
@@ -237,10 +231,8 @@ always_ff @(posedge clk) begin : huffman_enc
      //extract only encodings for unique characters 
     `SEND_OUTPUT: begin     //state=7
         c <= 'b0;
-        done = 1'b1;    //used in SV tb to stop the simulation
-       // io_out[11:8] <= 'b0;
+        done = 1'b1;    
         io_out[8:0] <= (b[0] == 1'b0) ? {done, 3'b011, character[a]} : {done, 2'b0, encoded_mask[a], encoded_value[a]};
-     //  io_out[8:0] <= {done, 2'b0, encoded_mask[b], encoded_value[b]};
         b <= b + 1'b1;
         a <= (b[0] == 1'b1)? a+1: a;     // 1 cycle delay
         state <= (a > `MAX_CHAR_COUNT-1)? `DATA_COLLECT : `SEND_OUTPUT; 
@@ -294,7 +286,6 @@ node_t temp_node;
 
             end
         end
-//    end
 end   
 endmodule
 
